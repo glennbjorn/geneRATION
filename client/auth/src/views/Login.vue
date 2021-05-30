@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="submit">
-
     <img
       class="mx-auto"
       src="../../assets/logo.png"
@@ -31,21 +30,25 @@
       <label for="floatingPassword">Password</label>
     </div>
 
+    <p>
+      Dont have an account? <router-link to="/register">Register here!</router-link>
+    </p>
+
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
   </form>
 </template>
 
 <script lang="ts">
-import {reactive} from 'vue';
-import { useRouter } from 'vue-router';
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Login",
   setup() {
     const data = reactive({
-      email: '',
-      password: ''
+      email: "",
+      password: "",
     });
 
     const router = useRouter();
@@ -54,17 +57,17 @@ export default {
       await fetch("http://localhost:4000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
+        // credentials: 'include',
         body: JSON.stringify(data),
       });
 
-      await router.push('/');
-    }
+      await router.push("/");
+    };
 
     return {
       data,
-      submit
-    }
-  }
-}
+      submit,
+    };
+  },
+};
 </script>

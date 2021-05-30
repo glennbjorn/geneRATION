@@ -3,12 +3,12 @@ const User = require("../model/User");
 // Create registerNewUser method
 exports.registerNewUser = async (req, res) => {
     try {
-        // console.log(isUser);
-        // if (isUser.length >= 1) {
-        //     return res.status(409).json({
-        //         message: "email already in use"
-        //     });
-        // }
+        let users_with_same_email = await User.find({ email: req.body.email })
+        if (users_with_same_email.length >= 1) {
+            return res.status(409).json({
+                message: "email already in use"
+            });
+        }
         const user = new User({
             name: req.body.name,
             email: req.body.email,
@@ -39,4 +39,4 @@ exports.loginUser = async (req, res) => {
 
 exports.getUserDetails = async (req, res) => {
     await res.json(req.userData);
-  };
+};

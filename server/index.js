@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const config = require("./config/db");
 const app = express();
+const helmet = require("helmet")
 
 //configure database and mongoose
 mongoose.set("useCreateIndex", true);
@@ -32,6 +33,9 @@ mongoose.connect(config.uri, {
 //registering cors
 app.use(cors());
 // app.use(cors({origin:['http://localhost:8080']}));
+
+//registering helmet
+// app.use(helmet());
 
 //configure body parser
 app.use(bodyParser.urlencoded({ extended: false }));

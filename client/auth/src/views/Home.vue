@@ -15,9 +15,9 @@ export default {
     onMounted(async () => {
       try {
         const response = await fetch("http://localhost:4000/me", {
-          method: "POST",
+          method: "GET",
           headers: { "Content-Type": "application/json" },
-          credentials: 'include'
+          // credentials: 'include'
         });
 
         const content = await response.json();
