@@ -31,6 +31,7 @@ mongoose.connect(config.uri, {
 
 //registering cors
 app.use(cors());
+// app.use(cors({origin:['http://localhost:8080']}));
 
 //configure body parser
 app.use(bodyParser.urlencoded({ extended: false }));
