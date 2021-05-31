@@ -6,18 +6,17 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const config = require("./config/db");
 const app = express();
-const helmet = require("helmet")
 
 //configure database and mongoose
 mongoose.set("useCreateIndex", true);
-// mongoose
-//   .connect(config.database, { useNewUrlParser: true })
-//   .then(() => {
-//     console.log("Database is connected");
-//   })
-//   .catch(err => {
-//     console.log({ database_error: err });
-//   });
+mongoose
+  .connect(config.uri, { useNewUrlParser: true })
+  .then(() => {
+    console.log("Database is connected");
+  })
+  .catch(err => {
+    console.log({ database_error: err });
+  });
 
 mongoose.connect(config.uri, {
   useNewUrlParser: true,
@@ -31,11 +30,7 @@ mongoose.connect(config.uri, {
 // db configuaration ends here
 
 //registering cors
-app.use(cors());
-// app.use(cors({origin:['http://localhost:8080']}));
-
-//registering helmet
-// app.use(helmet());
+app.use(cors({ credentials: true, origin: ["http://localhost:8080"] }));
 
 //configure body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,7 +43,7 @@ app.use(morgan("dev"));
 
 // define first route
 app.get("/", (req, res) => {
-  console.log("Hello MEVN Soldier");
+  console.log("Welcome");
 });
 
 //bring in our user routes

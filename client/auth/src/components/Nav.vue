@@ -8,7 +8,8 @@
         <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="!auth">
           <li class="nav-item">
               <!-- link Login -->
-            <router-link to="/login" class="nav-link" href="#">Login</router-link>
+            <!-- <router-link to="/login" class="nav-link" href="#">Login</router-link> -->
+            <router-link to="/" class="nav-link" href="#">Login</router-link>
           </li>
           <li class="nav-item">
               <!-- link Register -->
@@ -18,7 +19,8 @@
         <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="auth">
           <li class="nav-item">
               <!-- link Logout -->
-            <router-link to="/login" class="nav-link" href="#" @click="logout">Logout</router-link>
+            <!-- <router-link to="/login" class="nav-link" href="#" @click="logout">Logout</router-link> -->
+            <router-link to="/" class="nav-link" href="#" @click="logout">Logout</router-link>
           </li>
         </ul>
       </div>
@@ -29,6 +31,7 @@
 <script lang="ts">
 import {computed} from "vue";
 import { useStore } from 'vuex';
+import {useRouter} from 'vue-router';
 
 export default {
   name: "Nav",
@@ -37,12 +40,12 @@ export default {
 
     const auth = computed(() => store.state.authenticated)
 
-    const logout = async () => {
-      await fetch("http://localhost:4000/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: 'include',
-      });
+    const router = useRouter();
+
+    const logout = () => {
+      localStorage.removeItem("jwt");
+      router.push("/");
+      store.dispatch('setAuth', false);
     }
 
     return {

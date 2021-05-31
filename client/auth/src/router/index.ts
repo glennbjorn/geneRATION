@@ -5,8 +5,9 @@ import Register from '@/views/Register.vue'
 
 // routes for Home, Login & Register
 const routes: Array<RouteRecordRaw> = [
-  {path: '/', component: Home},
-  {path: '/login', component: Login},
+  {path: '/home', component: Home},
+  {path: '/', component: Login},
+  // {path: '/login', component: Login},
   {path: '/register', component: Register}
 ]
 

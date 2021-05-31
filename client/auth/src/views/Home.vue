@@ -1,38 +1,28 @@
 <template>
-  {{ message }}
+  <h1>hello</h1>
+  {{ user.name }}
 </template>
 
-<script lang='ts'>
-import { onMounted, ref } from "vue";
-import {useStore} from "vuex";
-
+<script>
+import {VueJwtDecode} from "vue-jwt-decode";
 export default {
-  name: "Home",
-  setup() {
-    const message = ref('You are not logged in!');
-    const store = useStore();
-    
-    onMounted(async () => {
-      try {
-        const response = await fetch("http://localhost:4000/me", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          // credentials: 'include'
-        });
-
-        const content = await response.json();
-
-        message.value = `Hi ${content.name}!`;
-
-        await store.dispatch('setAuth', true);
-
-      } catch(err) {
-        await store.dispatch('setAuth', false);
-      }
-    });
+  data() {
     return {
-        message
-    }
+      user: {}
+    };
   },
+  methods: {
+    getUserDetails() {
+      let token = localStorage.getItem("jwt");
+      let decoded = VueJwtDecode.decode(token);
+      this.user = decoded;
+    },
+  },
+
+  created() {
+    this.getUserDetails();
+  }
 };
 </script>
+
+

@@ -31,7 +31,8 @@
     </div>
 
     <p>
-      Dont have an account? <router-link to="/register">Register here!</router-link>
+      Dont have an account?
+      <router-link to="/register">Register here!</router-link>
     </p>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
@@ -42,6 +43,7 @@
 <script lang="ts">
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+import {useStore} from "vuex";
 
 export default {
   name: "Login",
@@ -53,15 +55,22 @@ export default {
 
     const router = useRouter();
 
+    const store = useStore();
+
     const submit = async () => {
-      await fetch("http://localhost:4000/login", {
+      const response = await fetch("http://localhost:4000/", { //change to /login after home page is created
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // credentials: 'include',
+        credentials: "include",
         body: JSON.stringify(data),
       });
 
-      await router.push("/");
+      if (response.status === 201) {
+        await router.push("/home");
+        await store.dispatch('setAuth', true);
+      } else {
+        alert("Invalid email or password. Please try again!")
+      }
     };
 
     return {

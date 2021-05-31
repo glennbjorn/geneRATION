@@ -44,7 +44,8 @@
     </div>
 
     <p>
-      Already have an account? <router-link to="/login">Sign in here!</router-link>
+      <!-- Already have an account? <router-link to="/login">Sign in here!</router-link> -->
+      Already have an account? <router-link to="/">Sign in here!</router-link>
     </p>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
@@ -68,13 +69,19 @@ export default {
     const router = useRouter();
 
     const submit = async () => {
-      await fetch("http://localhost:4000/register", {
+      const response = await fetch("http://localhost:4000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      await router.push('/login');
+      // await router.push('/login');
+      if (response.status === 201) {
+        // await router.push("/login");
+        await router.push("/");
+      } else {
+        alert("Email already exists! Please use another email.")
+      }
     };
 
     return {
