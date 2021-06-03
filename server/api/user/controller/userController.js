@@ -11,6 +11,7 @@ exports.registerNewUser = async (req, res) => {
         }
         const user = new User({
             name: req.body.name,
+            organisation: req.body.organisation,
             email: req.body.email,
             password: req.body.password
         });

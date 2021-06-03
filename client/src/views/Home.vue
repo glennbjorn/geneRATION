@@ -1,28 +1,12 @@
 <template>
-  <h1>hello</h1>
-  <!-- {{ user.name }} -->
+    <h1>Home</h1>
+    <p>Public's view</p>
 </template>
 
 <script>
-// import {VueJwtDecode} from "vue-jwt-decode";
-// export default {
-//   data() {
-//     return {
-//       user: {}
-//     };
-//   },
-//   methods: {
-//     getUserDetails() {
-//       let token = localStorage.getItem("jwt");
-//       let decoded = VueJwtDecode.decode(token);
-//       this.user = decoded;
-//     },
-//   },
-
-//   created() {
-//     this.getUserDetails();
-//   }
-// };
+export default {
+    name: 'Home',
+}
 </script>
 
-
+<style></style>

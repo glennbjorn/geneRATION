@@ -9,23 +9,18 @@ const app = express();
 
 //configure database and mongoose
 mongoose.set("useCreateIndex", true);
+
 mongoose
-  .connect(config.uri, { useNewUrlParser: true })
+  .connect(config.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("Database is connected");
   })
   .catch(err => {
     console.log({ database_error: err });
   });
-
-mongoose.connect(config.uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => {
-    console.log('MongoDB Connected…')
-  })
-  .catch(err => console.log(err))
 
 // db configuaration ends here
 
