@@ -3,8 +3,9 @@
     <h1>You are not logged in!</h1>
   </div>
   <div v-if="loggedIn">
-    <h1>Welcome {{ user.name }}</h1>
-    <button @click="$router.push('/create')">Create new campaign</button>
+    <form @submit.prevent="submit">
+      <h1>Create a new campaign!</h1>
+    </form>
   </div>
 </template>
 

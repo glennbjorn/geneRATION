@@ -21,6 +21,10 @@
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="loggedIn">
           <li class="nav-item">
+            <!-- link Dashboard -->
+            <router-link to="/dashboard" class="nav-link" href="#">Dashboard</router-link>
+          </li>
+          <li class="nav-item">
             <!-- link Logout -->
             <router-link to="/" class="nav-link" href="#" @click="logUserOut">Logout</router-link>
           </li>

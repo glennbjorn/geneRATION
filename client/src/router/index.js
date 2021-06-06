@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
+import CreateNew from '../views/CreateNew.vue'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard
+    },
+    {
+        path: '/create',
+        name: 'CreateNew',
+        component: CreateNew
     }
 ]
 
