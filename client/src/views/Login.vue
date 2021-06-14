@@ -86,10 +86,6 @@ export default {
   margin: auto;
 }
 
-.form-signin .checkbox {
-  font-weight: 400;
-}
-
 .form-signin .form-floating:focus-within {
   z-index: 2;
 }

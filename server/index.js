@@ -9,6 +9,7 @@ const app = express();
 
 //configure database and mongoose
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 mongoose
   .connect(config.uri, {
@@ -42,8 +43,10 @@ app.get("/", (req, res) => {
 });
 
 //bring in our user routes
-const userRoutes = require("./api/user/route/user");
+const userRoutes = require("./api/route/user");
+const newCampaignRoutes = require("./api/route/newCampaign");
 app.use("/", userRoutes);
+app.use("/create", newCampaignRoutes);
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
 });
