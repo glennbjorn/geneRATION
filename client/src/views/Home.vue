@@ -1,12 +1,19 @@
 <template>
-    <h1>Home</h1>
-    <p>Public's view</p>
+  <Nav />
+  <h1>Home</h1>
+  <p>Public's view</p>
 </template>
 
 <script>
+import Nav from "../components/Nav.vue";
+
 export default {
-    name: 'Home',
-}
+  name: "Home",
+
+  components: {
+    Nav,
+  },
+};
 </script>
 
 <style></style>

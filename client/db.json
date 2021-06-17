@@ -4,6 +4,11 @@
       "item": "White Rice (5kg)",
       "qty": "2",
       "id": 1
+    },
+    {
+      "item": "Instant Noodles (packs of 5)",
+      "qty": "2",
+      "id": 2
     }
   ]
 }

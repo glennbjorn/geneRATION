@@ -1,4 +1,5 @@
 <template>
+  <Nav />
   <div class="form-signin">
     <form @submit.prevent="submit">
       <img
@@ -20,7 +21,7 @@
         />
         <label for="floatingInput">Email address</label>
       </div>
-      
+
       <div class="form-floating">
         <input
           v-model="login.password"
@@ -46,35 +47,44 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import Nav from '../components/Nav.vue'
 
 export default {
   name: "Login",
   data() {
     return {
       login: {
-        email: '',
-        password: '',
-      }
-    }
+        email: "",
+        password: "",
+      },
+    };
   },
+
+  components: {
+    Nav
+  },
+
   methods: {
     async submit() {
       try {
-        let response = await axios.post('http://localhost:4000/login', this.login);
+        let response = await axios.post(
+          "http://localhost:4000/login",
+          this.login
+        );
         let token = response.data.token;
-        localStorage.setItem("jwt", token)
+        localStorage.setItem("jwt", token);
         if (token) {
-          this.$swal("Successfully logged in!")
-        await this.$router.push('/dashboard');
+          this.$swal("Successfully logged in!");
+          await this.$router.push("/dashboard");
         } else {
-          this.$swal("Something went wrong :(", "Try again")
+          this.$swal("Something went wrong :(", "Try again");
         }
       } catch (err) {
         this.$swal("Login failed!", "Check authentication credentials");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

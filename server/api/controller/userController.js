@@ -41,3 +41,12 @@ exports.loginUser = async (req, res) => {
 exports.getUserDetails = async (req, res) => {
     await res.json(req.userData);
 };
+
+exports.getUserOrg = async (req, res) => {
+    try {
+        let user = await User.find({ email: req.body.email });
+        await res.json(user[0].organisation)
+    } catch (err) {
+        res.status(400).json({err:err})
+    }
+};

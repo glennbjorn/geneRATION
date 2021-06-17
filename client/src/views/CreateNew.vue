@@ -1,4 +1,5 @@
 <template>
+  <Nav />
   <div v-if="!loggedIn">
     <h1>You are not logged in!</h1>
   </div>
@@ -17,7 +18,7 @@
       </div>
 
       <div class="create-campaign">
-        <label for="name">Description of Campaign</label>
+        <label for="camDesc">Description of Campaign</label>
         <textarea
           v-model="campaign.camDesc"
           type="text"
@@ -28,7 +29,7 @@
       </div>
 
       <div class="create-campaign">
-        <label for="name">Description of Organisation</label>
+        <label for="orgDesc">Description of Organisation</label>
         <textarea
           v-model="campaign.orgDesc"
           type="text"
@@ -42,7 +43,11 @@
 
       <div class="create-campaign">
         <label for="collection-date">Choose a collection date</label>
-        <input v-model="campaign.collectionDate" placeholder="DD/MM/YYYY" />
+        <input
+          v-model="campaign.collectionDate"
+          placeholder="DD/MM/YYYY"
+          id="collection-date"
+        />
       </div>
 
       <div>
@@ -58,7 +63,6 @@
         Create campaign
       </button>
       <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-
     </form>
   </div>
 </template>
@@ -69,6 +73,7 @@ import Items from "@/components/Items";
 import AddItem from "@/components/AddItem";
 import axios from "axios";
 import router from "@/router";
+import Nav from "../components/Nav.vue";
 
 export default {
   name: "Dashboard",
@@ -76,11 +81,13 @@ export default {
   components: {
     Items,
     AddItem,
+    Nav,
   },
 
   data() {
     return {
       user: {},
+      userOrg: "",
       loggedIn: false,
       campaign: {
         name: "",
@@ -99,6 +106,13 @@ export default {
         let decoded = VueJwtDecode.decode(token);
         this.user = decoded;
       }
+    },
+
+    async getUserOrg() {
+      const res = await axios.post("http://localhost:4000/getuserorg", {
+        email: this.user.email,
+      });
+      this.userOrg = res.data;
     },
 
     checkLoggedIn() {
@@ -153,20 +167,25 @@ export default {
 
     async submit() {
       try {
-        console.log(this.campaign)
-        let response = await axios.post("http://localhost:4000/create/newCampaign", {
-          name: this.campaign.name,
-          camDesc: this.campaign.camDesc,
-          orgDesc: this.campaign.orgDesc,
-          collectionDate: this.campaign.collectionDate,
-          items: this.items,
-        });
-        console.log(response)
+        await this.getUserOrg();
+        console.log(this.campaign);
+        let response = await axios.post(
+          "http://localhost:4000/create/newCampaign",
+          {
+            org: this.userOrg,
+            name: this.campaign.name,
+            camDesc: this.campaign.camDesc,
+            orgDesc: this.campaign.orgDesc,
+            collectionDate: this.campaign.collectionDate,
+            items: this.items,
+          }
+        );
+        console.log(response);
         this.$swal("Campaign created!");
         await router.push("/dashboard");
       } catch (err) {
         let error = err.response;
-        console.log(error.data.err.message)
+        console.log(error.data.err.message);
         this.$swal("Error");
       }
     },
@@ -176,6 +195,7 @@ export default {
     this.getUserDetails();
     this.checkLoggedIn();
     this.items = await this.fetchItems();
+    this.getUserOrg();
   },
 };
 </script>

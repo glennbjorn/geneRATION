@@ -1,4 +1,5 @@
 <template>
+  <Nav />
   <div class="form-register">
     <form @submit.prevent="submit">
       <img
@@ -81,31 +82,38 @@
 </template>
 
 <script>
-import axios from 'axios';
-import router from "@/router"
+import axios from "axios";
+import router from "@/router";
+import Nav from "../components/Nav.vue";
 
 export default {
   name: "Register",
   data() {
     return {
       reg: {
-        name: '',
-        organisation: '',
-        email: '',
-        password: '',
-      }
-    }
+        name: "",
+        organisation: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  components: {
+    Nav,
   },
   methods: {
     async submit() {
       try {
-        let response = await axios.post('http://localhost:4000/register', this.reg);
+        let response = await axios.post(
+          "http://localhost:4000/register",
+          this.reg
+        );
         let token = response.data.token;
         if (token) {
-          this.$swal("Successfully create an account!", "Sign in")
-        await router.push('/login');
+          this.$swal("Successfully create an account!", "Sign in");
+          await router.push("/login");
         } else {
-          this.$swal("Something went wrong :(", "Try again")
+          this.$swal("Something went wrong :(", "Try again");
         }
       } catch (err) {
         let error = err.response;
@@ -115,8 +123,8 @@ export default {
           this.$swal("Error", error.data.err.message, "error");
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

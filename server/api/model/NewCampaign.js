@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const newCampaignSchema = mongoose.Schema({
+  org: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true

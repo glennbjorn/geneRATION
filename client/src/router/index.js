@@ -4,6 +4,8 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
 import CreateNew from '../views/CreateNew.vue'
+import MyCampaigns from '../views/MyCampaigns.vue'
+import Form from '../views/Form.vue'
 
 const routes = [
     {
@@ -30,6 +32,16 @@ const routes = [
         path: '/create',
         name: 'CreateNew',
         component: CreateNew
+    },
+    {
+        path: '/mycampaigns',
+        name: 'MyCampaigns',
+        component: MyCampaigns
+    },
+    {
+        path: '/form',
+        name: 'Form',
+        component: Form
     }
 ]
 
