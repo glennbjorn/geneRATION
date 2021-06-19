@@ -110,7 +110,7 @@ export default {
         );
         let token = response.data.token;
         if (token) {
-          this.$swal("Successfully create an account!", "Sign in");
+          this.$swal("Successfully created an account!", "Sign in");
           await router.push("/login");
         } else {
           this.$swal("Something went wrong :(", "Try again");

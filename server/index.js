@@ -44,9 +44,11 @@ app.get("/", (req, res) => {
 
 //bring in our user routes
 const userRoutes = require("./api/route/user");
-const newCampaignRoutes = require("./api/route/newCampaign");
+const campaignRoutes = require("./api/route/campaign");
+const donateRoutes = require("./api/route/donor");
 app.use("/", userRoutes);
-app.use("/create", newCampaignRoutes);
+app.use("/campaign", campaignRoutes);
+app.use("/donate", donateRoutes);
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
 });

@@ -1,18 +1,26 @@
 <template>
-  <div class="campaignAdmin">
+  <div @click="goto" class="campaignAdmin">
     <h3>
       {{ campaignAdmin.name }}
-      <!-- <i @click="$emit('delete-item', campaign.id)" class="fas fa-times"></i> -->
     </h3>
-    <p>{{ campaignAdmin.collectionDate }}</p>
+    <p>Collection Date: {{ campaignAdmin.collectionDate }}</p>
   </div>
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "CampaignAdmin",
   props: {
     campaignAdmin: Object,
+  },
+  methods: {
+    async goto() {
+      localStorage.removeItem("admincampaignid");
+      localStorage.setItem("admincampaignid", this.campaignAdmin._id);
+      await router.push(`/mycampaigns/${this.campaignAdmin._id}`);
+    },
   },
 };
 </script>

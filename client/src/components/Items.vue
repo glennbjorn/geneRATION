@@ -1,6 +1,6 @@
 <template>
-    <div :key="item.id" v-for="item in items">
-        <Item @delete-item="$emit('delete-item', item.id)" :item="item" />
+    <div :key="item.item" v-for="item in items">
+        <Item @delete-item="$emit('delete-item', item.item)" :item="item" />
     </div>
 </template>
 

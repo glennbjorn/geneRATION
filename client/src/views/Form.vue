@@ -1,5 +1,8 @@
 <template>
   <Nav />
+  <div>
+    <h1>{{ campaign.name }}</h1>
+  </div>
   <div class="form-page">
     <form @submit.prevent="submit">
       <h1>Thank you for donating!</h1>
@@ -40,13 +43,33 @@
         />
       </div>
 
+      <div :key="n" v-for="n in donor.items.length">
+        <input v-model="donor.items[n - 1].donate" type="checkbox" id="items" />
+        <p>{{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}</p>
+      </div>
+
       <div class="form-form">
-        <label for="shelf-life">Shelf life</label>
-        <input
-          v-model="donor.shelfLife"
-          type="checkbox"
-          id="shelf-life"
-          placeholder="Shelf life"
+        <label for="shelf-life"
+          >I agree to only donate items that are <b>NOT</b> expiring in the next
+          3 months</label
+        >
+        <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
+      </div>
+
+      <div class="form-form">
+        <label for="halal"
+          >I agree to only donate items that are <b>Halal certified</b></label
+        >
+        <input v-model="donor.halal" type="checkbox" id="halal" />
+      </div>
+
+      <div class="form-form">
+        <label for="remarks">Do you have any additional remarks?</label>
+        <textarea
+          v-model="donor.remarks"
+          type="text"
+          id="remarks"
+          placeholder="e.g. I will be donating additional items!"
         />
       </div>
 
@@ -68,12 +91,17 @@ export default {
 
   data() {
     return {
+      campaignid: "",
+      campaign: [],
       donor: {
         name: "",
         contact: "",
         address: "",
         unit: "",
+        items: [],
         shelfLife: false,
+        halal: false,
+        remarks: ""
       },
     };
   },
@@ -83,34 +111,68 @@ export default {
   },
 
   methods: {
-    async submit() {
-      try {
-        await this.getUserOrg();
-        console.log(this.campaign);
-        let response = await axios.post(
-          "http://localhost:4000/create/newCampaign",
-          {
-            org: this.userOrg,
-            name: this.campaign.name,
-            camDesc: this.campaign.camDesc,
-            orgDesc: this.campaign.orgDesc,
-            collectionDate: this.campaign.collectionDate,
-            items: this.items,
-          }
-        );
-        console.log(response);
-        this.$swal("Campaign created!");
-        await router.push("/dashboard");
-      } catch (err) {
-        let error = err.response;
-        console.log(error.data.err.message);
-        this.$swal("Error");
+    getCampaignId() {
+      this.campaignid = localStorage.getItem("formId");
+    },
+
+    async getCampaign() {
+      const res = await axios.post(
+        "http://localhost:4000/campaign/getCampaignById",
+        {
+          _id: this.campaignid,
+        }
+      );
+
+      const data = await res.data[0];
+
+      return data;
+    },
+
+    getItems() {
+      for (let i = 0; i < this.campaign.items.length; i++) {
+        var item = this.campaign.items[i].item;
+        var data = {item: item, donate: false};
+        this.donor.items = [...this.donor.items, data]
       }
+    },
+
+    async submit() {
+      if (!this.donor.shelfLife) {
+        this.$swal(
+          "Please declare that you agree to donate items with sufficient shelf life!"
+        );
+        return;
+      }
+
+      if (!this.donor.halal) {
+        this.$swal(
+          "Please declare that you agree to donate items that are Halal!"
+        );
+        return;
+      }
+
+      await axios.post("http://localhost:4000/donate", {
+        campaignid: this.campaignid,
+        name: this.donor.name,
+        contact: this.donor.contact,
+        address: this.donor.address,
+        unit: this.donor.unit,
+        items: this.donor.items,
+        remarks: this.donor.remarks
+      });
+
+      localStorage.removeItem('tqid')
+      localStorage.setItem('tqid', this.campaignid);
+
+      router.push('/ThankYou')
     },
   },
 
-  // async created() {
-  // },
+  async created() {
+    this.getCampaignId();
+    this.campaign = await this.getCampaign();
+    this.getItems();
+  },
 };
 </script>
 

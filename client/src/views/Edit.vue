@@ -3,11 +3,11 @@
   <div v-if="!loggedIn">
     <h1>You are not logged in!</h1>
   </div>
-  <div class="create-page" v-if="loggedIn">
+  <div class="edit-page" v-if="loggedIn">
     <form @submit.prevent="submit">
-      <h1>Create a new campaign!</h1>
+      <h1>Edit your campaign!</h1>
 
-      <div class="create-campaign">
+      <div class="edit-campaign">
         <label for="name">Name of Campaign</label>
         <input
           v-model="campaign.name"
@@ -17,7 +17,7 @@
         />
       </div>
 
-      <div class="create-campaign">
+      <div class="edit-campaign">
         <label for="camDesc">Description of Campaign</label>
         <textarea
           v-model="campaign.camDesc"
@@ -28,7 +28,7 @@
         />
       </div>
 
-      <div class="create-campaign">
+      <div class="edit-campaign">
         <label for="orgDesc">Description of Organisation</label>
         <textarea
           v-model="campaign.orgDesc"
@@ -41,7 +41,7 @@
 
       <!-- having trouble adding datepicker -->
 
-      <div class="create-campaign">
+      <div class="edit-campaign">
         <label for="collection-date">Choose a collection date</label>
         <input
           v-model="campaign.collectionDate"
@@ -60,7 +60,7 @@
       </div>
 
       <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Create campaign
+        Edit campaign
       </button>
       <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
     </form>
@@ -87,14 +87,9 @@ export default {
   data() {
     return {
       user: {},
-      userOrg: "",
       loggedIn: false,
-      campaign: {
-        name: "",
-        camDesc: "",
-        orgDesc: "",
-        collectionDate: "",
-      },
+      campaignid: "",
+      campaign: [],
       items: [],
     };
   },
@@ -108,19 +103,33 @@ export default {
       }
     },
 
-    async getUserOrg() {
-      const res = await axios.post("http://localhost:4000/getuserorg", {
-        email: this.user.email,
-      });
-      this.userOrg = res.data;
-    },
-
     checkLoggedIn() {
       if (localStorage.getItem("jwt")) {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
       }
+    },
+
+    getCampaignId() {
+      this.campaignid = localStorage.getItem("editId");
+    },
+
+    async getCampaign() {
+      const res = await axios.post(
+        "http://localhost:4000/campaign/getCampaignById",
+        {
+          _id: this.campaignid,
+        }
+      );
+
+      const data = await res.data[0];
+
+      return data;
+    },
+
+    fetchItems() {
+      this.items = this.campaign.items;
     },
 
     addItem(item) {
@@ -139,8 +148,8 @@ export default {
 
     async submit() {
       try {
-        await axios.post("http://localhost:4000/campaign/newCampaign", {
-          org: this.userOrg,
+        await axios.post("http://localhost:4000/campaign/editCampaign", {
+          _id: this.campaignid,
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,
           orgDesc: this.campaign.orgDesc,
@@ -148,7 +157,7 @@ export default {
           items: this.items,
         });
 
-        this.$swal("Campaign created!");
+        this.$swal("Campaign edited!");
 
         await router.push("/dashboard");
       } catch (err) {
@@ -162,20 +171,22 @@ export default {
   async created() {
     this.getUserDetails();
     this.checkLoggedIn();
-    this.getUserOrg();
+    this.getCampaignId();
+    this.campaign = await this.getCampaign();
+    this.fetchItems();
   },
 };
 </script>
 
 <style>
-.create-page {
+.edit-page {
   width: 100%;
   max-width: 700px;
   padding: 15px;
   margin: auto;
 }
 
-.create-page .create-campaign {
+.edit-page .edit-campaign {
   display: flex;
   flex-direction: column;
   padding: 15px;

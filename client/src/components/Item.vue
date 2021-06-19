@@ -2,7 +2,7 @@
   <div class="item">
     <h3>
       {{ item.item }}
-      <i @click="$emit('delete-item', item.id)" class="fas fa-times"></i>
+      <i @click="$emit('delete-item', item.item)" class="fas fa-times"></i>
     </h3>
     <p>{{ item.qty }}</p>
   </div>

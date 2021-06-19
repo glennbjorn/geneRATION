@@ -4,7 +4,7 @@
     <h1>You are not logged in!</h1>
   </div>
   <div v-if="loggedIn">
-    <h1>Hello</h1>
+    <h1>Your Campaigns</h1>
     <div>
       <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
     </div>
@@ -61,7 +61,7 @@ export default {
 
     async getCampaigns() {
       const res = await axios.post(
-        "http://localhost:4000/create/getCampaigns",
+        "http://localhost:4000/campaign/getCampaigns",
         { org: this.userOrg }
       );
 

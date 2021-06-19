@@ -6,6 +6,10 @@ import Dashboard from '../views/Dashboard.vue'
 import CreateNew from '../views/CreateNew.vue'
 import MyCampaigns from '../views/MyCampaigns.vue'
 import Form from '../views/Form.vue'
+import Campaign from '../views/Campaign.vue'
+import ThankYou from '../views/ThankYou.vue'
+import CampaignAdmin from '../views/CampaignAdmin.vue'
+import Edit from '../views/Edit.vue'
 
 const routes = [
     {
@@ -39,10 +43,30 @@ const routes = [
         component: MyCampaigns
     },
     {
-        path: '/form',
+        path: '/:_id',
+        name: 'Campaign',
+        component: Campaign
+    },
+    {
+        path: '/:_id/donate',
         name: 'Form',
         component: Form
-    }
+    },
+    {
+        path: '/ThankYou',
+        name: 'ThankYou',
+        component: ThankYou
+    },
+    {
+        path: '/mycampaigns/:_id',
+        name: 'CampaignAdmin',
+        component: CampaignAdmin
+    },
+    {
+        path: '/mycampaigns/:_id/edit',
+        name: 'Edit',
+        component: Edit
+    },
 ]
 
 const router = createRouter({
