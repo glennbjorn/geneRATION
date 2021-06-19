@@ -1,8 +1,12 @@
 <template>
   <Nav />
-  <h1>Thank you so much for your donation!</h1>
-  <p>We will be coming to collect the items on {{campaign.collectionDate}}!</p>
-  <router-link to="/">You may head back to the Home page!</router-link>
+  <div class="page">
+    <h1>Thank you so much for your donation!</h1>
+    <p>
+      We will be coming to collect the items on {{ campaign.collectionDate }}!
+    </p>
+    <router-link to="/">You may head back to the Home page!</router-link>
+  </div>
 </template>
 
 <script>

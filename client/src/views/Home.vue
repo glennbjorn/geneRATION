@@ -1,7 +1,7 @@
-<template>
+<template class="page">
   <Nav />
-  <h1>Home</h1>
-  <div>
+  <h1 class="page">Home</h1>
+  <div class="page">
     <Campaigns :campaigns="campaigns" />
   </div>
 </template>
@@ -43,4 +43,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.page {
+  width: 100%;
+  padding: 15px;
+  margin: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+</style>

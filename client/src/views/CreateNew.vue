@@ -1,11 +1,14 @@
 <template>
   <Nav />
-  <div v-if="!loggedIn">
+  <div class="page" v-if="!loggedIn">
     <h1>You are not logged in!</h1>
   </div>
   <div class="create-page" v-if="loggedIn">
     <form @submit.prevent="submit">
-      <h1>Create a new campaign!</h1>
+      <div class="header">
+        <h1>Create</h1>
+        <h2>a new campaign!</h2>
+      </div>
 
       <div class="create-campaign">
         <label for="name">Name of Campaign</label>
@@ -50,19 +53,19 @@
         />
       </div>
 
+      <h3 class="mini-header">Add items here</h3>
+
       <div>
         <AddItem @add-item="addItem" />
       </div>
 
+      <h3 class="mini-header">List of Items</h3>
+
       <div>
-        <p>List of items:</p>
         <Items @delete-item="deleteItem" :items="items" />
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Create campaign
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+      <button class="btn" type="submit">Create Campaign</button>
     </form>
   </div>
 </template>
@@ -167,7 +170,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .create-page {
   width: 100%;
   max-width: 700px;
@@ -179,5 +182,37 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 15px;
+}
+
+.create-page .mini-header {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: -10px;
+}
+
+.create-page .header {
+  text-align: center;
+  margin-top: -20px;
+}
+
+.create-page .header h1 {
+  font-size: 100px;
+  margin-bottom: -15px;
+}
+
+.create-page .header h2 {
+  font-size: 35px;
+}
+
+.btn {
+  background: white;
+  width: 100%;
+  height: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 50px;
+  cursor: pointer;
+  margin-top: 100px;
 }
 </style>

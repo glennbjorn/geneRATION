@@ -1,9 +1,9 @@
 <template>
   <Nav />
-  <div v-if="!loggedIn">
+  <div class="page" v-if="!loggedIn">
     <h1>You are not logged in!</h1>
   </div>
-  <div v-if="loggedIn">
+  <div class="page" v-if="loggedIn">
     <h1>{{ campaign.name }}</h1>
     <p>By {{ campaign.org }}</p>
     <h4>{{ campaign.camDesc }}</h4>
@@ -14,9 +14,12 @@
     </div>
     <h5>More about the organisation:</h5>
     <p>{{ campaign.orgDesc }}</p>
-    <button @click="goToEdit">
-      Edit
-    </button>
+    <button @click="goToEdit">Edit</button>
+    <button @click="goToDonorsInfo">Donors Information</button>
+    <h5>Donation progress</h5>
+    <div v-for="n in items.length" :key="n">
+      {{ items[n - 1] }} : {{ itemCount[n - 1] }}
+    </div>
   </div>
 </template>
 
@@ -24,7 +27,7 @@
 import VueJwtDecode from "vue-jwt-decode";
 import Nav from "../components/Nav.vue";
 import axios from "axios";
-import router from "@/router"
+import router from "@/router";
 
 export default {
   name: "Dashboard",
@@ -35,6 +38,9 @@ export default {
       loggedIn: false,
       campaignid: "",
       campaign: [],
+      donors: [],
+      items: [],
+      itemCount: [],
     };
   },
 
@@ -79,8 +85,51 @@ export default {
     goToEdit() {
       localStorage.removeItem("editId");
       localStorage.setItem("editId", this.campaignid);
-      router.push(`/mycampaigns/${this.campaignid}/edit`)
-    }
+      router.push(`/mycampaigns/${this.campaignid}/edit`);
+    },
+
+    goToDonorsInfo() {
+      localStorage.removeItem("donorsInfoId"),
+      localStorage.setItem("donorsInfoId", this.campaignid),
+      router.push(`/mycampaigns/${this.campaignid}/donorsInfo`);
+    },
+
+    async getDonors() {
+      const res = await axios.post("http://localhost:4000/donate/getDonors", {
+        campaignid: this.campaignid,
+      });
+
+      return res.data;
+    },
+
+    getItems() {
+      let arr = [];
+      for (let i = 0; i < this.campaign.items.length; i++) {
+        let item = this.campaign.items[i].item;
+        arr = [...arr, item];
+      }
+      this.items = arr;
+    },
+
+    getItemCount() {
+      this.getItems();
+      let arr = [];
+      for (let i = 0; i < this.items.length; i++) {
+        arr = [...arr, 0];
+      }
+      for (let j = 0; j < this.donors.length; j++) {
+        let donor = this.donors[j];
+        for (let k = 0; k < donor.items.length; k++) {
+          if (donor.items[k].donate) {
+            let index = this.items.indexOf(donor.items[k].item);
+            if (index !== -1) {
+              arr[index]++;
+            }
+          }
+        }
+      }
+      this.itemCount = arr;
+    },
   },
 
   async created() {
@@ -88,6 +137,8 @@ export default {
     this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.donors = await this.getDonors();
+    this.getItemCount();
   },
 };
 </script>

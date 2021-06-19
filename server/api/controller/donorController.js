@@ -2,7 +2,6 @@ const Donor = require("../model/Donor");
 
 exports.addDonation = async (req, res) => {
     try {
-        console.log(req.body)
         let donation = new Donor({
             campaignid: req.body.campaignid,
             name: req.body.name,
@@ -18,5 +17,14 @@ exports.addDonation = async (req, res) => {
         console.log(err)
         res.status(400).json({ err: err })
     }
+}
 
+exports.getDonors = async (req, res) => {
+    try {
+        const data = await Donor.find({ campaignid: req.body.campaignid })
+        await res.json(data)
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ err: err })
+    }
 }

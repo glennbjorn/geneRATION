@@ -1,9 +1,9 @@
 <template>
   <Nav />
-  <div v-if="!loggedIn">
+  <div class="page" v-if="!loggedIn">
     <h1>You are not logged in!</h1>
   </div>
-  <div v-if="loggedIn">
+  <div class="page" v-if="loggedIn">
     <h1>Your Campaigns</h1>
     <div>
       <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
