@@ -37,7 +37,7 @@
           id="floatingEmail"
           placeholder="name@example.com"
         />
-        <label for="floatingEmail">Email address</label>
+        <label for="floatingEmail">Email Address</label>
       </div>
 
       <div class="form-floating">
