@@ -5,7 +5,9 @@
   </div>
   <div class="edit-page" v-if="loggedIn">
     <form @submit.prevent="submit">
-      <h1>Edit your campaign!</h1>
+      <div class="header">
+        <h1>Edit your campaign</h1>
+      </div>
 
       <div class="edit-campaign">
         <label for="name">Name of Campaign</label>
@@ -50,19 +52,25 @@
         />
       </div>
 
+      <h3 class="mini-header">Add items here</h3>
+
       <div>
         <AddItem @add-item="addItem" />
       </div>
 
+      <h3 class="mini-header">List of Items</h3>
+
+      <div class="no-items" v-if="items.length === 0">
+        <h5>Please add some items!</h5>
+      </div>
+
       <div>
-        <p>List of items:</p>
         <Items @delete-item="deleteItem" :items="items" />
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
+      <button class="edit" type="submit">
         Edit campaign
       </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
     </form>
   </div>
 </template>
@@ -147,6 +155,41 @@ export default {
     },
 
     async submit() {
+      if (!this.campaign.name) {
+        this.$swal(
+          "Please include a campaign name!"
+        );
+        return;
+      }
+
+      if (!this.campaign.camDesc) {
+        this.$swal(
+          "Please include a campaign description!"
+        );
+        return;
+      }
+
+      if (!this.campaign.orgDesc) {
+        this.$swal(
+          "Please include an organisation description!"
+        );
+        return;
+      }
+
+      if (!this.campaign.collectionDate) {
+        this.$swal(
+          "Please include a collection date!"
+        );
+        return;
+      }
+
+      if (this.campaign.items.length===0) {
+        this.$swal(
+          "Please include some items!"
+        );
+        return;
+      }
+      
       try {
         await axios.post("http://localhost:4000/campaign/editCampaign", {
           _id: this.campaignid,
@@ -178,7 +221,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .edit-page {
   width: 100%;
   max-width: 700px;
@@ -190,5 +233,37 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 15px;
+}
+
+.edit-page .header h1 {
+  text-align: center;
+  margin-top: -20px;
+  font-size: 70px;
+  margin-bottom: -15px;
+}
+
+.edit-page .mini-header {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: -10px;
+}
+
+.edit {
+  background: white;
+  width: 100%;
+  height: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 50px;
+  cursor: pointer;
+  margin-top: 70px;
+  margin-bottom:100px;
+}
+
+.no-items {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 30px;
 }
 </style>

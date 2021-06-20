@@ -38,8 +38,11 @@ export default {
 }
 
 .campaignAdmin h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  font-size: 50px;
+}
+
+.campaignAdmin p {
+  text-align: center;
 }
 </style>

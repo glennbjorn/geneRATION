@@ -1,16 +1,12 @@
 <template>
   <Nav />
+
+  <div class="header">
+    <h1>Login</h1>
+  </div>
+
   <div class="form-signin">
     <form @submit.prevent="submit">
-      <img
-        class="mx-auto"
-        src="../assets/logo.png"
-        alt=""
-        width="300"
-        height="200"
-      />
-      <h1 class="h3 mb-3 fw-normal">Sign In</h1>
-
       <div class="form-floating">
         <input
           v-model="login.email"
@@ -33,22 +29,19 @@
         <label for="floatingPassword">Password</label>
       </div>
 
-      <p>
+      <p class="center">
         Dont have an account?
         <router-link to="/register">Register here!</router-link>
       </p>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Sign in
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+      <button class="signin" type="submit">Sign in</button>
     </form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Nav from '../components/Nav.vue'
+import Nav from "../components/Nav.vue";
 
 export default {
   name: "Login",
@@ -62,7 +55,7 @@ export default {
   },
 
   components: {
-    Nav
+    Nav,
   },
 
   methods: {
@@ -88,7 +81,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.header h1 {
+  font-size: 250px;
+  text-align: center;
+  margin: -15px;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -110,5 +109,19 @@ export default {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.signin {
+  background: white;
+  width: 100%;
+  height: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+p {
+  text-align: center;
 }
 </style>

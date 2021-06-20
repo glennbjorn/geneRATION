@@ -29,6 +29,7 @@ export default {
 }
 
 .item h3 {
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -4,11 +4,19 @@
     <h1>You are not logged in!</h1>
   </div>
   <div class="page" v-if="loggedIn">
-    <h1>Your Campaigns</h1>
+    <h1 class="header">Your Campaigns</h1>
+    <div v-if="!campaignsAdmin">
+      <h2>You do not have any campaigns</h2>
+      <button class="create" @click="$router.push('/create')">
+        Create New Campaign
+      </button>
+    </div>
     <div>
       <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
     </div>
-    <button @click="$router.push('/dashboard')">Go back to dashboard</button>
+    <button class="btn" @click="$router.push('/dashboard')">
+      Go back to dashboard
+    </button>
   </div>
 </template>
 
@@ -16,14 +24,14 @@
 import VueJwtDecode from "vue-jwt-decode";
 import axios from "axios";
 import CampaignsAdmin from "@/components/CampaignsAdmin";
-import Nav from '../components/Nav.vue'
+import Nav from "../components/Nav.vue";
 
 export default {
   name: "Dashboard",
 
   components: {
     CampaignsAdmin,
-    Nav
+    Nav,
   },
 
   data() {
@@ -80,4 +88,33 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.btn {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+}
+
+.page h2 {
+  text-align: center;
+  margin-top: 70px;
+}
+
+.create {
+  background: white;
+  width: 48%;
+  height: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 50px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+</style>

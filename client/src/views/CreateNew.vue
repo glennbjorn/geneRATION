@@ -61,6 +61,10 @@
 
       <h3 class="mini-header">List of Items</h3>
 
+      <div class="no-items" v-if="items.length === 0">
+        <h5>Please add some items!</h5>
+      </div>
+
       <div>
         <Items @delete-item="deleteItem" :items="items" />
       </div>
@@ -141,6 +145,41 @@ export default {
     },
 
     async submit() {
+      if (!this.campaign.name) {
+        this.$swal(
+          "Please include a campaign name!"
+        );
+        return;
+      }
+
+      if (!this.campaign.camDesc) {
+        this.$swal(
+          "Please include a campaign description!"
+        );
+        return;
+      }
+
+      if (!this.campaign.orgDesc) {
+        this.$swal(
+          "Please include an organisation description!"
+        );
+        return;
+      }
+
+      if (!this.campaign.collectionDate) {
+        this.$swal(
+          "Please include a collection date!"
+        );
+        return;
+      }
+
+      if (this.campaign.items.length===0) {
+        this.$swal(
+          "Please include some items!"
+        );
+        return;
+      }
+
       try {
         await axios.post("http://localhost:4000/campaign/newCampaign", {
           org: this.userOrg,
@@ -213,6 +252,12 @@ export default {
   border-color: black;
   font-size: 50px;
   cursor: pointer;
-  margin-top: 100px;
+  margin-top: 70px;
+}
+
+.no-items {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 30px;
 }
 </style>

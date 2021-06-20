@@ -29,10 +29,6 @@ export default {
 </script>
 
 <style scope>
-.fas {
-  color: red;
-}
-
 .campaign {
   background: #f4f4f4;
   margin: 5px;
@@ -41,8 +37,14 @@ export default {
 }
 
 .campaign h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  font-size: 50px;
+}
+
+.campaign p {;
+  max-width: 1000px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
 }
 </style>

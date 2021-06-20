@@ -1,16 +1,12 @@
 <template>
   <Nav />
+
+  <div class="header">
+    <h1>Register</h1>
+  </div>
+
   <div class="form-register">
     <form @submit.prevent="submit">
-      <img
-        class="mx-auto"
-        src="../assets/logo.png"
-        alt=""
-        width="300"
-        height="200"
-      />
-      <h1 class="h3 mb-3 fw-normal">Register</h1>
-
       <div class="form-floating">
         <input
           v-model="reg.name"
@@ -56,7 +52,7 @@
         <label for="floatingPassword">Password</label>
       </div>
 
-      <!-- <div class="form-floating">
+      <div class="form-floating">
         <input
           v-model="reg.password.confirm"
           type="cfmpassword"
@@ -66,17 +62,16 @@
           minlength="8"
         />
         <label for="floatingCfmPassword">Confirm Password</label>
-      </div> -->
+      </div>
 
       <p>
         Already have an account?
         <router-link to="/login">Sign in here!</router-link>
       </p>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Register
+      <button class="register" type="submit">
+        New account
       </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
     </form>
   </div>
 </template>
@@ -95,6 +90,7 @@ export default {
         organisation: "",
         email: "",
         password: "",
+        cfmpassword: "",
       },
     };
   },
@@ -103,6 +99,48 @@ export default {
   },
   methods: {
     async submit() {
+      if (!this.reg.name) {
+        this.$swal(
+          "Please include your name!"
+        );
+        return;
+      }
+
+      if (!this.reg.organisation) {
+        this.$swal(
+          "Please include your organisation!"
+        );
+        return;
+      }
+
+      if (!this.reg.email) {
+        this.$swal(
+          "Please include your email!"
+        );
+        return;
+      }
+
+if (!this.reg.password) {
+        this.$swal(
+          "Please include your password!"
+        );
+        return;
+      }
+
+      if (!this.reg.cfmpassword) {
+        this.$swal(
+          "Please confirm your password!"
+        );
+        return;
+      }
+
+      if (this.reg.password != this.reg.cfmpassword) {
+        this.$swal(
+          "Your passwords do not match! Please try again."
+        );
+        return;
+      }
+
       try {
         let response = await axios.post(
           "http://localhost:4000/register",
@@ -128,7 +166,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.header h1 {
+  font-size: 150px;
+  text-align: center;
+  margin: -15px;
+}
+
 .form-register {
   width: 100%;
   max-width: 330px;
@@ -160,14 +204,28 @@ export default {
   border-radius: 0;
 }
 
-/* .form-register input[type="password"] {
+.form-register input[type="password"] {
   margin-bottom: -2px;
   border-radius: 0;
-} */
+}
 
-.form-register input[type="password"] {
+.form-register input[type="cfmpassword"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+p {
+  text-align: center;
+}
+
+.register {
+  background: white;
+  width: 100%;
+  height: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 30px;
+  cursor: pointer;
 }
 </style>

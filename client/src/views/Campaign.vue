@@ -1,20 +1,26 @@
 <template>
   <Nav />
   <div class="page">
-    <h1>{{ campaign.name }}</h1>
-    <p>By {{ campaign.org }}</p>
-    <h4>{{ campaign.camDesc }}</h4>
-    <p>Collection Date: {{ campaign.collectionDate }}</p>
+    <h1 class="header">{{ campaign.name }}</h1>
+    <h6 class="org">By {{ campaign.org }}</h6>
+    <h6 class="date-and-loc">Collection Date: {{ campaign.collectionDate }}</h6>
+    <div class="cam-desc">
+      {{ campaign.camDesc }}
+    </div>
     <h5>Items for collection</h5>
-    <div :key="item._id" v-for="item in campaign.items">
+    <div class="items" :key="item._id" v-for="item in campaign.items">
       <p>{{ item.qty }} x {{ item.item }}</p>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" @click="gotoform">
+    <button class="donate" @click="gotoform">
       Donate Today!
     </button>
     <h5>More about the organisation:</h5>
-    <p>{{ campaign.orgDesc }}</p>
-    <router-link to="/">Back</router-link>
+    <div class="org-desc">
+      <p>{{ campaign.orgDesc }}</p>
+    </div>
+    <button class="home" @click="$router.push('/')">
+      Back to Home
+    </button>
   </div>
 </template>
 
@@ -68,5 +74,67 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.org {
+  text-align: center;
+
+  margin-top: -20px;
+}
+
+.date-and-loc {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.cam-desc {
+  max-width: 1000px;
+  font-size: 20px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+h5 {
+  text-align: center;
+}
+
+.items {
+  text-align: center;
+  margin: auto;
+  align-content: center;
+  margin-bottom: -15px;
+}
+
+.donate {
+  background: white;
+  width: 48%;
+  height: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 50px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 65px;
+  margin-bottom: 50px;
+}
+
+.org-desc {
+  max-width: 1000px;
+  font-size: 15px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.home {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+}
 </style>

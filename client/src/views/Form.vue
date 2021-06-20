@@ -1,12 +1,14 @@
 <template>
   <Nav />
   <div>
-    <h1>{{ campaign.name }}</h1>
+    <h1 class="header">{{ campaign.name }}</h1>
   </div>
   <div class="form-page">
     <form @submit.prevent="submit">
-      <h1>Thank you for donating!</h1>
-      <h3>Kindly fill up your information below!</h3>
+      <div class="subheader">
+        <h1>Thank you for donating!</h1>
+        <h3>Kindly fill up your information below</h3>
+      </div>
 
       <div class="form-form">
         <label for="name">Name</label>
@@ -43,12 +45,22 @@
         />
       </div>
 
-      <div :key="n" v-for="n in donor.items.length">
-        <input v-model="donor.items[n - 1].donate" type="checkbox" id="items" />
-        <p>{{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}</p>
+      <div class="mini-header">
+        <h5>Items to donate</h5>
       </div>
 
-      <div class="form-form">
+      <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
+        <input v-model="donor.items[n - 1].donate" type="checkbox" id="items" />
+        <p>
+          {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
+        </p>
+      </div>
+
+      <div class="mini-header">
+        <h5>Declarations</h5>
+      </div>
+
+      <div class="agree-checkbox">
         <label for="shelf-life"
           >I agree to only donate items that are <b>NOT</b> expiring in the next
           3 months</label
@@ -56,7 +68,7 @@
         <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
       </div>
 
-      <div class="form-form">
+      <div class="agree-checkbox">
         <label for="halal"
           >I agree to only donate items that are <b>Halal certified</b></label
         >
@@ -73,9 +85,7 @@
         />
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Pledge My Donation!
-      </button>
+      <button class="donate" type="submit">Pledge My Donation!</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
     </form>
   </div>
@@ -101,7 +111,7 @@ export default {
         items: [],
         shelfLife: false,
         halal: false,
-        remarks: ""
+        remarks: "",
       },
     };
   },
@@ -131,12 +141,40 @@ export default {
     getItems() {
       for (let i = 0; i < this.campaign.items.length; i++) {
         var item = this.campaign.items[i].item;
-        var data = {item: item, donate: false};
-        this.donor.items = [...this.donor.items, data]
+        var data = { item: item, donate: false };
+        this.donor.items = [...this.donor.items, data];
       }
     },
 
     async submit() {
+      if (!this.donor.name) {
+        this.$swal(
+          "Please include your name!"
+        );
+        return;
+      }
+
+      if (!this.donor.contact) {
+        this.$swal(
+          "Please include your contact number!"
+        );
+        return;
+      }
+
+      if (!this.donor.address) {
+        this.$swal(
+          "Please include your address!"
+        );
+        return;
+      }
+
+      if (!this.donor.unit) {
+        this.$swal(
+          "Please include your unit number!"
+        );
+        return;
+      }
+
       if (!this.donor.shelfLife) {
         this.$swal(
           "Please declare that you agree to donate items with sufficient shelf life!"
@@ -158,13 +196,13 @@ export default {
         address: this.donor.address,
         unit: this.donor.unit,
         items: this.donor.items,
-        remarks: this.donor.remarks
+        remarks: this.donor.remarks,
       });
 
-      localStorage.removeItem('tqid')
-      localStorage.setItem('tqid', this.campaignid);
+      localStorage.removeItem("tqid");
+      localStorage.setItem("tqid", this.campaignid);
 
-      router.push('/ThankYou')
+      router.push("/ThankYou");
     },
   },
 
@@ -176,7 +214,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.subheader {
+  text-align: center;
+  margin-top: -20px;
+}
+
 .form-page {
   width: 100%;
   max-width: 700px;
@@ -188,5 +231,46 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 15px;
+}
+
+.items-checkbox {
+  width: 50%;
+  margin-left: 15px;
+}
+
+.items-checkbox input {
+  float: right;
+  transform: scale(1.5);
+}
+
+.agree-checkbox {
+  margin-top: 20px;
+  margin-left: 15px;
+}
+
+.agree-checkbox input {
+  float: right;
+  transform: scale(1.5);
+  margin-right: 15px;
+}
+
+.mini-header {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: 15px;
+}
+
+.mini-header h5 {
+  text-align: left;
+}
+
+.donate {
+  background: white;
+  width: 100%;
+  border-inline: 3px;
+  border-color: black;
+  font-size: 50px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 </style>
