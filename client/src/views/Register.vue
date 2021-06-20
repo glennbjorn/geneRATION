@@ -54,8 +54,8 @@
 
       <div class="form-floating">
         <input
-          v-model="reg.password.confirm"
-          type="cfmpassword"
+          v-model="reg.cfmpassword"
+          type="password"
           class="form-control"
           id="floatingCfmPassword"
           placeholder="Confirm Password"
