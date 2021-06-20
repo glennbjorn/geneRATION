@@ -12,7 +12,7 @@ mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
 
 mongoose
-  .connect(config.uri, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -22,6 +22,18 @@ mongoose
   .catch(err => {
     console.log({ database_error: err });
   });
+
+// mongoose
+// .connect(config.uri, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+// .then(() => {
+//   console.log("Database is connected");
+// })
+// .catch(err => {
+//   console.log({ database_error: err });
+// });
 
 // db configuaration ends here
 
@@ -54,7 +66,7 @@ app.use("/donate", donateRoutes);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(__dirname + '/public/'));
 
-  app.get(/.*/,(req, res) => res.sendFile(__dirname + '/public/index.html'));
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
 }
 
 app.listen(PORT, () => {
