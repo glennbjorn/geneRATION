@@ -17,7 +17,7 @@ mongoose
     useUnifiedTopology: true
   })
   .then(() => {
-    console.log("Database is connected");
+    console.log("Database is connected!");
   })
   .catch(err => {
     console.log({ database_error: err });
@@ -38,9 +38,9 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 // define first route
-app.get("/", (req, res) => {
-  console.log("Welcome");
-});
+// app.get("/", (req, res) => {
+//   console.log("Welcome");
+// });
 
 //bring in our user routes
 const userRoutes = require("./api/route/user");
