@@ -1,7 +1,7 @@
 {
-  "name": "geneRATION",
+  "name": "generation",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Table of contents",
   "main": "index.js",
   "engines": {
     "node": "14.15"
@@ -24,5 +24,14 @@
     "mongoose": "^5.12.11",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glennbjorn/geneRATION.git"
+  },
+  "bugs": {
+    "url": "https://github.com/glennbjorn/geneRATION/issues"
+  },
+  "homepage": "https://github.com/glennbjorn/geneRATION#readme"
 }
