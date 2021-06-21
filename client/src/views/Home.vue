@@ -42,7 +42,7 @@ export default {
 
     async getCampaigns() {
       const res = await axios.post(
-        process.env.BACKEND_URL + "/campaign/getAllCampaigns"
+        "https://new-generation.herokuapp.com/campaign/getAllCampaigns"
       );
 
       const data = await res.data;
