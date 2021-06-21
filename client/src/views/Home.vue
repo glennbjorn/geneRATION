@@ -30,9 +30,19 @@ export default {
   },
 
   methods: {
+    // async getCampaigns() {
+    //   const res = await axios.post(
+    //     "http://localhost:4000/campaign/getAllCampaigns"
+    //   );
+
+    //   const data = await res.data;
+
+    //   return data;
+    // },
+
     async getCampaigns() {
       const res = await axios.post(
-        "http://localhost:4000/campaign/getAllCampaigns"
+        "/api/campaign/getAllCampaigns"
       );
 
       const data = await res.data;
