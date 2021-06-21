@@ -1,12 +1,13 @@
 const path = require('path');
 
 if (process.env.NODE_ENV === "development") {
+    require('dotenv').config();
     module.exports = {
         outputDir: path.resolve(__dirname, '../server/public'),
         devServer: {
             proxy: {
                 '^/api': {
-                    target: 'http://localhost:4000',
+                    target: process.env.BACKEND_URL,
                     changeOrigin: true,
                     secure:false,
                     pathRewrite: {'^/api': '/'},
@@ -23,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
         devServer: {
             proxy: {
                 '^/api': {
-                    target: 'https://new-generation.herokuapp.com',
+                    target: process.env.BACKEND_URL,
                     changeOrigin: true,
                     secure:false,
                     pathRewrite: {'^/api': '/'},
