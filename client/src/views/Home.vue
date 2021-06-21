@@ -32,7 +32,7 @@ export default {
   methods: {
     async getCampaigns() {
       const res = await axios.post(
-        "/api/campaign/getAllCampaigns"
+        "/campaign/getAllCampaigns"
       );
 
       const data = await res.data;
