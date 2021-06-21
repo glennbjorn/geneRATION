@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const donorController = require("../controller/donorController");
-const auth = require("../../config/auth")
+const path = require('path');
+const donorController = require(path.join(__dirname,"../controller/donorController"));
 
 router.post("/", donorController.addDonation);
 router.post("/getDonors", donorController.getDonors);
