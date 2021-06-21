@@ -84,7 +84,7 @@ export default {
 
     async getCampaign() {
       const res = await axios.post(
-        "http://localhost:4000/campaign/getCampaignById",
+        "/api/campaign/getCampaignById",
         {
           _id: this.campaignid,
         }
@@ -108,7 +108,7 @@ export default {
     },
 
     async getDonors() {
-      const res = await axios.post("http://localhost:4000/donate/getDonors", {
+      const res = await axios.post("/api/donate/getDonors", {
         campaignid: this.campaignid,
       });
 

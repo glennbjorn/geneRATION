@@ -125,7 +125,7 @@ export default {
 
     async getCampaign() {
       const res = await axios.post(
-        "http://localhost:4000/campaign/getCampaignById",
+        "/api/campaign/getCampaignById",
         {
           _id: this.campaignid,
         }
@@ -191,7 +191,7 @@ export default {
       }
       
       try {
-        await axios.post("http://localhost:4000/campaign/editCampaign", {
+        await axios.post("/api/campaign/editCampaign", {
           _id: this.campaignid,
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,

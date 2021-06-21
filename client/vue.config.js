@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "development") {
         devServer: {
             proxy: {
                 '^/api': {
-                    target: process.env.BACKEND_URL,
+                    target: "http://localhost:4000",
                     changeOrigin: true,
                     secure:false,
                     pathRewrite: {'^/api': '/'},
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
         devServer: {
             proxy: {
                 '^/api': {
-                    target: process.env.BACKEND_URL,
+                    target: "https://new-generation.herokuapp.com",
                     changeOrigin: true,
                     secure:false,
                     pathRewrite: {'^/api': '/'},
