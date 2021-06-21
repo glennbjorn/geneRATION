@@ -84,7 +84,7 @@ export default {
 
     async getCampaign() {
       const res = await axios.post(
-        "/api/campaign/getCampaignById",
+        "/campaign/getCampaignById",
         {
           _id: this.campaignid,
         }
@@ -108,7 +108,7 @@ export default {
     },
 
     async getDonors() {
-      const res = await axios.post("/api/donate/getDonors", {
+      const res = await axios.post("/donate/getDonors", {
         campaignid: this.campaignid,
       });
 

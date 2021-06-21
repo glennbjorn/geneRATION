@@ -62,7 +62,7 @@ export default {
     async submit() {
       try {
         let response = await axios.post(
-          "/api/login",
+          "/login",
           this.login
         );
         let token = response.data.token;

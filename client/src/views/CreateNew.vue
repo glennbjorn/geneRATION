@@ -116,7 +116,7 @@ export default {
     },
 
     async getUserOrg() {
-      const res = await axios.post("/api/getuserorg", {
+      const res = await axios.post("/getuserorg", {
         email: this.user.email,
       });
       this.userOrg = res.data;
@@ -181,7 +181,7 @@ export default {
       }
 
       try {
-        await axios.post("/api/campaign/newCampaign", {
+        await axios.post("/campaign/newCampaign", {
           org: this.userOrg,
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,

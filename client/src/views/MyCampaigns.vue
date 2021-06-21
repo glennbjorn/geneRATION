@@ -61,7 +61,7 @@ export default {
     },
 
     async getUserOrg() {
-      const res = await axios.post("/api/getuserorg", {
+      const res = await axios.post("/getuserorg", {
         email: this.user.email,
       });
       this.userOrg = res.data;
@@ -69,7 +69,7 @@ export default {
 
     async getCampaigns() {
       const res = await axios.post(
-        "/api/campaign/getCampaigns",
+        "/campaign/getCampaigns",
         { org: this.userOrg }
       );
 

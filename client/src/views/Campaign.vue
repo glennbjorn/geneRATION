@@ -49,7 +49,7 @@ export default {
 
     async getCampaign() {
       const res = await axios.post(
-        "/api/campaign/getCampaignById",
+        "/campaign/getCampaignById",
         {
           _id: this.campaignid,
         }

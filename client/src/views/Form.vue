@@ -127,7 +127,7 @@ export default {
 
     async getCampaign() {
       const res = await axios.post(
-        "/api/campaign/getCampaignById",
+        "/campaign/getCampaignById",
         {
           _id: this.campaignid,
         }
@@ -189,7 +189,7 @@ export default {
         return;
       }
 
-      await axios.post("/api/donate", {
+      await axios.post("/donate", {
         campaignid: this.campaignid,
         name: this.donor.name,
         contact: this.donor.contact,
