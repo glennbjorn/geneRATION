@@ -42,7 +42,7 @@ export default {
 
     async getCampaigns() {
       const res = await axios.post(
-        "/api/campaign/getAllCampaigns"
+        process.env.BACKEND_URL + "/campaign/getAllCampaigns"
       );
 
       const data = await res.data;
