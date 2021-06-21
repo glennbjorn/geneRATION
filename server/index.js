@@ -5,7 +5,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
-require('dotenv').config();
 
 //configure database and mongoose
 mongoose.set("useCreateIndex", true);
