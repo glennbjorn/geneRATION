@@ -4,15 +4,33 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const config = require("./config/db")
 const app = express();
 
 //configure database and mongoose
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
 
-console.log(process.env.MONGODB_URI)
+// db configuaration ends here
 
-mongoose
+//registering cors
+if (process.env.NODE_ENV === "development") {
+  app.use(cors({ credentials: true, origin: ["http://localhost:8080"] }));
+  require('dotenv').config();
+  mongoose
+  .connect(config.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Database is connected!");
+  })
+  .catch(err => {
+    console.log({ database_error: err });
+  });
+} else {
+  app.use(cors({ credentials: true, origin: ["https://new-generation.herokuapp.com"] }));
+  mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -23,15 +41,6 @@ mongoose
   .catch(err => {
     console.log({ database_error: err });
   });
-
-// db configuaration ends here
-
-//registering cors
-
-if (process.env.NODE_ENV === "development") {
-  app.use(cors({ credentials: true, origin: ["http://localhost:8080"] }));
-} else {
-  app.use(cors({ credentials: true, origin: ["https://new-generation.herokuapp.com"] }));
 }
 
 //configure body parser
