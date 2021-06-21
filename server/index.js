@@ -31,7 +31,8 @@ mongoose
 // db configuaration ends here
 
 //registering cors
-app.use(cors({ credentials: true, origin: ["http://localhost:8080"] }));
+// app.use(cors({ credentials: true, origin: ["http://localhost:8080"] }));
+app.use(cors({ credentials: true, origin: ["https://new-generation.herokuapp.com"] }));
 
 //configure body parser
 app.use(bodyParser.urlencoded({ extended: false }));
