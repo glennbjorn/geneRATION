@@ -79,7 +79,7 @@ export default {
     },
 
     getCampaignId() {
-      this.campaignid = localStorage.getItem("campaignid");
+      this.campaignid = localStorage.getItem("admincampaignid");
     },
 
     async getCampaign() {
