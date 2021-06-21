@@ -12,28 +12,16 @@ mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Database is connected");
-  })
-  .catch(err => {
-    console.log({ database_error: err });
-  });
-
-// mongoose
-// .connect(config.uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// })
-// .then(() => {
-//   console.log("Database is connected");
-// })
-// .catch(err => {
-//   console.log({ database_error: err });
-// });
+.connect(config.uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log("Database is connected");
+})
+.catch(err => {
+  console.log({ database_error: err });
+});
 
 // db configuaration ends here
 

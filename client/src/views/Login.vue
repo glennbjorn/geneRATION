@@ -62,9 +62,13 @@ export default {
     async submit() {
       try {
         let response = await axios.post(
-          "http://localhost:4000/login",
+          "/login",
           this.login
         );
+        // let response = await axios.post(
+        //   "http://localhost:4000/login",
+        //   this.login
+        // );
         let token = response.data.token;
         localStorage.setItem("jwt", token);
         if (token) {

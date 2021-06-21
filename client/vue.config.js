@@ -6,7 +6,7 @@ module.exports = {
         proxy: {
             '^/backend': {
                 target: 'https://localhost:4000',
-                pathRewrite: { '^/backend': '/' }
+                pathRewrite: { '^/backend': '' }
             }
         }
     }

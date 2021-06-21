@@ -173,7 +173,7 @@ export default {
         return;
       }
 
-      if (this.campaign.items.length===0) {
+      if (this.items.length===0) {
         this.$swal(
           "Please include some items!"
         );
