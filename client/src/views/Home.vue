@@ -2,8 +2,11 @@
   <Nav />
   <div class="page">
     <img src="@/assets/logo.png" alt="Logo of geneRATION">
-    
-    <h1 class="header">Ongoing Campaigns</h1>
+
+  
+
+
+    <h1 class="ongoing-campaign">Ongoing Campaigns</h1>
     <Campaigns :campaigns="campaigns" />
     <div class="home-no-campaign" v-if="!campaigns">
       <h2>There are no campaigns at the moment.</h2>
@@ -50,16 +53,21 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poiret+One&display=swap');
 
 img {
 display: block;
 margin-left: auto;
 margin-right: auto;
-
 }
 
-.header {
+.page {
+  background-image: url("../assets/kindness-bg-50T.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.ongoing-campaign {
   text-align: center;
   margin-top: -20px;
   font-size: 100px;
