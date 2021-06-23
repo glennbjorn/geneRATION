@@ -2,6 +2,8 @@
   <Nav />
   <div class="page">
     <img src="@/assets/logo.png" alt="Logo of geneRATION">
+    
+    <h1 class="header">Ongoing Campaigns</h1>
     <Campaigns :campaigns="campaigns" />
     <div class="home-no-campaign" v-if="!campaigns">
       <h2>There are no campaigns at the moment.</h2>
@@ -48,6 +50,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
 img {
 display: block;
 margin-left: auto;
@@ -58,7 +62,7 @@ margin-right: auto;
 .header {
   text-align: center;
   margin-top: -20px;
-  font-size: 200px;
+  font-size: 100px;
   margin-bottom: 30px;
 }
 
@@ -66,8 +70,7 @@ margin-right: auto;
   width: 100%;
   padding: 15px;
   margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: 'Poiret One', cursive;
 }
 
 .page .home-no-campaign h2 {
@@ -79,4 +82,5 @@ margin-right: auto;
   text-align: center;
   margin-top: 50px;
 }
+
 </style>
