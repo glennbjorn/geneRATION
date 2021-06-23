@@ -1,9 +1,7 @@
 <template>
   <Nav />
   <div class="page">
-    <img src="@/assets/logo.png" alt="Logo of geneRATION">
-
-  
+    <h1 class="generation">geneRATION</h1>
 
 
     <h1 class="ongoing-campaign">Ongoing Campaigns</h1>
@@ -53,7 +51,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poiret+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 
 img {
 display: block;
@@ -65,6 +63,16 @@ margin-right: auto;
   background-image: url("../assets/kindness-bg-50T.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.generation {
+  font-family: 'Poiret One', cursive;
+  font-weight: bolder;
+  color: #c42218;
+  text-align: center;
+  margin-top: -20px;
+  font-size: 100px;
+  margin-bottom: 30px;
 }
 
 .ongoing-campaign {
