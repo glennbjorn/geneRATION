@@ -1,7 +1,7 @@
 <template>
   <Nav />
   <div class="page">
-    <h1 class="header">Home</h1>
+    <img src="@/assets/logo.png" alt="Logo of geneRATION">
     <Campaigns :campaigns="campaigns" />
     <div class="home-no-campaign" v-if="!campaigns">
       <h2>There are no campaigns at the moment.</h2>
@@ -48,10 +48,17 @@ export default {
 </script>
 
 <style>
+img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+}
+
 .header {
   text-align: center;
   margin-top: -20px;
-  font-size: 100px;
+  font-size: 200px;
   margin-bottom: 30px;
 }
 
