@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <nav class="navbar navbar-expand-md navbar-light bg-custom mb-4">
     <div class="container-fluid">
       <!-- link Home -->
       <!-- <router-link to="/" class="navbar-brand" href="#">geneRATION</router-link> -->
@@ -70,7 +70,9 @@ export default {
   width: 40%;
   height: 40%;
   float: left;
-
 }
 
+.bg-custom {
+  background-color: #eef3e3;
+}
 </style>
