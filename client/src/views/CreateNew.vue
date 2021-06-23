@@ -42,8 +42,6 @@
         />
       </div>
 
-      <!-- having trouble adding datepicker -->
-
       <div class="create-campaign">
         <label for="collection-date">Choose a collection date</label>
         <input
