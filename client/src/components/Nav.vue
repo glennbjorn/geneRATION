@@ -75,7 +75,10 @@ export default {
 }
 
 .bg-custom {
-  background-color: #eef3e3;
+  /* background-color: #eef3e3; */
+  /* background-image: linear-gradient(15deg, #eef3e3 0%, #e0e0e0 100%); */
+  background-image: linear-gradient(15deg, #eef3e3 0%, #d4c7c7 100%); 
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .navbar-wording {
