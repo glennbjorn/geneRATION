@@ -1,7 +1,7 @@
 <template>
   <Nav />
   <div class="page">
-    <!-- <h1 class="generation">geneRATION</h1> -->
+
     <img class="logo" src="@/assets/logo.png" alt="Logo of geneRATION">
     <a href="#section-aboutus"> About Us </a>
     <a href="#section-howitworks"> How it Works </a>
@@ -34,8 +34,8 @@
         on the less fortunate in our society, we want to build a website that will make it easier for
         charitable organisations to organise food drives in the future. </div>
 
-  <!-- <h3 id="section-howitworks"> How it Works </h3>
-  <div class="howitworks-text"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, aliquam? </div> -->
+  <h3 id="section-howitworks"> How it Works </h3>
+  <div class="howitworks-text"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, aliquam? </div>
 
     <h1 class="ongoing-campaign">Ongoing Campaigns</h1>
     <Campaigns :campaigns="campaigns" />
