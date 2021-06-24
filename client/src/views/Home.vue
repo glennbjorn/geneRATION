@@ -1,8 +1,12 @@
 <template>
   <Nav />
   <div class="page">
-    <h1 class="generation">geneRATION</h1>
+    <!-- <h1 class="generation">geneRATION</h1> -->
+    <img class="logo" src="@/assets/logo.png" alt="Logo of geneRATION">
 
+    <span class="generation-intro-highlight">
+      <h2>geneRATION is your a one-stop web platform that eases the process of organising food drives for charitable organisations</h2>
+    </span>
 
     <h1 class="ongoing-campaign">Ongoing Campaigns</h1>
     <Campaigns :campaigns="campaigns" />
@@ -11,6 +15,8 @@
       <h3>Do visit another day!</h3>
     </div>
   </div>
+
+  
 </template>
 
 <script>
@@ -53,10 +59,12 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 
-img {
+.logo {
 display: block;
 margin-left: auto;
 margin-right: auto;
+float: right;
+margin-top: 100px; 
 }
 
 .page {
@@ -65,19 +73,20 @@ margin-right: auto;
   background-size: cover;
 }
 
-.generation {
+.generation-intro-highlight h2 {
   font-family: 'Poiret One', cursive;
   font-weight: bolder;
   color: #c42218;
   text-align: center;
-  margin-top: -20px;
-  font-size: 100px;
+  margin-top: 100px;
+  font-size: 80px;
   margin-bottom: 30px;
 }
 
+
 .ongoing-campaign {
   text-align: center;
-  margin-top: -20px;
+  margin-top: 100px;
   font-size: 100px;
   margin-bottom: 30px;
 }
