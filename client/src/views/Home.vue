@@ -97,8 +97,7 @@ margin-top: 100px;
 }
 
 .page {
-  background-image: url("../assets/kindness-bg-50T.jpg");
-  background-repeat: no-repeat;
+  background-image: url("../assets/marble-bg.jpg");
   background-size: cover;
   background-position: center;
 }
