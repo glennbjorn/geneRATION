@@ -4,7 +4,6 @@
     <h1>You are not logged in!</h1>
   </div>
   <div class="page" v-if="loggedIn">
-      <button @click="$router.push(`/mycampaigns/${campaignid}`)">Back</button>
     <table class="table">
       <thead>
         <tr class="tr">
@@ -20,12 +19,16 @@
           <td class="td">{{ donor.address }}</td>
           <td class="td">{{ donor.unit }}</td>
           <td class="td" :key="item.id" v-for="item in donor.items">
-            <p v-if=item.donate>Yes</p>
+            <p v-if="item.donate">Yes</p>
             <p v-else>No</p>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
+      Back to My Campaigns
+    </button>
   </div>
 </template>
 
@@ -70,12 +73,9 @@ export default {
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/api/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -118,29 +118,30 @@ export default {
 
 <style>
 .table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  width: 750px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   border-collapse: collapse;
   border: 3px solid #44475c;
-  margin: 10px 10px 0 10px;
 }
 
 .table .th {
   text-align: center;
-  background: #44475c;
+  background: #696969;
   color: #fff;
   cursor: pointer;
   padding: 8px;
   min-width: 30px;
+  vertical-align: middle;
 }
 
 .table .th:hover {
-  background: #717699;
+  background: black;
 }
 .table .tr .td {
   text-align: center;
   padding: 3px;
   border-right: 2px solid #696969;
+  vertical-align: middle;
 }
 
 .table .td {
@@ -149,5 +150,15 @@ export default {
 
 .table .tbody .tr .td {
   background: #d4d8f9;
+}
+
+.back {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
 }
 </style>

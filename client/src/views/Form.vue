@@ -26,12 +26,12 @@
       </div>
 
       <div class="form-form">
-        <label for="address">Home Address</label>
+        <label for="address">Home Postal Code</label>
         <input
           v-model="donor.address"
           type="text"
           id="address"
-          placeholder="Home Address"
+          placeholder="Postal Code"
         />
       </div>
 
@@ -163,9 +163,15 @@ export default {
 
       if (!this.donor.address) {
         this.$swal(
-          "Please include your address!"
+          "Please include your postal code!"
         );
         return;
+      }
+
+      if (this.donor.address.length != 6) {
+        this.$swal(
+          "Your postal code should be 6 digits!"
+        )
       }
 
       if (!this.donor.unit) {

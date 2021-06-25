@@ -33,6 +33,10 @@
     <div class="itemcount" v-for="n in items.length" :key="n">
       {{ items[n - 1] }} : {{ itemCount[n - 1] }}
     </div>
+
+    <button class="back" @click="$router.push('/mycampaigns')">
+      Back to My Campaigns
+    </button>
   </div>
 </template>
 
@@ -220,7 +224,7 @@ h5 {
   margin-bottom: 30px;
 }
 
-.home {
+.back {
   background: white;
   border-inline: 3px;
   border-color: black;
