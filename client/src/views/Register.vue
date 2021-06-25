@@ -143,7 +143,7 @@ if (!this.reg.password) {
 
       try {
         let response = await axios.post(
-          "/register",
+          "/api/register",
           this.reg
         );
         let token = response.data.token;
