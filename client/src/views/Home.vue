@@ -1,7 +1,10 @@
 <template>
   <Nav />
   <div class="page">
-    <h1 class="header">Home</h1>
+    <img class="logo" src="@/assets/logo-new.png" alt="Logo of geneRATION">
+    <span class="generation-intro">
+      <h2>a one-stop food drive organiser<br /></h2>
+    </span>
     <Campaigns :campaigns="campaigns" />
     <div class="home-no-campaign" v-if="!campaigns">
       <h2>There are no campaigns at the moment.</h2>
@@ -31,9 +34,7 @@ export default {
 
   methods: {
     async getCampaigns() {
-      const res = await axios.post(
-        "/api/campaign/getAllCampaigns"
-      );
+      const res = await axios.post("/api/campaign/getAllCampaigns");
 
       const data = await res.data;
 
@@ -48,13 +49,6 @@ export default {
 </script>
 
 <style>
-.header {
-  text-align: center;
-  margin-top: -20px;
-  font-size: 100px;
-  margin-bottom: 30px;
-}
-
 .page {
   width: 100%;
   padding: 15px;
@@ -71,5 +65,21 @@ export default {
 .page .home-no-campaign h3 {
   text-align: center;
   margin-top: 50px;
+}
+
+.logo {
+margin-right: auto;
+margin: 0 auto;
+display: block;
+max-width: 25%;
+}
+
+.generation-intro h2 {
+  font-weight: bolder;
+  color: #cd2520;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 </style>
