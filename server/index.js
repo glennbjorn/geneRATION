@@ -54,11 +54,6 @@ app.use(morgan("dev"));
 
 // define first route
 
-app.get('/', function(req, res, next) {
-  res.send("Hello world");
-});
-
-
 //bring in our user routes
 const userRoutes = require("./api/route/user");
 const campaignRoutes = require("./api/route/campaign");
