@@ -58,9 +58,9 @@ app.use(morgan("dev"));
 const userRoutes = require("./api/route/user");
 const campaignRoutes = require("./api/route/campaign");
 const donateRoutes = require("./api/route/donor");
-app.use("/", userRoutes);
-app.use("/campaign", campaignRoutes);
-app.use("/donate", donateRoutes);
+app.use("/api", userRoutes);
+app.use("/api/campaign", campaignRoutes);
+app.use("/api/donate", donateRoutes);
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {
