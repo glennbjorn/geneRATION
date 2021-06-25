@@ -15,13 +15,13 @@
       <p>{{ item.qty }} x {{ item.item }}</p>
     </div>
 
+    <div class="qrcode">
+      <QRcodeVue :value="qrcode" :size="size" :level="L" />
+    </div>
+
     <div class="container">
-      <button class="left" @click="goToEdit">
-        Edit
-      </button>
-      <button class="right" @click="goToDonorsInfo">
-        Donors Information
-      </button>
+      <button class="left" @click="goToEdit">Edit</button>
+      <button class="right" @click="goToDonorsInfo">Donors Information</button>
     </div>
 
     <h5>More about the organisation:</h5>
@@ -41,6 +41,7 @@ import VueJwtDecode from "vue-jwt-decode";
 import Nav from "../components/Nav.vue";
 import axios from "axios";
 import router from "@/router";
+import QRcodeVue from "qrcode.vue";
 
 export default {
   name: "Dashboard",
@@ -54,11 +55,14 @@ export default {
       donors: [],
       items: [],
       itemCount: [],
+      qrcode: "",
+      size: 300,
     };
   },
 
   components: {
     Nav,
+    QRcodeVue,
   },
 
   methods: {
@@ -83,12 +87,9 @@ export default {
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -143,6 +144,11 @@ export default {
       }
       this.itemCount = arr;
     },
+
+    createQR() {
+      this.qrcode = "new-generation.herokuapp.com/" + this.campaignid;
+      console.log(this.qrcode);
+    },
   },
 
   async created() {
@@ -152,6 +158,7 @@ export default {
     this.campaign = await this.getCampaign();
     this.donors = await this.getDonors();
     this.getItemCount();
+    this.createQR();
   },
 };
 </script>
@@ -159,7 +166,6 @@ export default {
 <style scoped>
 .org {
   text-align: center;
-
   margin-top: -20px;
 }
 
@@ -249,5 +255,11 @@ h5 {
 
 .itemcount {
   text-align: center;
+}
+
+.qrcode {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 </style>
