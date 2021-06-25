@@ -15,9 +15,14 @@
       <p>{{ item.qty }} x {{ item.item }}</p>
     </div>
 
-    <div class="qrcode">
+    <!-- <div class="qrcode">
       <QRcodeVue :value="qrcode" :size="size" :level="L" />
+    </div> -->
+
+    <div>
+      <img src="qrcodeSrc" alt="">
     </div>
+
 
     <div class="container">
       <button class="left" @click="goToEdit">Edit</button>
@@ -41,7 +46,7 @@ import VueJwtDecode from "vue-jwt-decode";
 import Nav from "../components/Nav.vue";
 import axios from "axios";
 import router from "@/router";
-import QRcodeVue from "qrcode.vue";
+// import QRcodeVue from "qrcode.vue";
 
 export default {
   name: "Dashboard",
@@ -55,14 +60,15 @@ export default {
       donors: [],
       items: [],
       itemCount: [],
-      qrcode: "",
+      url: "",
+      qrcodeSrc: "",
       size: 300,
     };
   },
 
   components: {
     Nav,
-    QRcodeVue,
+    // QRcodeVue,
   },
 
   methods: {
@@ -146,8 +152,11 @@ export default {
     },
 
     createQR() {
-      this.qrcode = "new-generation.herokuapp.com/" + this.campaignid;
-      console.log(this.qrcode);
+      this.url = "new-generation.herokuapp.com/" + this.campaignid;
+      console.log(this.url)
+      let imgSrc = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+this.url;
+      console.log(this.imgSrc)
+      this.qrcodeSrc = imgSrc;
     },
   },
 

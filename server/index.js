@@ -18,29 +18,29 @@ if (process.env.NODE_ENV === "development") {
   app.use(cors({ credentials: true, origin: ["http://localhost:8080"] }));
   require('dotenv').config();
   mongoose
-  .connect(config.uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Database is connected!");
-  })
-  .catch(err => {
-    console.log({ database_error: err });
-  });
+    .connect(config.uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
+    .then(() => {
+      console.log("Database is connected!");
+    })
+    .catch(err => {
+      console.log({ database_error: err });
+    });
 } else {
   app.use(cors({ credentials: true, origin: ["https://new-generation.herokuapp.com"] }));
   mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Database is connected!");
-  })
-  .catch(err => {
-    console.log({ database_error: err });
-  });
+    .connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
+    .then(() => {
+      console.log("Database is connected!");
+    })
+    .catch(err => {
+      console.log({ database_error: err });
+    });
 }
 
 //configure body parser
@@ -53,9 +53,11 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 // define first route
-// app.get("/", (req, res) => {
-//   console.log("Welcome");
-// });
+
+app.get('/', function(req, res, next) {
+  res.send("Hello world");
+});
+
 
 //bring in our user routes
 const userRoutes = require("./api/route/user");
@@ -66,11 +68,11 @@ app.use("/campaign", campaignRoutes);
 app.use("/donate", donateRoutes);
 
 // Handle production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/public/'));
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(__dirname + '/public/'));
 
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
-}
+//   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+// }
 
 // only code thats running / executes
 app.listen(PORT, () => {
