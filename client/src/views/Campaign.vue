@@ -44,7 +44,7 @@ export default {
 
   methods: {
     getCampaignId() {
-      this.campaignid = localStorage.getItem("campaignid");
+      this.campaignid = this.$route.path.slice(1);
     },
 
     async getCampaign() {

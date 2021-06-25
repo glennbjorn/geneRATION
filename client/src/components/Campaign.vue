@@ -20,8 +20,6 @@ export default {
 
   methods: {
     async goto() {
-      localStorage.removeItem('campaignid')
-      localStorage.setItem('campaignid', this.campaign._id)
       await router.push(`/${this.campaign._id}`)
     },
   }
