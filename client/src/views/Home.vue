@@ -4,9 +4,9 @@
 
     <img class="logo" src="@/assets/logo.png" alt="Logo of geneRATION">
     
-      <a href="#section-aboutus"> About Us </a>&emsp;
+    <!-- <a href="#section-aboutus"> About Us </a>&emsp;
     <a href="#section-howitworks"> How it Works </a>&emsp;
-    <a href="#ongoing-campaign"> Ongoing Campaigns </a>&emsp;
+    <a href="#ongoing-campaign"> Ongoing Campaigns </a>&emsp; -->
 
     <span class="generation-intro">
       <h2>a one-stop <br>food drive organiser<br></h2>
@@ -38,9 +38,9 @@
   <h3 id="section-howitworks"> How it Works </h3>
   <div class="howitworks-text"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, aliquam? </div>
 
-    <h1 class="ongoing-campaign">Ongoing Campaigns</h1>
+    <h1 id="ongoing-campaign">Ongoing Campaigns</h1>
     <Campaigns :campaigns="campaigns" />
-    <div class="home-no-campaign" v-if="!campaigns">
+    <div id="home-no-campaign" v-if="!campaigns">
       <h2>There are no campaigns at the moment.</h2>
       <h3>Do visit another day!</h3>
     </div>
@@ -119,7 +119,7 @@ font-family: 'Poiret One', cursive;
   font-weight: bolder;
   color: #4a0602;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 250px;
   font-size: 50px;
   margin-bottom: 30px;
 }
@@ -155,7 +155,7 @@ text-align: center;
   margin-bottom: 30px;
 }
 
-.ongoing-campaign {
+#ongoing-campaign {
   text-align: center;
   margin-top: 100px;
   font-size: 100px;
@@ -169,12 +169,12 @@ text-align: center;
   font-family: 'Poiret One', cursive;
 }
 
-.page .home-no-campaign h2 {
+.page #home-no-campaign h2 {
   text-align: center;
   margin-top: 70px;
 }
 
-.page .home-no-campaign h3 {
+.page #home-no-campaign h3 {
   text-align: center;
   margin-top: 50px;
 }

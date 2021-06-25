@@ -7,6 +7,12 @@
          <img class="top-right-logo" src="@/assets/smaller-logo.png" alt="Home Button">
       </router-link>
 
+    <a href="#section-aboutus"> About Us </a>&ensp;
+    <a href="#section-howitworks"> How it Works </a>&ensp;
+    <a href="#ongoing-campaign"> Ongoing Campaigns </a>
+
+
+
       <div>
         <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="!loggedIn">
           <li class="nav-item">
