@@ -68,11 +68,15 @@ app.use("/campaign", campaignRoutes);
 app.use("/donate", donateRoutes);
 
 // Handle production
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(__dirname + '/public/'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/public/'));
 
-//   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
-// }
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+} else {
+  app.get('/', function(req, res, next) {
+    res.send("Welcome");
+  });
+}
 
 // only code thats running / executes
 app.listen(PORT, () => {
