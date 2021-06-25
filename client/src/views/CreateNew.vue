@@ -44,7 +44,7 @@
 
       <div class="create-campaign">
         <label for="collection-date">Choose a collection date</label>
-        <input
+        <input type="date"
           v-model="campaign.collectionDate"
           placeholder="DD/MM/YYYY"
           id="collection-date"
