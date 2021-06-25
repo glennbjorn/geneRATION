@@ -15,14 +15,9 @@
       <p>{{ item.qty }} x {{ item.item }}</p>
     </div>
 
-    <!-- <div class="qrcode">
-      <QRcodeVue :value="qrcode" :size="size" :level="L" />
-    </div> -->
-
-    <div>
-      <img src="qrcodeSrc" alt="">
+    <div class="qr-img">
+      <img src="" />
     </div>
-
 
     <div class="container">
       <button class="left" @click="goToEdit">Edit</button>
@@ -46,7 +41,6 @@ import VueJwtDecode from "vue-jwt-decode";
 import Nav from "../components/Nav.vue";
 import axios from "axios";
 import router from "@/router";
-// import QRcodeVue from "qrcode.vue";
 
 export default {
   name: "Dashboard",
@@ -60,9 +54,6 @@ export default {
       donors: [],
       items: [],
       itemCount: [],
-      url: "",
-      qrcodeSrc: "",
-      size: 300,
     };
   },
 
@@ -153,10 +144,14 @@ export default {
 
     createQR() {
       this.url = "new-generation.herokuapp.com/" + this.campaignid;
-      console.log(this.url)
-      let imgSrc = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+this.url;
-      console.log(this.imgSrc)
-      this.qrcodeSrc = imgSrc;
+
+      let qrImg = document.querySelector(".qr-img img");
+
+      let imgSrc =
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+        this.url;
+
+      qrImg.src = imgSrc;
     },
   },
 
@@ -266,9 +261,14 @@ h5 {
   text-align: center;
 }
 
-.qrcode {
+.qr-img {
   display: flex;
   justify-content: center;
   padding: 20px;
+}
+
+.qr-img img {
+  max-width: 200px;
+  width: 100%;
 }
 </style>
