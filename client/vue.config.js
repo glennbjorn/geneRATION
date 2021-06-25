@@ -10,7 +10,6 @@ if (process.env.NODE_ENV === "development") {
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    pathRewrite: { '^/api': '' }
                 },
             }
         }
@@ -27,7 +26,6 @@ if (process.env.NODE_ENV === "production") {
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    pathRewrite: { '^/api': '' }
                 },
             }
         }
