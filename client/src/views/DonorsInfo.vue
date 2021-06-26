@@ -4,12 +4,14 @@
     <h1>You are not logged in!</h1>
   </div>
   <div class="page" v-if="loggedIn">
+    <p><i>You may click on the header to sort the table</i></p>
     <table class="table">
       <thead>
         <tr class="tr">
-          <th class="th">Name</th>
-          <th class="th">Postal Code</th>
-          <th class="th">Unit Number</th>
+          <th class="th" @click="sort('name')">Name</th>
+          <th class="th" @click="sort('address')">Postal Code</th>
+          <th class="th" @click="sort('unit')">Unit Number</th>
+          <th class="th" @click="sort('contact')">Contact No.</th>
           <th class="th" :key="item" v-for="item in items">{{ item }}</th>
         </tr>
       </thead>
@@ -18,6 +20,7 @@
           <td class="td">{{ donor.name }}</td>
           <td class="td">{{ donor.address }}</td>
           <td class="td">{{ donor.unit }}</td>
+          <td class="td">{{ donor.contact }}</td>
           <td class="td" :key="item.id" v-for="item in donor.items">
             <p v-if="item.donate">Yes</p>
             <p v-else>No</p>
@@ -48,6 +51,8 @@ export default {
       campaign: [],
       items: [],
       donors: [],
+      currentSort: "address",
+      currentSortDir: "asc",
     };
   },
 
@@ -89,7 +94,6 @@ export default {
         arr = [...arr, item];
       }
       this.items = arr;
-      console.log(this.items);
     },
 
     getCampaignId() {
@@ -103,6 +107,22 @@ export default {
 
       return res.data;
     },
+
+    sort(field) {
+      if (field === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      }
+
+      this.currentSort = field;
+
+      this.donors.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDir === "desc") modifier = -1;
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    },
   },
 
   async created() {
@@ -112,11 +132,16 @@ export default {
     this.campaign = await this.getCampaign();
     this.getItems();
     this.donors = await this.getDonors();
+    this.sort("address");
   },
 };
 </script>
 
-<style>
+<style scoped>
+p {
+  text-align: center;
+}
+
 .table {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;

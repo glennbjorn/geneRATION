@@ -3,7 +3,14 @@
     <h3>
       {{ campaignAdmin.name }}
     </h3>
-    <p>Collection Date: {{ date }}</p>
+    <div class="date-and-loc">
+      <p>Collection Date: {{ date }}</p>
+      <p>
+        Collection Area: {{ campaignAdmin.collectionAddress }}, S{{
+          campaignAdmin.collectionPostalCode
+        }}
+      </p>
+    </div>
   </div>
 </template>
 
