@@ -41,7 +41,25 @@
         />
       </div>
 
-      <!-- having trouble adding datepicker -->
+      <div class="edit-campaign">
+        <label for="collection-address">Address of Collection Area</label>
+        <input
+          v-model="campaign.collectionAddress"
+          type="text"
+          id="collection-address"
+          placeholder="Address of Collection Area"
+        />
+      </div>
+
+      <div class="edit-campaign">
+        <label for="collection-postcode">Postal Code of Collection Area</label>
+        <input
+          v-model="campaign.collectionPostalCode"
+          type="text"
+          id="collection-postcode"
+          placeholder="e.g. 512345"
+        />
+      </div>
 
       <div class="edit-campaign">
         <label for="collection-date">Choose a collection date</label>
@@ -69,6 +87,16 @@
         <Items @delete-item="deleteItem" :items="items" />
       </div>
 
+      <div class="edit-campaign">
+        <label for="target">Target number of sets</label>
+        <input
+          v-model="campaign.target"
+          type="text"
+          id="target"
+          placeholder="Please indicate a whole number"
+        />
+      </div>
+
       <button class="edit" type="submit">Edit campaign</button>
     </form>
 
@@ -77,6 +105,10 @@
       <p>Delete campaign</p>
     </div>
   </div>
+
+  <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
+      Back to My Campaigns
+    </button>
 </template>
 
 <script>
@@ -171,12 +203,29 @@ export default {
         return;
       }
 
+      if (!this.campaign.collectionAddress) {
+        this.$swal("Please include a collection address!");
+        return;
+      }
+
+      if (!this.campaign.collectionPostalCode) {
+        this.$swal(
+          "Please include the postal code for the collection address!"
+        );
+        return;
+      }
+
+      if (this.campaign.collectionPostalCode.length !== 6) {
+        this.$swal("A postal code should consist of 6 digits");
+        return
+      }
+
       if (!this.campaign.collectionDate) {
         this.$swal("Please include a collection date!");
         return;
       }
 
-      if (this.campaign.items.length === 0) {
+      if (this.items.length === 0) {
         this.$swal("Please include some items!");
         return;
       }
@@ -187,8 +236,11 @@ export default {
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,
           orgDesc: this.campaign.orgDesc,
+          collectionAddress: this.campaign.collectionAddress,
+          collectionPostalCode: this.campaign.collectionPostalCode,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
+          target: this.campaign.target,
         });
 
         this.$swal("Campaign edited!");
@@ -272,7 +324,6 @@ export default {
   display: block;
   margin: 0 auto;
   text-align: center;
-  margin-bottom: 100px;
 }
 
 .fas {
@@ -284,5 +335,16 @@ export default {
 
 .delete p {
   font-size: 20px;
+}
+
+.back {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 100px;
 }
 </style>

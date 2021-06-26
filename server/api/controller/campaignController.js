@@ -2,18 +2,16 @@ const Campaign = require("../model/Campaign");
 
 exports.newCampaign = async (req, res) => {
     try {
-        // const campaignName = req.body.name
-        // const existingCampaign = await NewCampaign.find({ campaignName })
-        // if (existingCampaign.length >= 1) {
-        //     return res.status(409).json({message:"Campaign name taken!"})
-        // }
         let campaign = new Campaign({
             org: req.body.org,
             name: req.body.name,
             camDesc: req.body.camDesc,
             orgDesc: req.body.orgDesc,
+            collectionAddress: req.body.collectionAddress,
+            collectionPostalCode: req.body.collectionPostalCode,
             collectionDate: req.body.collectionDate,
-            items: req.body.items
+            items: req.body.items,
+            target: req.body.target,
         })
         let data = await campaign.save()
         res.status(201).json({ data })
@@ -56,8 +54,11 @@ exports.editCampaign = async (req, res) => {
         campaign.name = req.body.name;
         campaign.camDesc = req.body.camDesc;
         campaign.orgDesc = req.body.orgDesc;
+        campaign.collectionAddress = req.body.collectionAddress;
+        campaign.collectionPostalCode = req.body.collectionPostalCode;
         campaign.collectionDate = req.body.collectionDate;
         campaign.items = req.body.items;
+        campaign.target = req.body.target;
         let data = await campaign.save();
         res.status(201).json({ data })
     } catch (err) {
@@ -69,7 +70,7 @@ exports.editCampaign = async (req, res) => {
 exports.deleteCampaign = async (req, res) => {
     try {
         await Campaign.findByIdAndDelete({ _id: req.body._id });
-        await res.json({message: "deleted"})
+        await res.json({ message: "deleted" })
     } catch (err) {
         res.status(400).json({ err: err })
     }

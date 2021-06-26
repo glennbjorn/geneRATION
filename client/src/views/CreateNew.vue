@@ -42,7 +42,25 @@
         />
       </div>
 
-      <!-- having trouble adding datepicker -->
+      <div class="create-campaign">
+        <label for="collection-address">Address of Collection Area</label>
+        <input
+          v-model="campaign.collectionAddress"
+          type="text"
+          id="collection-address"
+          placeholder="Address of Collection Area"
+        />
+      </div>
+
+      <div class="create-campaign">
+        <label for="collection-postcode">Postal Code of Collection Area</label>
+        <input
+          v-model="campaign.collectionPostalCode"
+          type="text"
+          id="collection-postcode"
+          placeholder="e.g. 512345"
+        />
+      </div>
 
       <div class="create-campaign">
         <label for="collection-date">Choose a collection date</label>
@@ -68,6 +86,16 @@
 
       <div>
         <Items @delete-item="deleteItem" :items="items" />
+      </div>
+
+      <div class="create-campaign">
+        <label for="target">Target number of sets</label>
+        <input
+          v-model="campaign.target"
+          type="text"
+          id="target"
+          placeholder="Please indicate a whole number"
+        />
       </div>
 
       <button class="btn" type="submit">Create Campaign</button>
@@ -101,7 +129,10 @@ export default {
         name: "",
         camDesc: "",
         orgDesc: "",
+        collectionAddress: "",
+        collectionPostalCode: "",
         collectionDate: "",
+        target: "",
       },
       items: [],
     };
@@ -147,37 +178,44 @@ export default {
 
     async submit() {
       if (!this.campaign.name) {
-        this.$swal(
-          "Please include a campaign name!"
-        );
+        this.$swal("Please include a campaign name!");
         return;
       }
 
       if (!this.campaign.camDesc) {
-        this.$swal(
-          "Please include a campaign description!"
-        );
+        this.$swal("Please include a campaign description!");
         return;
       }
 
       if (!this.campaign.orgDesc) {
+        this.$swal("Please include an organisation description!");
+        return;
+      }
+
+      if (!this.campaign.collectionAddress) {
+        this.$swal("Please include a collection address!");
+        return;
+      }
+
+      if (!this.campaign.collectionPostalCode) {
         this.$swal(
-          "Please include an organisation description!"
+          "Please include the postal code for the collection address!"
         );
+        return;
+      }
+
+      if (this.campaign.collectionPostalCode.length !== 6) {
+        this.$swal("A postal code should consist of 6 digits");
         return;
       }
 
       if (!this.campaign.collectionDate) {
-        this.$swal(
-          "Please include a collection date!"
-        );
+        this.$swal("Please include a collection date!");
         return;
       }
 
-      if (this.items.length===0) {
-        this.$swal(
-          "Please include some items!"
-        );
+      if (this.items.length === 0) {
+        this.$swal("Please include some items!");
         return;
       }
 
@@ -187,8 +225,11 @@ export default {
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,
           orgDesc: this.campaign.orgDesc,
+          collectionAddress: this.campaign.collectionAddress,
+          collectionPostalCode: this.campaign.collectionPostalCode,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
+          target: this.campaign.target,
         });
 
         this.$swal("Campaign created!");

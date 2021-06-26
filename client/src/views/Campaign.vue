@@ -3,7 +3,14 @@
   <div class="page">
     <h1 class="header">{{ campaign.name }}</h1>
     <h6 class="org">By {{ campaign.org }}</h6>
-    <h6 class="date-and-loc">Collection Date: {{ date }}</h6>
+    <div class="date-and-loc">
+      <h6>Collection Date: {{ date }}</h6>
+      <h6>
+        Collection Area: {{ campaign.collectionAddress }}, S{{
+          campaign.collectionPostalCode
+        }}
+      </h6>
+    </div>
     <div class="cam-desc">
       {{ campaign.camDesc }}
     </div>
@@ -89,9 +96,12 @@ export default {
 }
 
 .date-and-loc {
-  text-align: center;
-  margin-bottom: 30px;
+  display: flex;
   margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 25%;
+  margin-right: 25%;
+  justify-content: space-between;
 }
 
 .cam-desc {

@@ -6,7 +6,14 @@
   <div class="page" v-if="loggedIn">
     <h1 class="header">{{ campaign.name }}</h1>
     <h6 class="org">By {{ campaign.org }}</h6>
-    <h6 class="date-and-loc">Collection Date: {{ date }}</h6>
+    <div class="date-and-loc">
+      <h6>Collection Date: {{ date }}</h6>
+      <h6>
+        Collection Area: {{ campaign.collectionAddress }}, S{{
+          campaign.collectionPostalCode
+        }}
+      </h6>
+    </div>
     <div class="cam-desc">
       {{ campaign.camDesc }}
     </div>
@@ -31,7 +38,7 @@
 
     <h5>Donation progress</h5>
     <div class="itemcount" v-for="n in items.length" :key="n">
-      {{ items[n - 1] }} : {{ itemCount[n - 1] }}
+      {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ campaign.target }}
     </div>
 
     <button class="back" @click="$router.push('/mycampaigns')">
@@ -160,8 +167,8 @@ export default {
     },
 
     convertDate() {
-      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY")
-    }
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY");
+    },
   },
 
   async created() {
@@ -184,9 +191,12 @@ export default {
 }
 
 .date-and-loc {
-  text-align: center;
-  margin-bottom: 30px;
+  display: flex;
   margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 25%;
+  margin-right: 25%;
+  justify-content: space-between;
 }
 
 .cam-desc {

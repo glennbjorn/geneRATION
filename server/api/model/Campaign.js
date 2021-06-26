@@ -16,6 +16,14 @@ const CampaignSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  collectionAddress: {
+    type: String,
+    required: true
+  },
+  collectionPostalCode: {
+    type: String,
+    required: true
+  },
   collectionDate: {
     type: String,
     required: true
@@ -31,7 +39,11 @@ const CampaignSchema = mongoose.Schema({
         required: true
       }
     }
-  ]
+  ],
+  target: {
+    type: String,
+    required: true
+  },
 });
 
 const Campaign = mongoose.model("campaign", CampaignSchema);
