@@ -49,6 +49,11 @@
         <h5>Items to donate</h5>
       </div>
 
+      <div class="items-checkbox">
+        <input v-model="toggle" type="checkbox" @click="selectAll" />
+        <p>Select all</p>
+      </div>
+
       <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
         <input v-model="donor.items[n - 1].donate" type="checkbox" id="items" />
         <p>
@@ -113,6 +118,7 @@ export default {
         halal: false,
         remarks: "",
       },
+      toggle: false,
     };
   },
 
@@ -126,12 +132,9 @@ export default {
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/api/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -148,36 +151,26 @@ export default {
 
     async submit() {
       if (!this.donor.name) {
-        this.$swal(
-          "Please include your name!"
-        );
+        this.$swal("Please include your name!");
         return;
       }
 
       if (!this.donor.contact) {
-        this.$swal(
-          "Please include your contact number!"
-        );
+        this.$swal("Please include your contact number!");
         return;
       }
 
       if (!this.donor.address) {
-        this.$swal(
-          "Please include your postal code!"
-        );
+        this.$swal("Please include your postal code!");
         return;
       }
 
       if (this.donor.address.length != 6) {
-        this.$swal(
-          "Your postal code should be 6 digits!"
-        )
+        this.$swal("Your postal code should be 6 digits!");
       }
 
       if (!this.donor.unit) {
-        this.$swal(
-          "Please include your unit number!"
-        );
+        this.$swal("Please include your unit number!");
         return;
       }
 
@@ -209,6 +202,12 @@ export default {
       localStorage.setItem("tqid", this.campaignid);
 
       router.push("/ThankYou");
+    },
+
+    selectAll() {
+      for (let i = 0; i < this.donor.items.length; i++) {
+        this.donor.items[i].donate = !this.toggle;
+      }
     },
   },
 
