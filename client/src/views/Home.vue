@@ -49,6 +49,13 @@ export default {
 </script>
 
 <style>
+.header {
+  text-align: center;
+  margin-top: -20px;
+  font-size: 100px;
+  margin-bottom: 30px;
+}
+
 .page {
   width: 100%;
   padding: 15px;
