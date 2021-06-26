@@ -69,10 +69,13 @@
         <Items @delete-item="deleteItem" :items="items" />
       </div>
 
-      <button class="edit" type="submit">
-        Edit campaign
-      </button>
+      <button class="edit" type="submit">Edit campaign</button>
     </form>
+
+    <div class="delete">
+      <i class="fas fa-trash" @click="deleteCampaign"></i>
+      <p>Delete campaign</p>
+    </div>
   </div>
 </template>
 
@@ -125,12 +128,9 @@ export default {
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/api/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -157,40 +157,30 @@ export default {
 
     async submit() {
       if (!this.campaign.name) {
-        this.$swal(
-          "Please include a campaign name!"
-        );
+        this.$swal("Please include a campaign name!");
         return;
       }
 
       if (!this.campaign.camDesc) {
-        this.$swal(
-          "Please include a campaign description!"
-        );
+        this.$swal("Please include a campaign description!");
         return;
       }
 
       if (!this.campaign.orgDesc) {
-        this.$swal(
-          "Please include an organisation description!"
-        );
+        this.$swal("Please include an organisation description!");
         return;
       }
 
       if (!this.campaign.collectionDate) {
-        this.$swal(
-          "Please include a collection date!"
-        );
+        this.$swal("Please include a collection date!");
         return;
       }
 
-      if (this.campaign.items.length===0) {
-        this.$swal(
-          "Please include some items!"
-        );
+      if (this.campaign.items.length === 0) {
+        this.$swal("Please include some items!");
         return;
       }
-      
+
       try {
         await axios.post("/api/campaign/editCampaign", {
           _id: this.campaignid,
@@ -208,6 +198,16 @@ export default {
         let error = err.response;
         console.log(error.data.err.message);
         this.$swal("Error");
+      }
+    },
+
+    async deleteCampaign() {
+      if (confirm("You sure you want to delete this?")) {
+        await axios.post("/api/campaign/deleteCampaign", {
+          _id: this.campaignid,
+        });
+        this.$swal("Campaign deleted!");
+        await router.push("/mycampaigns");
       }
     },
   },
@@ -259,12 +259,30 @@ export default {
   font-size: 50px;
   cursor: pointer;
   margin-top: 70px;
-  margin-bottom:100px;
+  margin-bottom: 70px;
 }
 
 .no-items {
   text-align: center;
   font-size: 20px;
   margin-top: 30px;
+}
+
+.delete {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.fas {
+  color: grey;
+  cursor: pointer;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.delete p {
+  font-size: 20px;
 }
 </style>

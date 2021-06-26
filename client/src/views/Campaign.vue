@@ -3,7 +3,7 @@
   <div class="page">
     <h1 class="header">{{ campaign.name }}</h1>
     <h6 class="org">By {{ campaign.org }}</h6>
-    <h6 class="date-and-loc">Collection Date: {{ campaign.collectionDate }}</h6>
+    <h6 class="date-and-loc">Collection Date: {{ date }}</h6>
     <div class="cam-desc">
       {{ campaign.camDesc }}
     </div>
@@ -27,6 +27,7 @@
 <script>
 import Nav from "../components/Nav.vue";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   name: "Campaign",
@@ -39,6 +40,7 @@ export default {
     return {
       campaignid: "",
       campaign: [],
+      date: "",
     };
   },
 
@@ -65,11 +67,16 @@ export default {
         localStorage.setItem("formId", this.campaignid),
         this.$router.push(`/${this.campaignid}/donate`);
     },
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY")
+    }
   },
 
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.convertDate();
   },
 };
 </script>

@@ -4,15 +4,22 @@
       {{ campaign.name }}
     </h3>
     <p>{{ campaign.camDesc }}</p>
-    <p>Collection Date: {{ campaign.collectionDate }}</p>
+    <p>Collection Date: {{ date }}</p>
   </div>
 </template>
 
 <script>
 import router from "@/router";
+import moment from "moment";
 
 export default {
   name: "Campaign",
+
+  data() {
+    return {
+      date: "",
+    };
+  },
 
   props: {
     campaign: Object,
@@ -20,9 +27,17 @@ export default {
 
   methods: {
     async goto() {
-      await router.push(`/${this.campaign._id}`)
+      await router.push(`/${this.campaign._id}`);
     },
-  }
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY");
+    },
+  },
+
+  created() {
+    this.convertDate();
+  },
 };
 </script>
 
@@ -39,7 +54,7 @@ export default {
   font-size: 50px;
 }
 
-.campaign p {;
+.campaign p {
   max-width: 1000px;
   text-align: center;
   margin: auto;

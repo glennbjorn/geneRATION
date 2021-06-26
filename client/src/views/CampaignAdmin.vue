@@ -6,7 +6,7 @@
   <div class="page" v-if="loggedIn">
     <h1 class="header">{{ campaign.name }}</h1>
     <h6 class="org">By {{ campaign.org }}</h6>
-    <h6 class="date-and-loc">Collection Date: {{ campaign.collectionDate }}</h6>
+    <h6 class="date-and-loc">Collection Date: {{ date }}</h6>
     <div class="cam-desc">
       {{ campaign.camDesc }}
     </div>
@@ -45,6 +45,7 @@ import VueJwtDecode from "vue-jwt-decode";
 import Nav from "../components/Nav.vue";
 import axios from "axios";
 import router from "@/router";
+import moment from "moment";
 
 export default {
   name: "Dashboard",
@@ -58,12 +59,12 @@ export default {
       donors: [],
       items: [],
       itemCount: [],
+      date: "",
     };
   },
 
   components: {
     Nav,
-    // QRcodeVue,
   },
 
   methods: {
@@ -157,6 +158,10 @@ export default {
 
       qrImg.src = imgSrc;
     },
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY")
+    }
   },
 
   async created() {
@@ -167,6 +172,7 @@ export default {
     this.donors = await this.getDonors();
     this.getItemCount();
     this.createQR();
+    this.convertDate();
   },
 };
 </script>

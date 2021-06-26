@@ -3,24 +3,41 @@
     <h3>
       {{ campaignAdmin.name }}
     </h3>
-    <p>Collection Date: {{ campaignAdmin.collectionDate }}</p>
+    <p>Collection Date: {{ date }}</p>
   </div>
 </template>
 
 <script>
 import router from "@/router";
+import moment from "moment";
 
 export default {
   name: "CampaignAdmin",
+
+  data() {
+    return {
+      date: "",
+    };
+  },
+
   props: {
     campaignAdmin: Object,
   },
+
   methods: {
     async goto() {
       localStorage.removeItem("admincampaignid");
       localStorage.setItem("admincampaignid", this.campaignAdmin._id);
       await router.push(`/mycampaigns/${this.campaignAdmin._id}`);
     },
+
+    convertDate() {
+      this.date = moment(this.campaignAdmin.collectionDate).format("Do MMM YYYY");
+    },
+  },
+
+  created() {
+    this.convertDate();
   },
 };
 </script>

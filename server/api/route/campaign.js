@@ -8,5 +8,6 @@ router.post("/getCampaigns", campaignController.getCampaigns);
 router.post("/getAllCampaigns", campaignController.getAllCampaigns);
 router.post("/getCampaignById", campaignController.getCampaignById);
 router.post("/editCampaign", campaignController.editCampaign);
+router.post("/deleteCampaign", campaignController.deleteCampaign);
 
 module.exports = router;

@@ -65,3 +65,12 @@ exports.editCampaign = async (req, res) => {
         res.status(400).json({ err: err })
     }
 }
+
+exports.deleteCampaign = async (req, res) => {
+    try {
+        await Campaign.findByIdAndDelete({ _id: req.body._id });
+        await res.json({message: "deleted"})
+    } catch (err) {
+        res.status(400).json({ err: err })
+    }
+}
