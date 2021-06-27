@@ -1,37 +1,39 @@
 <template>
   <Nav />
-  <div class="page" v-if="!auth">
-    <h1>You are not authorised to view this page</h1>
-  </div>
-  <div class="page" v-if="auth">
-    <p><i>You may click on the header to sort the table</i></p>
-    <table class="table">
-      <thead>
-        <tr class="tr">
-          <th class="th" @click="sort('name')">Name</th>
-          <th class="th" @click="sort('address')">Postal Code</th>
-          <th class="th" @click="sort('unit')">Unit Number</th>
-          <th class="th" @click="sort('contact')">Contact No.</th>
-          <th class="th" :key="item" v-for="item in items">{{ item }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="tr" :key="donor.id" v-for="donor in donors">
-          <td class="td">{{ donor.name }}</td>
-          <td class="td">{{ donor.address }}</td>
-          <td class="td">{{ donor.unit }}</td>
-          <td class="td">{{ donor.contact }}</td>
-          <td class="td" :key="item.id" v-for="item in donor.items">
-            <p v-if="item.donate">Yes</p>
-            <p v-else>No</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div v-if="!isLoading">
+    <div class="page" v-if="!auth">
+      <h1>You are not authorised to view this page</h1>
+    </div>
+    <div class="page" v-if="auth">
+      <p><i>You may click on the header to sort the table</i></p>
+      <table class="table">
+        <thead>
+          <tr class="tr">
+            <th class="th" @click="sort('name')">Name</th>
+            <th class="th" @click="sort('address')">Postal Code</th>
+            <th class="th" @click="sort('unit')">Unit Number</th>
+            <th class="th" @click="sort('contact')">Contact No.</th>
+            <th class="th" :key="item" v-for="item in items">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr" :key="donor.id" v-for="donor in donors">
+            <td class="td">{{ donor.name }}</td>
+            <td class="td">{{ donor.address }}</td>
+            <td class="td">{{ donor.unit }}</td>
+            <td class="td">{{ donor.contact }}</td>
+            <td class="td" :key="item.id" v-for="item in donor.items">
+              <p v-if="item.donate">Yes</p>
+              <p v-else>No</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
-      Back to My Campaigns
-    </button>
+      <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
+        Back to My Campaigns
+      </button>
+    </div>
   </div>
 </template>
 
@@ -53,6 +55,7 @@ export default {
       donors: [],
       currentSort: "address",
       currentSortDir: "asc",
+      isLoading: true,
     };
   },
 
@@ -134,6 +137,7 @@ export default {
     this.getItems();
     this.donors = await this.getDonors();
     this.sort("address");
+    this.isLoading = false;
   },
 };
 </script>

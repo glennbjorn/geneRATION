@@ -1,49 +1,53 @@
 <template>
   <Nav />
-  <div class="page" v-if="!auth">
-    <h1>You are not authorised to view this page</h1>
-  </div>
-  <div class="page" v-if="auth">
-    <h1 class="header">{{ campaign.name }}</h1>
-    <h6 class="org">By {{ campaign.org }}</h6>
-    <div class="date-and-loc">
-      <h6>Collection Date: {{ date }}</h6>
-      <h6>
-        Collection Area: {{ campaign.collectionAddress }}, S{{
-          campaign.collectionPostalCode
-        }}
-      </h6>
+  <div v-if="!isLoading">
+    <div class="page" v-if="!auth">
+      <h1>You are not authorised to view this page</h1>
     </div>
-    <div class="cam-desc">
-      {{ campaign.camDesc }}
-    </div>
-    <h5>Items for collection</h5>
-    <div class="items" :key="item._id" v-for="item in campaign.items">
-      <p>{{ item.qty }} x {{ item.item }}</p>
-    </div>
+    <div class="page" v-if="auth">
+      <h1 class="header">{{ campaign.name }}</h1>
+      <h6 class="org">By {{ campaign.org }}</h6>
+      <div class="date-and-loc">
+        <h6>Collection Date: {{ date }}</h6>
+        <h6>
+          Collection Area: {{ campaign.collectionAddress }}, S{{
+            campaign.collectionPostalCode
+          }}
+        </h6>
+      </div>
+      <div class="cam-desc">
+        {{ campaign.camDesc }}
+      </div>
+      <h5>Items for collection</h5>
+      <div class="items" :key="item._id" v-for="item in campaign.items">
+        <p>{{ item.qty }} x {{ item.item }}</p>
+      </div>
 
-    <div class="qr-img">
-      <img src="" />
-    </div>
+      <div class="qr-img">
+        <img :src="imgsrc" />
+      </div>
 
-    <div class="container">
-      <button class="left" @click="goToEdit">Edit</button>
-      <button class="right" @click="goToDonorsInfo">Donors Information</button>
-    </div>
+      <div class="container">
+        <button class="left" @click="goToEdit">Edit</button>
+        <button class="right" @click="goToDonorsInfo">
+          Donors Information
+        </button>
+      </div>
 
-    <h5>More about the organisation:</h5>
-    <div class="org-desc">
-      <p>{{ campaign.orgDesc }}</p>
-    </div>
+      <h5>More about the organisation:</h5>
+      <div class="org-desc">
+        <p>{{ campaign.orgDesc }}</p>
+      </div>
 
-    <h5>Donation progress</h5>
-    <div class="itemcount" v-for="n in items.length" :key="n">
-      {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ campaign.target }}
-    </div>
+      <h5>Donation progress</h5>
+      <div class="itemcount" v-for="n in items.length" :key="n">
+        {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ campaign.target }}
+      </div>
 
-    <button class="back" @click="$router.push('/mycampaigns')">
-      Back to My Campaigns
-    </button>
+      <button class="back" @click="$router.push('/mycampaigns')">
+        Back to My Campaigns
+      </button>
+    </div>
   </div>
 </template>
 
@@ -67,6 +71,8 @@ export default {
       items: [],
       itemCount: [],
       date: "",
+      isLoading: true,
+      imgsrc: "",
     };
   },
 
@@ -158,13 +164,9 @@ export default {
     createQR() {
       this.url = "new-generation.herokuapp.com/" + this.campaignid;
 
-      let qrImg = document.querySelector(".qr-img img");
-
-      let imgSrc =
+      this.imgsrc =
         "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
         this.url;
-
-      qrImg.src = imgSrc;
     },
 
     convertDate() {
@@ -181,6 +183,7 @@ export default {
     this.getItemCount();
     this.createQR();
     this.convertDate();
+    this.isLoading = false;
   },
 };
 </script>

@@ -1,14 +1,16 @@
 <template>
   <Nav />
-  <div class="page">
-    <img class="logo" src="@/assets/logo-new.png" alt="Logo of geneRATION">
-    <span class="generation-intro">
-      <h2>a one-stop food drive organiser<br /></h2>
-    </span>
-    <Campaigns :campaigns="campaigns" />
-    <div class="home-no-campaign" v-if="!campaigns">
-      <h2>There are no campaigns at the moment.</h2>
-      <h3>Do visit another day!</h3>
+  <div v-if="!isLoading">
+    <div class="page">
+      <img class="logo" src="@/assets/logo-new.png" alt="Logo of geneRATION" />
+      <span class="generation-intro">
+        <h2>a one-stop food drive organiser<br /></h2>
+      </span>
+      <Campaigns :campaigns="campaigns" />
+      <div class="home-no-campaign" v-if="!campaigns">
+        <h2>There are no campaigns at the moment.</h2>
+        <h3>Do visit another day!</h3>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +31,7 @@ export default {
   data() {
     return {
       campaigns: [],
+      isLoading: true,
     };
   },
 
@@ -44,6 +47,7 @@ export default {
 
   async created() {
     this.campaigns = await this.getCampaigns();
+    this.isLoading = false;
   },
 };
 </script>
@@ -75,10 +79,10 @@ export default {
 }
 
 .logo {
-margin-right: auto;
-margin: 0 auto;
-display: block;
-max-width: 25%;
+  margin-right: auto;
+  margin: 0 auto;
+  display: block;
+  max-width: 25%;
 }
 
 .generation-intro h2 {

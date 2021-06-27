@@ -1,18 +1,20 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
-  </div>
-  <div class="page" v-if="loggedIn">
-    <h1 class="header">Welcome</h1>
-    <h1 class="name">{{ user.name }}</h1>
-    <div class="container">
-      <button class="left" @click="$router.push('/create')">
-        New Campaign
-      </button>
-      <button class="right" @click="$router.push('/mycampaigns')">
-        View My Campaigns
-      </button>
+  <div v-if="!isLoading">
+    <div class="page" v-if="!loggedIn">
+      <h1>You are not logged in!</h1>
+    </div>
+    <div class="page" v-if="loggedIn">
+      <h1 class="header">Welcome</h1>
+      <h1 class="name">{{ user.name }}</h1>
+      <div class="container">
+        <button class="left" @click="$router.push('/create')">
+          New Campaign
+        </button>
+        <button class="right" @click="$router.push('/mycampaigns')">
+          View My Campaigns
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +30,7 @@ export default {
     return {
       user: {},
       loggedIn: false,
+      isLoading: true,
     };
   },
 
@@ -55,6 +58,7 @@ export default {
   created() {
     this.getUserDetails();
     this.checkLoggedIn();
+    this.isLoading = false;
   },
 };
 </script>

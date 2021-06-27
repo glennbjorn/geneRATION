@@ -1,100 +1,111 @@
 <template>
   <Nav />
-  <div>
-    <h1 class="header">{{ campaign.name }}</h1>
-  </div>
-  <div class="form-page">
-    <form @submit.prevent="submit">
-      <div class="subheader">
-        <h1>Thank you for donating!</h1>
-        <h3>Kindly fill up your information below</h3>
-      </div>
+  <div v-if="!isLoading">
+    <div>
+      <h1 class="header">{{ campaign.name }}</h1>
+    </div>
+    <div class="form-page">
+      <form @submit.prevent="submit">
+        <div class="subheader">
+          <h1>Thank you for donating!</h1>
+          <h3>Kindly fill up your information below</h3>
+        </div>
 
-      <div class="form-form">
-        <label for="name">Name</label>
-        <input v-model="donor.name" type="text" id="name" placeholder="Name" />
-      </div>
+        <div class="form-form">
+          <label for="name">Name</label>
+          <input
+            v-model="donor.name"
+            type="text"
+            id="name"
+            placeholder="Name"
+          />
+        </div>
 
-      <div class="form-form">
-        <label for="contact">Contact Number</label>
-        <input
-          v-model="donor.contact"
-          type="text"
-          id="contact"
-          placeholder="Contact Number"
-        />
-      </div>
+        <div class="form-form">
+          <label for="contact">Contact Number</label>
+          <input
+            v-model="donor.contact"
+            type="text"
+            id="contact"
+            placeholder="Contact Number"
+          />
+        </div>
 
-      <div class="form-form">
-        <label for="address">Home Postal Code</label>
-        <input
-          v-model="donor.address"
-          type="text"
-          id="address"
-          placeholder="Postal Code"
-        />
-      </div>
+        <div class="form-form">
+          <label for="address">Home Postal Code</label>
+          <input
+            v-model="donor.address"
+            type="text"
+            id="address"
+            placeholder="Postal Code"
+          />
+        </div>
 
-      <div class="form-form">
-        <label for="unit">Unit Number</label>
-        <input
-          v-model="donor.unit"
-          type="text"
-          id="unit"
-          placeholder="Unit Number"
-        />
-      </div>
+        <div class="form-form">
+          <label for="unit">Unit Number</label>
+          <input
+            v-model="donor.unit"
+            type="text"
+            id="unit"
+            placeholder="Unit Number"
+          />
+        </div>
 
-      <div class="mini-header">
-        <h5>Items to donate</h5>
-      </div>
+        <div class="mini-header">
+          <h5>Items to donate</h5>
+        </div>
 
-      <div class="items-checkbox">
-        <input v-model="toggle" type="checkbox" @click="selectAll" />
-        <p>Select all</p>
-      </div>
+        <div class="items-checkbox">
+          <input v-model="toggle" type="checkbox" @click="selectAll" />
+          <p>Select all</p>
+        </div>
 
-      <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
-        <input v-model="donor.items[n - 1].donate" type="checkbox" id="items" />
-        <p>
-          {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
-        </p>
-      </div>
+        <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
+          <input
+            v-model="donor.items[n - 1].donate"
+            type="checkbox"
+            id="items"
+          />
+          <p>
+            {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
+          </p>
+        </div>
 
-      <div class="mini-header">
-        <h5>Declarations</h5>
-      </div>
+        <div class="mini-header">
+          <h5>Declarations</h5>
+        </div>
 
-      <div class="agree-checkbox">
-        <label for="shelf-life"
-          >I agree to only donate items that are <b>NOT</b> expiring in the next
-          3 months</label
-        >
-        <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
-      </div>
+        <div class="agree-checkbox">
+          <label for="shelf-life"
+            >I agree to only donate items that are <b>NOT</b> expiring in the
+            next 3 months</label
+          >
+          <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
+        </div>
 
-      <div class="agree-checkbox">
-        <label for="halal"
-          >I agree to only donate items that are <b>Halal certified</b></label
-        >
-        <input v-model="donor.halal" type="checkbox" id="halal" />
-      </div>
+        <div class="agree-checkbox">
+          <label for="halal"
+            >I agree to only donate items that are <b>Halal certified</b></label
+          >
+          <input v-model="donor.halal" type="checkbox" id="halal" />
+        </div>
 
-      <div class="form-form">
-        <label for="remarks">Do you have any additional remarks?</label>
-        <textarea
-          v-model="donor.remarks"
-          type="text"
-          id="remarks"
-          placeholder="e.g. I will be donating additional items!"
-        />
-      </div>
+        <div class="form-form">
+          <label for="remarks">Do you have any additional remarks?</label>
+          <textarea
+            v-model="donor.remarks"
+            type="text"
+            id="remarks"
+            placeholder="e.g. I will be donating additional items!"
+          />
+        </div>
 
-      <button class="donate" type="submit">Pledge My Donation!</button>
-    </form>
-    <button class="back" @click="$router.push(`/${campaignid}`)">
-      Back to Campaigns
-    </button>
+        <button class="donate" type="submit">Pledge My Donation!</button>
+      </form>
+      <button class="back" @click="$router.push(`/${campaignid}`)">
+        Back to Campaigns
+      </button>
+    </div>
   </div>
 </template>
 
@@ -121,6 +132,7 @@ export default {
         remarks: "",
       },
       toggle: false,
+      isLoading: true,
     };
   },
 
@@ -217,6 +229,7 @@ export default {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
     this.getItems();
+    this.isLoading = false;
   },
 };
 </script>

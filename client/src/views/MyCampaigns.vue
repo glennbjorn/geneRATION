@@ -1,22 +1,24 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
-  </div>
-  <div class="page" v-if="loggedIn">
-    <h1 class="header">Your Campaigns</h1>
-    <div v-if="campaignsAdmin.length === 0">
-      <h2>You do not have any campaigns</h2>
-      <button class="create" @click="$router.push('/create')">
-        Create New Campaign
+  <div v-if="!isLoading">
+    <div class="page" v-if="!loggedIn">
+      <h1>You are not logged in!</h1>
+    </div>
+    <div class="page" v-if="loggedIn">
+      <h1 class="header">Your Campaigns</h1>
+      <div v-if="campaignsAdmin.length === 0">
+        <h2>You do not have any campaigns</h2>
+        <button class="create" @click="$router.push('/create')">
+          Create New Campaign
+        </button>
+      </div>
+      <div>
+        <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
+      </div>
+      <button class="btn" @click="$router.push('/dashboard')">
+        Go back to dashboard
       </button>
     </div>
-    <div>
-      <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
-    </div>
-    <button class="btn" @click="$router.push('/dashboard')">
-      Go back to dashboard
-    </button>
   </div>
 </template>
 
@@ -39,6 +41,7 @@ export default {
       user: {},
       loggedIn: false,
       campaignsAdmin: [],
+      isLoading: true,
     };
   },
 
@@ -76,6 +79,7 @@ export default {
     this.getUserDetails();
     this.checkLoggedIn();
     this.campaignsAdmin = await this.getCampaigns();
+    this.isLoading = false;
   },
 };
 </script>

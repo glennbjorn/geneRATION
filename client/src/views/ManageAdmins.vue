@@ -1,23 +1,25 @@
 <template>
   <Nav />
-  <div class="page" v-if="!auth">
-    <h1>You are not authorised to view this page</h1>
-  </div>
-  <div class="page" v-if="auth">
-    <div class="owner">
-      <h3>OWNER: {{ owner }}</h3>
+  <div v-if="!isLoading">
+    <div class="page" v-if="!auth">
+      <h1>You are not authorised to view this page</h1>
     </div>
-    <AddAdmin @add-admin="addAdmin" />
-    <Admins @delete-admin="deleteAdmin" :admins="admins" />
-    <div class="admins" v-if="admins.length === 0">
-      <p>No collaborators at the moment</p>
+    <div class="page" v-if="auth">
+      <div class="owner">
+        <h3>OWNER: {{ owner }}</h3>
+      </div>
+      <AddAdmin @add-admin="addAdmin" />
+      <Admins @delete-admin="deleteAdmin" :admins="admins" />
+      <div class="admins" v-if="admins.length === 0">
+        <p>No collaborators at the moment</p>
+      </div>
+      <button
+        class="back"
+        @click="$router.push(`/mycampaigns/${campaignid}/edit`)"
+      >
+        Back to Editing Campaign
+      </button>
     </div>
-    <button
-      class="back"
-      @click="$router.push(`/mycampaigns/${campaignid}/edit`)"
-    >
-      Back to Editing Campaign
-    </button>
   </div>
 </template>
 
@@ -39,6 +41,7 @@ export default {
       campaign: [],
       admins: [],
       owner: "",
+      isLoading: true,
     };
   },
 
@@ -133,6 +136,7 @@ export default {
     this.checkAuth();
     this.getAdmins();
     this.getOwner();
+    this.isLoading = false;
   },
 };
 </script>
