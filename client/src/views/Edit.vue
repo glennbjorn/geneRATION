@@ -1,9 +1,9 @@
 <template>
   <Nav />
-  <div v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
+  <div v-if="!auth">
+    <h1>You are not authorised to view this page</h1>
   </div>
-  <div class="edit-page" v-if="loggedIn">
+  <div class="edit-page" v-if="auth">
     <form @submit.prevent="submit">
       <div class="header">
         <h1>Edit your campaign</h1>
@@ -106,15 +106,17 @@
         <p>Delete campaign</p>
       </div>
       <div class="admins">
-        <i class="fas fa-user-friends" @click="$router.push(`/mycampaigns/${campaignid}/admins`)"></i>
+        <i
+          class="fas fa-user-friends"
+          @click="$router.push(`/mycampaigns/${campaignid}/admins`)"
+        ></i>
         <p>Manage administrators</p>
       </div>
     </div>
+    <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
+      Back to My Campaigns
+    </button>
   </div>
-
-  <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
-    Back to My Campaigns
-  </button>
 </template>
 
 <script>
@@ -137,7 +139,7 @@ export default {
   data() {
     return {
       user: {},
-      loggedIn: false,
+      auth: false,
       campaignid: "",
       campaign: [],
       items: [],
@@ -153,11 +155,12 @@ export default {
       }
     },
 
-    checkLoggedIn() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
+    checkAuth() {
+      let admins = this.campaign.admin;
+      for (var i = 0; i < admins.length; i++) {
+        if (admins[i].email === this.user.email) {
+          this.auth = true;
+        }
       }
     },
 
@@ -272,9 +275,9 @@ export default {
 
   async created() {
     this.getUserDetails();
-    this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.checkAuth();
     this.fetchItems();
   },
 };

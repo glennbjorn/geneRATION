@@ -1,21 +1,24 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
+  <div class="page" v-if="!auth">
+    <h1>You are not authorised to view this page</h1>
   </div>
-  <div class="page" v-if="loggedIn">
+  <div class="page" v-if="auth">
     <div class="owner">
       <h3>OWNER: {{ owner }}</h3>
     </div>
+    <AddAdmin @add-admin="addAdmin" />
+    <Admins @delete-admin="deleteAdmin" :admins="admins" />
+    <div class="admins" v-if="admins.length === 0">
+      <p>No collaborators at the moment</p>
+    </div>
+    <button
+      class="back"
+      @click="$router.push(`/mycampaigns/${campaignid}/edit`)"
+    >
+      Back to Editing Campaign
+    </button>
   </div>
-  <AddAdmin @add-admin="addAdmin" />
-  <Admins @delete-admin="deleteAdmin" :admins="admins" />
-  <div class="admins" v-if="admins.length === 0">
-    <p>No collaborators at the moment</p>
-  </div>
-  <button class="back" @click="$router.push(`/mycampaigns/${campaignid}/edit`)">
-    Back to Editing Campaign
-  </button>
 </template>
 
 <script>
@@ -31,7 +34,7 @@ export default {
   data() {
     return {
       user: {},
-      loggedIn: false,
+      auth: false,
       campaignid: "",
       campaign: [],
       admins: [],
@@ -54,11 +57,12 @@ export default {
       }
     },
 
-    checkLoggedIn() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
+    checkAuth() {
+      let admins = this.campaign.admin;
+      for (var i = 0; i < admins.length; i++) {
+        if (admins[i].email === this.user.email) {
+          this.auth = true;
+        }
       }
     },
 
@@ -87,8 +91,8 @@ export default {
     async addAdmin(admin) {
       var arr = this.admins;
       if (this.owner === admin.email) {
-          this.$swal("Owner is already a collaborator!");
-          return;
+        this.$swal("Owner is already a collaborator!");
+        return;
       }
       for (var i = 0; i < arr.length; i++) {
         if (arr[i].email === admin.email) {
@@ -124,9 +128,9 @@ export default {
 
   async created() {
     this.getUserDetails();
-    this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.checkAuth();
     this.getAdmins();
     this.getOwner();
   },
@@ -154,7 +158,7 @@ export default {
 }
 
 .admins {
-    text-align: center;
-    margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 </style>

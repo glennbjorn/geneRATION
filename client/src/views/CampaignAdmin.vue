@@ -1,9 +1,9 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
+  <div class="page" v-if="!auth">
+    <h1>You are not authorised to view this page</h1>
   </div>
-  <div class="page" v-if="loggedIn">
+  <div class="page" v-if="auth">
     <h1 class="header">{{ campaign.name }}</h1>
     <h6 class="org">By {{ campaign.org }}</h6>
     <div class="date-and-loc">
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       user: {},
-      loggedIn: false,
+      auth: false,
       campaignid: "",
       campaign: [],
       donors: [],
@@ -83,11 +83,12 @@ export default {
       }
     },
 
-    checkLoggedIn() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
+    checkAuth() {
+      let admins = this.campaign.admin;
+      for (var i = 0; i < admins.length; i++) {
+        if (admins[i].email === this.user.email) {
+          this.auth = true;
+        }
       }
     },
 
@@ -173,9 +174,9 @@ export default {
 
   async created() {
     this.getUserDetails();
-    this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.checkAuth();
     this.donors = await this.getDonors();
     this.getItemCount();
     this.createQR();

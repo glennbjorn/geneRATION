@@ -28,7 +28,7 @@ export default {
   background:white;
   margin: auto;
   padding: 10px 20px;
-  max-width: 50%;
+  max-width: 450px;
 }
 
 .admin h3 {

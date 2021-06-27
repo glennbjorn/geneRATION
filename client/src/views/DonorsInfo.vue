@@ -1,9 +1,9 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
+  <div class="page" v-if="!auth">
+    <h1>You are not authorised to view this page</h1>
   </div>
-  <div class="page" v-if="loggedIn">
+  <div class="page" v-if="auth">
     <p><i>You may click on the header to sort the table</i></p>
     <table class="table">
       <thead>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       user: {},
-      loggedIn: false,
+      auth: false,
       campaignid: "",
       campaign: [],
       items: [],
@@ -69,11 +69,12 @@ export default {
       }
     },
 
-    checkLoggedIn() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
+    checkAuth() {
+      let admins = this.campaign.admin;
+      for (var i = 0; i < admins.length; i++) {
+        if (admins[i].email === this.user.email) {
+          this.auth = true;
+        }
       }
     },
 
@@ -127,9 +128,9 @@ export default {
 
   async created() {
     this.getUserDetails();
-    this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.checkAuth();
     this.getItems();
     this.donors = await this.getDonors();
     this.sort("address");
