@@ -147,19 +147,19 @@ export default {
       }
     },
 
-    async getUserOrg() {
-      const res = await axios.post("/api/getuserorg", {
-        email: this.user.email,
-      });
-      this.userOrg = res.data;
-    },
-
     checkLoggedIn() {
       if (localStorage.getItem("jwt")) {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
       }
+    },
+
+    async getUserOrg() {
+      const res = await axios.post("/api/getuserorg", {
+        email: this.user.email,
+      });
+      this.userOrg = res.data;
     },
 
     addItem(item) {
@@ -221,6 +221,7 @@ export default {
 
       try {
         await axios.post("/api/campaign/newCampaign", {
+          email: [{ email: this.user.email }],
           org: this.userOrg,
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,

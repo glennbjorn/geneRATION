@@ -91,8 +91,10 @@
       </div>
 
       <button class="donate" type="submit">Pledge My Donation!</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
     </form>
+    <button class="back" @click="$router.push(`/${campaignid}`)">
+      Back to Campaigns
+    </button>
   </div>
 </template>
 
@@ -277,5 +279,16 @@ export default {
   font-size: 50px;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.back {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 100px;
 }
 </style>

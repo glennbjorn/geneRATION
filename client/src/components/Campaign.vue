@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .campaign {
   background: #f4f4f4;
   margin: 5px;

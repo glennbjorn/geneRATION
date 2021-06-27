@@ -3,6 +3,7 @@ const Campaign = require("../model/Campaign");
 exports.newCampaign = async (req, res) => {
     try {
         let campaign = new Campaign({
+            admin: req.body.email,
             org: req.body.org,
             name: req.body.name,
             camDesc: req.body.camDesc,
@@ -23,7 +24,7 @@ exports.newCampaign = async (req, res) => {
 
 exports.getCampaigns = async (req, res) => {
     try {
-        let campaign = await Campaign.find({ org: req.body.org });
+        let campaign = await Campaign.find({ "admin.email": req.body.email });
         await res.json(campaign)
     } catch (err) {
         res.status(400).json({ err: err })
@@ -71,6 +72,17 @@ exports.deleteCampaign = async (req, res) => {
     try {
         await Campaign.findByIdAndDelete({ _id: req.body._id });
         await res.json({ message: "deleted" })
+    } catch (err) {
+        res.status(400).json({ err: err })
+    }
+}
+
+exports.updateAdmins = async (req, res) => {
+    try {
+        var campaign = await Campaign.findOne({ _id: req.body._id });
+        campaign.admin = req.body.admin;
+        let data = await campaign.save();
+        res.status(201).json({ data })
     } catch (err) {
         res.status(400).json({ err: err })
     }

@@ -191,12 +191,8 @@ export default {
 }
 
 .date-and-loc {
-  display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 25%;
-  margin-right: 25%;
-  justify-content: space-between;
+  text-align: center;
+  padding: 20px;
 }
 
 .cam-desc {

@@ -100,15 +100,21 @@
       <button class="edit" type="submit">Edit campaign</button>
     </form>
 
-    <div class="delete">
-      <i class="fas fa-trash" @click="deleteCampaign"></i>
-      <p>Delete campaign</p>
+    <div class="icons">
+      <div class="delete">
+        <i class="fas fa-trash" @click="deleteCampaign"></i>
+        <p>Delete campaign</p>
+      </div>
+      <div class="admins">
+        <i class="fas fa-user-friends" @click="$router.push(`/mycampaigns/${campaignid}/admins`)"></i>
+        <p>Manage administrators</p>
+      </div>
     </div>
   </div>
 
   <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
-      Back to My Campaigns
-    </button>
+    Back to My Campaigns
+  </button>
 </template>
 
 <script>
@@ -217,7 +223,7 @@ export default {
 
       if (this.campaign.collectionPostalCode.length !== 6) {
         this.$swal("A postal code should consist of 6 digits");
-        return
+        return;
       }
 
       if (!this.campaign.collectionDate) {
@@ -320,7 +326,21 @@ export default {
   margin-top: 30px;
 }
 
+.icons {
+  display: flex;
+}
+
+.icons p {
+  font-size: 20px;
+}
+
 .delete {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.admins {
   display: block;
   margin: 0 auto;
   text-align: center;
@@ -331,10 +351,6 @@ export default {
   cursor: pointer;
   font-size: 40px;
   margin-bottom: 10px;
-}
-
-.delete p {
-  font-size: 20px;
 }
 
 .back {

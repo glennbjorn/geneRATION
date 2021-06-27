@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const CampaignSchema = mongoose.Schema({
+  admin: [{
+    email: {
+      type: String,
+      required: true
+    }
+  }],
   org: {
     type: String,
     required: true
