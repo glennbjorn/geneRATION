@@ -3,29 +3,53 @@
     <h3>
       {{ campaignAdmin.name }}
     </h3>
-    <p>Collection Date: {{ campaignAdmin.collectionDate }}</p>
+    <div class="date-and-loc">
+      <p>Collection Date: {{ date }}</p>
+      <p>
+        Collection Area: {{ campaignAdmin.collectionAddress }}, S{{
+          campaignAdmin.collectionPostalCode
+        }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 import router from "@/router";
+import moment from "moment";
 
 export default {
   name: "CampaignAdmin",
+
+  data() {
+    return {
+      date: "",
+    };
+  },
+
   props: {
     campaignAdmin: Object,
   },
+
   methods: {
     async goto() {
       localStorage.removeItem("admincampaignid");
       localStorage.setItem("admincampaignid", this.campaignAdmin._id);
       await router.push(`/mycampaigns/${this.campaignAdmin._id}`);
     },
+
+    convertDate() {
+      this.date = moment(this.campaignAdmin.collectionDate).format("Do MMM YYYY");
+    },
+  },
+
+  created() {
+    this.convertDate();
   },
 };
 </script>
 
-<style scope>
+<style scoped>
 .fas {
   color: red;
 }

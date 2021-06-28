@@ -1,31 +1,39 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
-  </div>
-  <div class="page" v-if="loggedIn">
-      <button @click="$router.push(`/mycampaigns/${campaignid}`)">Back</button>
-    <table class="table">
-      <thead>
-        <tr class="tr">
-          <th class="th">Name</th>
-          <th class="th">Postal Code</th>
-          <th class="th">Unit Number</th>
-          <th class="th" :key="item" v-for="item in items">{{ item }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="tr" :key="donor.id" v-for="donor in donors">
-          <td class="td">{{ donor.name }}</td>
-          <td class="td">{{ donor.address }}</td>
-          <td class="td">{{ donor.unit }}</td>
-          <td class="td" :key="item.id" v-for="item in donor.items">
-            <p v-if=item.donate>Yes</p>
-            <p v-else>No</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div v-if="!isLoading">
+    <div class="page" v-if="!auth">
+      <h1>You are not authorised to view this page</h1>
+    </div>
+    <div class="page" v-if="auth">
+      <p><i>You may click on the header to sort the table</i></p>
+      <table class="table">
+        <thead>
+          <tr class="tr">
+            <th class="th" @click="sort('name')">Name</th>
+            <th class="th" @click="sort('address')">Postal Code</th>
+            <th class="th" @click="sort('unit')">Unit Number</th>
+            <th class="th" @click="sort('contact')">Contact No.</th>
+            <th class="th" :key="item" v-for="item in items">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr" :key="donor.id" v-for="donor in donors">
+            <td class="td">{{ donor.name }}</td>
+            <td class="td">{{ donor.address }}</td>
+            <td class="td">{{ donor.unit }}</td>
+            <td class="td">{{ donor.contact }}</td>
+            <td class="td" :key="item.id" v-for="item in donor.items">
+              <p v-if="item.donate">Yes</p>
+              <p v-else>No</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
+        Back to My Campaigns
+      </button>
+    </div>
   </div>
 </template>
 
@@ -40,11 +48,14 @@ export default {
   data() {
     return {
       user: {},
-      loggedIn: false,
+      auth: false,
       campaignid: "",
       campaign: [],
       items: [],
       donors: [],
+      currentSort: "address",
+      currentSortDir: "asc",
+      isLoading: true,
     };
   },
 
@@ -61,21 +72,19 @@ export default {
       }
     },
 
-    checkLoggedIn() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
+    checkAuth() {
+      let admins = this.campaign.admin;
+      for (var i = 0; i < admins.length; i++) {
+        if (admins[i].email === this.user.email) {
+          this.auth = true;
+        }
       }
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -89,7 +98,6 @@ export default {
         arr = [...arr, item];
       }
       this.items = arr;
-      console.log(this.items);
     },
 
     getCampaignId() {
@@ -97,50 +105,73 @@ export default {
     },
 
     async getDonors() {
-      const res = await axios.post("/donate/getDonors", {
+      const res = await axios.post("/api/donate/getDonors", {
         campaignid: this.campaignid,
       });
 
       return res.data;
     },
+
+    sort(field) {
+      if (field === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      }
+
+      this.currentSort = field;
+
+      this.donors.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDir === "desc") modifier = -1;
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    },
   },
 
   async created() {
     this.getUserDetails();
-    this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.checkAuth();
     this.getItems();
     this.donors = await this.getDonors();
+    this.sort("address");
+    this.isLoading = false;
   },
 };
 </script>
 
-<style>
+<style scoped>
+p {
+  text-align: center;
+}
+
 .table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  width: 750px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   border-collapse: collapse;
   border: 3px solid #44475c;
-  margin: 10px 10px 0 10px;
 }
 
 .table .th {
   text-align: center;
-  background: #44475c;
+  background: #696969;
   color: #fff;
   cursor: pointer;
   padding: 8px;
   min-width: 30px;
+  vertical-align: middle;
 }
 
 .table .th:hover {
-  background: #717699;
+  background: black;
 }
 .table .tr .td {
   text-align: center;
   padding: 3px;
   border-right: 2px solid #696969;
+  vertical-align: middle;
 }
 
 .table .td {
@@ -149,5 +180,15 @@ export default {
 
 .table .tbody .tr .td {
   background: #d4d8f9;
+}
+
+.back {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
 }
 </style>

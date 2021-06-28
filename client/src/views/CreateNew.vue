@@ -1,5 +1,6 @@
 <template>
   <Nav />
+<<<<<<< HEAD
   <div class="page" v-if="!loggedIn">
     <h1>You are not logged in!</h1>
   </div>
@@ -69,6 +70,112 @@
 
       <button class="btn" type="submit">Create Campaign</button>
     </form>
+=======
+  <div v-if="!isLoading">
+    <div class="page" v-if="!loggedIn">
+      <h1>You are not logged in!</h1>
+    </div>
+    <div class="create-page" v-if="loggedIn">
+      <form @submit.prevent="submit">
+        <div class="header">
+          <h1>Create</h1>
+          <h2>a new campaign!</h2>
+        </div>
+
+        <div class="create-campaign">
+          <label for="name">Name of Campaign</label>
+          <input
+            v-model="campaign.name"
+            type="text"
+            id="name"
+            placeholder="Name of Campaign"
+          />
+        </div>
+
+        <div class="create-campaign">
+          <label for="camDesc">Description of Campaign</label>
+          <textarea
+            v-model="campaign.camDesc"
+            type="text"
+            id="camDesc"
+            rows="4"
+            placeholder="Description of Campaign"
+          />
+        </div>
+
+        <div class="create-campaign">
+          <label for="orgDesc">Description of Organisation</label>
+          <textarea
+            v-model="campaign.orgDesc"
+            type="text"
+            id="orgDesc"
+            rows="4"
+            placeholder="Description of Organisation"
+          />
+        </div>
+
+        <div class="create-campaign">
+          <label for="collection-address">Address of Collection Area</label>
+          <input
+            v-model="campaign.collectionAddress"
+            type="text"
+            id="collection-address"
+            placeholder="Address of Collection Area"
+          />
+        </div>
+
+        <div class="create-campaign">
+          <label for="collection-postcode"
+            >Postal Code of Collection Area</label
+          >
+          <input
+            v-model="campaign.collectionPostalCode"
+            type="text"
+            id="collection-postcode"
+            placeholder="e.g. 512345"
+          />
+        </div>
+
+        <div class="create-campaign">
+          <label for="collection-date">Choose a collection date</label>
+          <input
+            type="date"
+            v-model="campaign.collectionDate"
+            placeholder="DD/MM/YYYY"
+            id="collection-date"
+          />
+        </div>
+
+        <h3 class="mini-header">Add items here</h3>
+
+        <div>
+          <AddItem @add-item="addItem" />
+        </div>
+
+        <h3 class="mini-header">List of Items</h3>
+
+        <div class="no-items" v-if="items.length === 0">
+          <h5>Please add some items!</h5>
+        </div>
+
+        <div>
+          <Items @delete-item="deleteItem" :items="items" />
+        </div>
+
+        <div class="create-campaign">
+          <label for="target">Target number of sets</label>
+          <input
+            v-model="campaign.target"
+            type="text"
+            id="target"
+            placeholder="Please indicate a whole number"
+          />
+        </div>
+
+        <button class="btn" type="submit">Create Campaign</button>
+      </form>
+    </div>
+>>>>>>> origin/main
   </div>
 </template>
 
@@ -98,9 +205,13 @@ export default {
         name: "",
         camDesc: "",
         orgDesc: "",
+        collectionAddress: "",
+        collectionPostalCode: "",
         collectionDate: "",
+        target: "",
       },
       items: [],
+      isLoading: true,
     };
   },
 
@@ -113,19 +224,19 @@ export default {
       }
     },
 
-    async getUserOrg() {
-      const res = await axios.post("/getuserorg", {
-        email: this.user.email,
-      });
-      this.userOrg = res.data;
-    },
-
     checkLoggedIn() {
       if (localStorage.getItem("jwt")) {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
       }
+    },
+
+    async getUserOrg() {
+      const res = await axios.post("/api/getuserorg", {
+        email: this.user.email,
+      });
+      this.userOrg = res.data;
     },
 
     addItem(item) {
@@ -144,48 +255,59 @@ export default {
 
     async submit() {
       if (!this.campaign.name) {
-        this.$swal(
-          "Please include a campaign name!"
-        );
+        this.$swal("Please include a campaign name!");
         return;
       }
 
       if (!this.campaign.camDesc) {
-        this.$swal(
-          "Please include a campaign description!"
-        );
+        this.$swal("Please include a campaign description!");
         return;
       }
 
       if (!this.campaign.orgDesc) {
+        this.$swal("Please include an organisation description!");
+        return;
+      }
+
+      if (!this.campaign.collectionAddress) {
+        this.$swal("Please include a collection address!");
+        return;
+      }
+
+      if (!this.campaign.collectionPostalCode) {
         this.$swal(
-          "Please include an organisation description!"
+          "Please include the postal code for the collection address!"
         );
+        return;
+      }
+
+      if (this.campaign.collectionPostalCode.length !== 6) {
+        this.$swal("A postal code should consist of 6 digits");
         return;
       }
 
       if (!this.campaign.collectionDate) {
-        this.$swal(
-          "Please include a collection date!"
-        );
+        this.$swal("Please include a collection date!");
         return;
       }
 
-      if (this.items.length===0) {
-        this.$swal(
-          "Please include some items!"
-        );
+      if (this.items.length === 0) {
+        this.$swal("Please include some items!");
         return;
       }
 
       try {
-        await axios.post("/campaign/newCampaign", {
+        await axios.post("/api/campaign/newCampaign", {
+          email: [{ email: this.user.email }],
           org: this.userOrg,
           name: this.campaign.name,
           camDesc: this.campaign.camDesc,
           orgDesc: this.campaign.orgDesc,
+          collectionAddress: this.campaign.collectionAddress,
+          collectionPostalCode: this.campaign.collectionPostalCode,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
+          target: this.campaign.target,
         });
 
         this.$swal("Campaign created!");
@@ -203,6 +325,7 @@ export default {
     this.getUserDetails();
     this.checkLoggedIn();
     this.getUserOrg();
+    this.isLoading = false;
   },
 };
 </script>

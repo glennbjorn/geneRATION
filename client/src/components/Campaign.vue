@@ -4,15 +4,29 @@
       {{ campaign.name }}
     </h3>
     <p>{{ campaign.camDesc }}</p>
-    <p>Collection Date: {{ campaign.collectionDate }}</p>
+    <div class="date-and-loc">
+      <p>Collection Date: {{ date }}</p>
+      <p>
+        Collection Area: {{ campaign.collectionAddress }}, S{{
+          campaign.collectionPostalCode
+        }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 import router from "@/router";
+import moment from "moment";
 
 export default {
   name: "Campaign",
+
+  data() {
+    return {
+      date: "",
+    };
+  },
 
   props: {
     campaign: Object,
@@ -20,15 +34,21 @@ export default {
 
   methods: {
     async goto() {
-      localStorage.removeItem('campaignid')
-      localStorage.setItem('campaignid', this.campaign._id)
-      await router.push(`/${this.campaign._id}`)
+      await router.push(`/${this.campaign._id}`);
     },
-  }
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY");
+    },
+  },
+
+  created() {
+    this.convertDate();
+  },
 };
 </script>
 
-<style scope>
+<style scoped>
 .campaign {
   background: #f4f4f4;
   margin: 5px;
@@ -41,10 +61,18 @@ export default {
   font-size: 50px;
 }
 
-.campaign p {;
+.campaign p {
   max-width: 1000px;
   text-align: center;
   margin: auto;
   margin-bottom: 15px;
+}
+
+.date-and-loc {
+  display: flex;
+  margin-top: 20px;
+  margin-left: 25%;
+  margin-right: 25%;
+  justify-content: space-between;
 }
 </style>

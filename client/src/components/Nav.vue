@@ -2,6 +2,7 @@
   <nav class="navbar navbar-expand-md navbar-light bg-custom mb-4">
     <div class="container-fluid">
       <!-- link Home -->
+<<<<<<< HEAD
       <!-- <router-link to="/" class="navbar-brand" href="#">geneRATION</router-link> -->
       <router-link to="/" class="navbar-brand" href="#">
          <img class="top-right-logo" src="@/assets/smaller-logo.png" alt="Home Button">
@@ -14,6 +15,11 @@
     <a href="#ongoing-campaign"> Ongoing Campaigns </a>
 
 
+=======
+      <router-link to="/" class="navbar-brand" href="#">
+        <img class="img" src="@/assets/header.png" alt="Home Button">
+      </router-link>
+>>>>>>> origin/main
 
       <div>
         <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="!loggedIn">
@@ -75,6 +81,7 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style>
 .top-right-logo {
   width: 25%;
@@ -93,4 +100,10 @@ export default {
 font-weight: bold;
 font-size: 120%;
 }
+=======
+<style scoped>
+  .img {
+    max-width: 200px;
+  }
+>>>>>>> origin/main
 </style>

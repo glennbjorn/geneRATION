@@ -5,7 +5,7 @@
     <h1 class="sentence">so much for your donation!</h1>
     <div class="reminder">
       <p>
-        We will be coming to collect the items on {{ campaign.collectionDate }}!
+        We will be coming to collect the items on {{ date }}!
       </p>
     </div>
 
@@ -18,6 +18,7 @@
 <script>
 import Nav from "../components/Nav.vue";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   name: "Campaign",
@@ -30,6 +31,7 @@ export default {
     return {
       campaignid: "",
       campaign: [],
+      date: "",
     };
   },
 
@@ -40,7 +42,7 @@ export default {
 
     async getCampaign() {
       const res = await axios.post(
-        "/campaign/getCampaignById",
+        "/api/campaign/getCampaignById",
         {
           _id: this.campaignid,
         }
@@ -50,11 +52,16 @@ export default {
 
       return data;
     },
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY")
+    }
   },
 
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.convertDate();
   },
 };
 </script>

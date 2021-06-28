@@ -1,93 +1,111 @@
 <template>
   <Nav />
-  <div>
-    <h1 class="header">{{ campaign.name }}</h1>
-  </div>
-  <div class="form-page">
-    <form @submit.prevent="submit">
-      <div class="subheader">
-        <h1>Thank you for donating!</h1>
-        <h3>Kindly fill up your information below</h3>
-      </div>
+  <div v-if="!isLoading">
+    <div>
+      <h1 class="header">{{ campaign.name }}</h1>
+    </div>
+    <div class="form-page">
+      <form @submit.prevent="submit">
+        <div class="subheader">
+          <h1>Thank you for donating!</h1>
+          <h3>Kindly fill up your information below</h3>
+        </div>
 
-      <div class="form-form">
-        <label for="name">Name</label>
-        <input v-model="donor.name" type="text" id="name" placeholder="Name" />
-      </div>
+        <div class="form-form">
+          <label for="name">Name</label>
+          <input
+            v-model="donor.name"
+            type="text"
+            id="name"
+            placeholder="Name"
+          />
+        </div>
 
-      <div class="form-form">
-        <label for="contact">Contact Number</label>
-        <input
-          v-model="donor.contact"
-          type="text"
-          id="contact"
-          placeholder="Contact Number"
-        />
-      </div>
+        <div class="form-form">
+          <label for="contact">Contact Number</label>
+          <input
+            v-model="donor.contact"
+            type="text"
+            id="contact"
+            placeholder="Contact Number"
+          />
+        </div>
 
-      <div class="form-form">
-        <label for="address">Home Address</label>
-        <input
-          v-model="donor.address"
-          type="text"
-          id="address"
-          placeholder="Home Address"
-        />
-      </div>
+        <div class="form-form">
+          <label for="address">Home Postal Code</label>
+          <input
+            v-model="donor.address"
+            type="text"
+            id="address"
+            placeholder="Postal Code"
+          />
+        </div>
 
-      <div class="form-form">
-        <label for="unit">Unit Number</label>
-        <input
-          v-model="donor.unit"
-          type="text"
-          id="unit"
-          placeholder="Unit Number"
-        />
-      </div>
+        <div class="form-form">
+          <label for="unit">Unit Number</label>
+          <input
+            v-model="donor.unit"
+            type="text"
+            id="unit"
+            placeholder="Unit Number"
+          />
+        </div>
 
-      <div class="mini-header">
-        <h5>Items to donate</h5>
-      </div>
+        <div class="mini-header">
+          <h5>Items to donate</h5>
+        </div>
 
-      <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
-        <input v-model="donor.items[n - 1].donate" type="checkbox" id="items" />
-        <p>
-          {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
-        </p>
-      </div>
+        <div class="items-checkbox">
+          <input v-model="toggle" type="checkbox" @click="selectAll" />
+          <p>Select all</p>
+        </div>
 
-      <div class="mini-header">
-        <h5>Declarations</h5>
-      </div>
+        <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
+          <input
+            v-model="donor.items[n - 1].donate"
+            type="checkbox"
+            id="items"
+          />
+          <p>
+            {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
+          </p>
+        </div>
 
-      <div class="agree-checkbox">
-        <label for="shelf-life"
-          >I agree to only donate items that are <b>NOT</b> expiring in the next
-          3 months</label
-        >
-        <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
-      </div>
+        <div class="mini-header">
+          <h5>Declarations</h5>
+        </div>
 
-      <div class="agree-checkbox">
-        <label for="halal"
-          >I agree to only donate items that are <b>Halal certified</b></label
-        >
-        <input v-model="donor.halal" type="checkbox" id="halal" />
-      </div>
+        <div class="agree-checkbox">
+          <label for="shelf-life"
+            >I agree to only donate items that are <b>NOT</b> expiring in the
+            next 3 months</label
+          >
+          <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
+        </div>
 
-      <div class="form-form">
-        <label for="remarks">Do you have any additional remarks?</label>
-        <textarea
-          v-model="donor.remarks"
-          type="text"
-          id="remarks"
-          placeholder="e.g. I will be donating additional items!"
-        />
-      </div>
+        <div class="agree-checkbox">
+          <label for="halal"
+            >I agree to only donate items that are <b>Halal certified</b></label
+          >
+          <input v-model="donor.halal" type="checkbox" id="halal" />
+        </div>
 
-      <button class="donate" type="submit">Pledge My Donation!</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-    </form>
+        <div class="form-form">
+          <label for="remarks">Do you have any additional remarks?</label>
+          <textarea
+            v-model="donor.remarks"
+            type="text"
+            id="remarks"
+            placeholder="e.g. I will be donating additional items!"
+          />
+        </div>
+
+        <button class="donate" type="submit">Pledge My Donation!</button>
+      </form>
+      <button class="back" @click="$router.push(`/${campaignid}`)">
+        Back to Campaigns
+      </button>
+    </div>
   </div>
 </template>
 
@@ -113,6 +131,8 @@ export default {
         halal: false,
         remarks: "",
       },
+      toggle: false,
+      isLoading: true,
     };
   },
 
@@ -126,12 +146,9 @@ export default {
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -148,30 +165,26 @@ export default {
 
     async submit() {
       if (!this.donor.name) {
-        this.$swal(
-          "Please include your name!"
-        );
+        this.$swal("Please include your name!");
         return;
       }
 
       if (!this.donor.contact) {
-        this.$swal(
-          "Please include your contact number!"
-        );
+        this.$swal("Please include your contact number!");
         return;
       }
 
       if (!this.donor.address) {
-        this.$swal(
-          "Please include your address!"
-        );
+        this.$swal("Please include your postal code!");
         return;
       }
 
+      if (this.donor.address.length != 6) {
+        this.$swal("Your postal code should be 6 digits!");
+      }
+
       if (!this.donor.unit) {
-        this.$swal(
-          "Please include your unit number!"
-        );
+        this.$swal("Please include your unit number!");
         return;
       }
 
@@ -189,7 +202,7 @@ export default {
         return;
       }
 
-      await axios.post("/donate", {
+      await axios.post("/api/donate", {
         campaignid: this.campaignid,
         name: this.donor.name,
         contact: this.donor.contact,
@@ -204,12 +217,19 @@ export default {
 
       router.push("/ThankYou");
     },
+
+    selectAll() {
+      for (let i = 0; i < this.donor.items.length; i++) {
+        this.donor.items[i].donate = !this.toggle;
+      }
+    },
   },
 
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
     this.getItems();
+    this.isLoading = false;
   },
 };
 </script>
@@ -272,5 +292,16 @@ export default {
   font-size: 50px;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.back {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 100px;
 }
 </style>

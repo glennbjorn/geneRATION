@@ -1,37 +1,52 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
-  </div>
-  <div class="page" v-if="loggedIn">
-    <h1 class="header">{{ campaign.name }}</h1>
-    <h6 class="org">By {{ campaign.org }}</h6>
-    <h6 class="date-and-loc">Collection Date: {{ campaign.collectionDate }}</h6>
-    <div class="cam-desc">
-      {{ campaign.camDesc }}
+  <div v-if="!isLoading">
+    <div class="page" v-if="!auth">
+      <h1>You are not authorised to view this page</h1>
     </div>
-    <h5>Items for collection</h5>
-    <div class="items" :key="item._id" v-for="item in campaign.items">
-      <p>{{ item.qty }} x {{ item.item }}</p>
-    </div>
+    <div class="page" v-if="auth">
+      <h1 class="header">{{ campaign.name }}</h1>
+      <h6 class="org">By {{ campaign.org }}</h6>
+      <div class="date-and-loc">
+        <h6>Collection Date: {{ date }}</h6>
+        <h6>
+          Collection Area: {{ campaign.collectionAddress }}, S{{
+            campaign.collectionPostalCode
+          }}
+        </h6>
+      </div>
+      <div class="cam-desc">
+        {{ campaign.camDesc }}
+      </div>
+      <h5>Items for collection</h5>
+      <div class="items" :key="item._id" v-for="item in campaign.items">
+        <p>{{ item.qty }} x {{ item.item }}</p>
+      </div>
 
-    <div class="container">
-      <button class="left" @click="goToEdit">
-        Edit
+      <div class="qr-img">
+        <img :src="imgsrc" />
+      </div>
+
+      <div class="container">
+        <button class="left" @click="goToEdit">Edit</button>
+        <button class="right" @click="goToDonorsInfo">
+          Donors Information
+        </button>
+      </div>
+
+      <h5>More about the organisation:</h5>
+      <div class="org-desc">
+        <p>{{ campaign.orgDesc }}</p>
+      </div>
+
+      <h5>Donation progress</h5>
+      <div class="itemcount" v-for="n in items.length" :key="n">
+        {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ campaign.target }}
+      </div>
+
+      <button class="back" @click="$router.push('/mycampaigns')">
+        Back to My Campaigns
       </button>
-      <button class="right" @click="goToDonorsInfo">
-        Donors Information
-      </button>
-    </div>
-
-    <h5>More about the organisation:</h5>
-    <div class="org-desc">
-      <p>{{ campaign.orgDesc }}</p>
-    </div>
-
-    <h5>Donation progress</h5>
-    <div class="itemcount" v-for="n in items.length" :key="n">
-      {{ items[n - 1] }} : {{ itemCount[n - 1] }}
     </div>
   </div>
 </template>
@@ -41,6 +56,7 @@ import VueJwtDecode from "vue-jwt-decode";
 import Nav from "../components/Nav.vue";
 import axios from "axios";
 import router from "@/router";
+import moment from "moment";
 
 export default {
   name: "Dashboard",
@@ -48,12 +64,15 @@ export default {
   data() {
     return {
       user: {},
-      loggedIn: false,
+      auth: false,
       campaignid: "",
       campaign: [],
       donors: [],
       items: [],
       itemCount: [],
+      date: "",
+      isLoading: true,
+      imgsrc: "",
     };
   },
 
@@ -70,11 +89,12 @@ export default {
       }
     },
 
-    checkLoggedIn() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
+    checkAuth() {
+      let admins = this.campaign.admin;
+      for (var i = 0; i < admins.length; i++) {
+        if (admins[i].email === this.user.email) {
+          this.auth = true;
+        }
       }
     },
 
@@ -83,12 +103,9 @@ export default {
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -108,7 +125,7 @@ export default {
     },
 
     async getDonors() {
-      const res = await axios.post("/donate/getDonors", {
+      const res = await axios.post("/api/donate/getDonors", {
         campaignid: this.campaignid,
       });
 
@@ -143,15 +160,30 @@ export default {
       }
       this.itemCount = arr;
     },
+
+    createQR() {
+      this.url = "new-generation.herokuapp.com/" + this.campaignid;
+
+      this.imgsrc =
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+        this.url;
+    },
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY");
+    },
   },
 
   async created() {
     this.getUserDetails();
-    this.checkLoggedIn();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.checkAuth();
     this.donors = await this.getDonors();
     this.getItemCount();
+    this.createQR();
+    this.convertDate();
+    this.isLoading = false;
   },
 };
 </script>
@@ -159,14 +191,12 @@ export default {
 <style scoped>
 .org {
   text-align: center;
-
   margin-top: -20px;
 }
 
 .date-and-loc {
   text-align: center;
-  margin-bottom: 30px;
-  margin-top: 20px;
+  padding: 20px;
 }
 
 .cam-desc {
@@ -210,7 +240,7 @@ h5 {
   margin-bottom: 30px;
 }
 
-.home {
+.back {
   background: white;
   border-inline: 3px;
   border-color: black;
@@ -249,5 +279,16 @@ h5 {
 
 .itemcount {
   text-align: center;
+}
+
+.qr-img {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.qr-img img {
+  max-width: 200px;
+  width: 100%;
 }
 </style>

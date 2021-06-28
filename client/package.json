@@ -16,15 +16,16 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "json-server": "^0.16.3",
+    "moment": "^2.29.1",
     "sass-loader": "^12.0.0",
     "vee-validate": "^4.4.3",
     "vue": "^3.0.0",
     "vue-jwt-decode": "^0.1.0",
+    "vue-qriously": "^1.1.1",
     "vue-router": "^4.0.8",
+    "vue-spinners": "^1.0.2",
     "vue-sweetalert2": "^4.3.1",
-    "vue3-datepicker": "^0.2.4",
-    "vuelidate": "^0.7.6",
-    "vuex": "^4.0.1"
+    "vue3-datepicker": "^0.2.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

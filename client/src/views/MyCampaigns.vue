@@ -1,22 +1,24 @@
 <template>
   <Nav />
-  <div class="page" v-if="!loggedIn">
-    <h1>You are not logged in!</h1>
-  </div>
-  <div class="page" v-if="loggedIn">
-    <h1 class="header">Your Campaigns</h1>
-    <div v-if="!campaignsAdmin">
-      <h2>You do not have any campaigns</h2>
-      <button class="create" @click="$router.push('/create')">
-        Create New Campaign
+  <div v-if="!isLoading">
+    <div class="page" v-if="!loggedIn">
+      <h1>You are not logged in!</h1>
+    </div>
+    <div class="page" v-if="loggedIn">
+      <h1 class="header">Your Campaigns</h1>
+      <div v-if="campaignsAdmin.length === 0">
+        <h2>You do not have any campaigns</h2>
+        <button class="create" @click="$router.push('/create')">
+          Create New Campaign
+        </button>
+      </div>
+      <div>
+        <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
+      </div>
+      <button class="btn" @click="$router.push('/dashboard')">
+        Go back to dashboard
       </button>
     </div>
-    <div>
-      <CampaignsAdmin :campaignsAdmin="campaignsAdmin" />
-    </div>
-    <button class="btn" @click="$router.push('/dashboard')">
-      Go back to dashboard
-    </button>
   </div>
 </template>
 
@@ -38,8 +40,8 @@ export default {
     return {
       user: {},
       loggedIn: false,
-      userOrg: "",
       campaignsAdmin: [],
+      isLoading: true,
     };
   },
 
@@ -60,20 +62,14 @@ export default {
       }
     },
 
-    async getUserOrg() {
-      const res = await axios.post("/getuserorg", {
+    async getCampaigns() {
+      const res = await axios.post("/api/campaign/getCampaigns", {
         email: this.user.email,
       });
-      this.userOrg = res.data;
-    },
-
-    async getCampaigns() {
-      const res = await axios.post(
-        "/campaign/getCampaigns",
-        { org: this.userOrg }
-      );
 
       const data = await res.data;
+
+      console.log(data);
 
       return data;
     },
@@ -82,8 +78,8 @@ export default {
   async created() {
     this.getUserDetails();
     this.checkLoggedIn();
-    await this.getUserOrg();
     this.campaignsAdmin = await this.getCampaigns();
+    this.isLoading = false;
   },
 };
 </script>

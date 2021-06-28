@@ -1,36 +1,37 @@
 <template>
-  <div class="item">
+  <div class="admin">
     <h3>
-      {{ item.item }}
-      <i @click="$emit('delete-item', item.item)" class="fas fa-times"></i>
+      {{ admin.email }}
+      <i @click="$emit('delete-admin', admin.email)" class="fas fa-times"></i>
     </h3>
-    <p>Quantity: {{ item.qty }}</p>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: "Item",
+  name: "Admin",
 
   props: {
-    item: Object,
+    admin: Object,
   },
 };
 </script>
 
-<style scope>
+<style scoped>
 .fas {
   color: red;
+  cursor: pointer;
 }
 
-.item {
+.admin {
   background:white;
-  margin: 5px;
+  margin: auto;
   padding: 10px 20px;
+  max-width: 450px;
 }
 
-.item h3 {
+.admin h3 {
   font-size: 20px;
   display: flex;
   align-items: center;

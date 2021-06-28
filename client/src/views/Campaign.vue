@@ -1,32 +1,38 @@
 <template>
   <Nav />
-  <div class="page">
-    <h1 class="header">{{ campaign.name }}</h1>
-    <h6 class="org">By {{ campaign.org }}</h6>
-    <h6 class="date-and-loc">Collection Date: {{ campaign.collectionDate }}</h6>
-    <div class="cam-desc">
-      {{ campaign.camDesc }}
+  <div v-if="!isLoading">
+    <div class="page">
+      <h1 class="header">{{ campaign.name }}</h1>
+      <h6 class="org">By {{ campaign.org }}</h6>
+      <div class="date-and-loc">
+        <h6>Collection Date: {{ date }}</h6>
+        <h6>
+          Collection Area: {{ campaign.collectionAddress }}, S{{
+            campaign.collectionPostalCode
+          }}
+        </h6>
+      </div>
+      <div class="cam-desc">
+        {{ campaign.camDesc }}
+      </div>
+      <h5>Items for collection</h5>
+      <div class="items" :key="item._id" v-for="item in campaign.items">
+        <p>{{ item.qty }} x {{ item.item }}</p>
+      </div>
+      <button class="donate" @click="gotoform">Donate Today!</button>
+      <h5>More about the organisation:</h5>
+      <div class="org-desc">
+        <p>{{ campaign.orgDesc }}</p>
+      </div>
+      <button class="home" @click="$router.push('/')">Back to Home</button>
     </div>
-    <h5>Items for collection</h5>
-    <div class="items" :key="item._id" v-for="item in campaign.items">
-      <p>{{ item.qty }} x {{ item.item }}</p>
-    </div>
-    <button class="donate" @click="gotoform">
-      Donate Today!
-    </button>
-    <h5>More about the organisation:</h5>
-    <div class="org-desc">
-      <p>{{ campaign.orgDesc }}</p>
-    </div>
-    <button class="home" @click="$router.push('/')">
-      Back to Home
-    </button>
   </div>
 </template>
 
 <script>
 import Nav from "../components/Nav.vue";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   name: "Campaign",
@@ -39,21 +45,20 @@ export default {
     return {
       campaignid: "",
       campaign: [],
+      date: "",
+      isLoading: true,
     };
   },
 
   methods: {
     getCampaignId() {
-      this.campaignid = localStorage.getItem("campaignid");
+      this.campaignid = this.$route.path.slice(1);
     },
 
     async getCampaign() {
-      const res = await axios.post(
-        "/campaign/getCampaignById",
-        {
-          _id: this.campaignid,
-        }
-      );
+      const res = await axios.post("/api/campaign/getCampaignById", {
+        _id: this.campaignid,
+      });
 
       const data = await res.data[0];
 
@@ -65,11 +70,17 @@ export default {
         localStorage.setItem("formId", this.campaignid),
         this.$router.push(`/${this.campaignid}/donate`);
     },
+
+    convertDate() {
+      this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY");
+    },
   },
 
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.convertDate();
+    this.isLoading = false;
   },
 };
 </script>
@@ -83,8 +94,7 @@ export default {
 
 .date-and-loc {
   text-align: center;
-  margin-bottom: 30px;
-  margin-top: 20px;
+  padding: 20px;
 }
 
 .cam-desc {

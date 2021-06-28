@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const CampaignSchema = mongoose.Schema({
+  admin: [{
+    email: {
+      type: String,
+      required: true
+    }
+  }],
   org: {
     type: String,
     required: true
@@ -13,6 +19,14 @@ const CampaignSchema = mongoose.Schema({
     required: true
   },
   orgDesc: {
+    type: String,
+    required: true
+  },
+  collectionAddress: {
+    type: String,
+    required: true
+  },
+  collectionPostalCode: {
     type: String,
     required: true
   },
@@ -31,7 +45,11 @@ const CampaignSchema = mongoose.Schema({
         required: true
       }
     }
-  ]
+  ],
+  target: {
+    type: String,
+    required: true
+  },
 });
 
 const Campaign = mongoose.model("campaign", CampaignSchema);

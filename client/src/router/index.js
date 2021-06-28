@@ -11,6 +11,7 @@ import ThankYou from '../views/ThankYou.vue'
 import CampaignAdmin from '../views/CampaignAdmin.vue'
 import Edit from '../views/Edit.vue'
 import DonorsInfo from '../views/DonorsInfo.vue'
+import ManageAdmins from '../views/ManageAdmins'
 
 const routes = [
     {
@@ -72,6 +73,11 @@ const routes = [
         path: '/mycampaigns/:_id/donorsInfo',
         name: 'DonorsInfo',
         component: DonorsInfo
+    },
+    {
+        path: '/mycampaigns/:_id/admins',
+        name: 'ManageAdmins',
+        component: ManageAdmins
     },
 ]
 
