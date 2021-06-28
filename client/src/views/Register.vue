@@ -217,6 +217,7 @@ if (!this.reg.password) {
 
 p {
   text-align: center;
+  margin-top: 10px;
 }
 
 .register {
