@@ -64,13 +64,13 @@ npm i vue express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors d
 
 1. Set the node environment to "development"
 
-For windows:
-    ```bash
+For Windows:
+    ```
     SET NODE_ENV=development
     ```
 
 For MacOS:
-    ```bash
+    ```
     export NODE_ENV=development
     ```
 
