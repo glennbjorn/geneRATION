@@ -90,7 +90,7 @@ The backend server must be running before starting the app.
 
 1. Start the app on another terminal (on port 8080)
     ```bash
-    cd ../client
+    cd client
     npm run serve
     ```
 
