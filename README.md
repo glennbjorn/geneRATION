@@ -55,14 +55,25 @@ npm install -g nodemon
 
 2. We can now install packages
 ```bash
-npm i express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors --save
+npm i vue express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors dotenv --save
 ```
 
 ## Development
 
 ### Start server in development
 
-1. Run the back end server (on port 4000)
+1. Set the node environment to "development"
+For windows:
+    ```bash
+    SET NODE_ENV=development
+    ```
+
+For MacOS:
+    ```bash
+    export NODE_ENV=development
+    ```
+
+2. Run the back end server (on port 4000)
     ```bash
     cd server
     nodemon
