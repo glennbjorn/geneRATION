@@ -63,6 +63,7 @@ npm i vue express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors d
 ### Start server in development
 
 1. Set the node environment to "development"
+
 For windows:
     ```bash
     SET NODE_ENV=development
