@@ -55,7 +55,9 @@ npm install -g nodemon
 
 2. We can now install packages
 ```bash
+cd client
 npm i vue express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors dotenv --save
+cd ..
 ```
 
 ## Development
@@ -86,7 +88,7 @@ The backend server must be running before starting the app.
 
 ### Start app in development
 
-1. Start the app (on port 8080)
+1. Start the app on another terminal (on port 8080)
     ```bash
     cd ../client
     npm run serve
