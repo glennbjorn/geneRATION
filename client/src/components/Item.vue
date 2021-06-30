@@ -4,12 +4,11 @@
       {{ item.item }}
       <i @click="$emit('delete-item', item.item)" class="fas fa-times"></i>
     </h3>
-    <p>Quantity: {{ item.qty }}</p>
+    <p>Targeted Quantity: {{ item.qty }}</p>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "Item",
 
@@ -25,7 +24,7 @@ export default {
 }
 
 .item {
-  background:white;
+  background: white;
   margin: 5px;
   padding: 10px 20px;
 }

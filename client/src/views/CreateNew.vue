@@ -66,7 +66,7 @@
         </div>
 
         <div class="create-campaign">
-          <label for="collection-date">Choose a collection date</label>
+          <label for="collection-date">Set a Collection Date</label>
           <input
             type="date"
             v-model="campaign.collectionDate"
