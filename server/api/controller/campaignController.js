@@ -12,7 +12,7 @@ exports.newCampaign = async (req, res) => {
             collectionPostalCode: req.body.collectionPostalCode,
             collectionDate: req.body.collectionDate,
             items: req.body.items,
-            target: req.body.target,
+            // target: req.body.target,
         })
         let data = await campaign.save()
         res.status(201).json({ data })
@@ -59,7 +59,7 @@ exports.editCampaign = async (req, res) => {
         campaign.collectionPostalCode = req.body.collectionPostalCode;
         campaign.collectionDate = req.body.collectionDate;
         campaign.items = req.body.items;
-        campaign.target = req.body.target;
+        // campaign.target = req.body.target;
         let data = await campaign.save();
         res.status(201).json({ data })
     } catch (err) {

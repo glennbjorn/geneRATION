@@ -18,7 +18,7 @@
       <div class="cam-desc">
         {{ campaign.camDesc }}
       </div>
-      <h5>Items for collection</h5>
+      <h5>Items for Collection</h5>
       <div class="items" :key="item._id" v-for="item in campaign.items">
         <p>{{ item.qty }} x {{ item.item }}</p>
       </div>
@@ -39,9 +39,10 @@
         <p>{{ campaign.orgDesc }}</p>
       </div>
 
-      <h5>Donation progress</h5>
+      <h5>Donation Progress</h5>
       <div class="itemcount" v-for="n in items.length" :key="n">
-        {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ campaign.target }}
+        {{ items[n - 1] }} : {{ itemCount[n - 1] }} /
+        <!-- {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ qty[n - 1] }} -->
       </div>
 
       <button class="back" @click="$router.push('/mycampaigns')">

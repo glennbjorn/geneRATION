@@ -90,7 +90,7 @@
           <Items @delete-item="deleteItem" :items="items" />
         </div>
 
-        <div class="edit-campaign">
+        <!-- <div class="edit-campaign">
           <label for="target">Target number of sets</label>
           <input
             v-model="campaign.target"
@@ -98,7 +98,7 @@
             id="target"
             placeholder="Please indicate a whole number"
           />
-        </div>
+        </div> -->
 
         <button class="edit" type="submit">Save Changes</button>
       </form>
@@ -254,7 +254,6 @@ export default {
           collectionPostalCode: this.campaign.collectionPostalCode,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
-          target: this.campaign.target,
         });
 
         this.$swal("Campaign edited!");

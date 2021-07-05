@@ -91,7 +91,7 @@
           <Items @delete-item="deleteItem" :items="items" />
         </div>
 
-        <div class="create-campaign">
+        <!-- <div class="create-campaign">
           <label for="target">Target number of sets</label>
           <input
             v-model="campaign.target"
@@ -99,7 +99,7 @@
             id="target"
             placeholder="Please indicate a whole number"
           />
-        </div>
+        </div> -->
 
         <button class="btn" type="submit">Create Campaign</button>
       </form>
@@ -136,7 +136,8 @@ export default {
         collectionAddress: "",
         collectionPostalCode: "",
         collectionDate: "",
-        target: "",
+        qty: "",
+        // target: "",
       },
       items: [],
       isLoading: true,
@@ -235,7 +236,7 @@ export default {
           collectionPostalCode: this.campaign.collectionPostalCode,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
-          target: this.campaign.target,
+          // target: this.campaign.target,
         });
 
         this.$swal("Campaign created!");
