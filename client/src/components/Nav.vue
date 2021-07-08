@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <!-- link Home -->
       <router-link to="/" class="navbar-brand" href="#">
-        <img class="img" src="@/assets/header.png" alt="Home Button">
+        <img class="img" src="@/assets/header.png" alt="Home Button" />
       </router-link>
 
       <div>
@@ -11,24 +11,28 @@
           <li class="nav-item">
             <!-- link Login -->
             <router-link to="/login" class="nav-link" href="#"
-              >Login</router-link
+              >LOG IN</router-link
             >
           </li>
           <li class="nav-item">
             <!-- link Register -->
             <router-link to="/register" class="nav-link" href="#"
-              >Register</router-link
+              >REGISTER</router-link
             >
           </li>
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="loggedIn">
           <li class="nav-item">
             <!-- link Dashboard -->
-            <router-link to="/dashboard" class="nav-link" href="#">Dashboard</router-link>
+            <router-link to="/dashboard" class="nav-link" href="#"
+              >DASHBOARD</router-link
+            >
           </li>
           <li class="nav-item">
             <!-- link Logout -->
-            <router-link to="/" class="nav-link" href="#" @click="logUserOut">Logout</router-link>
+            <router-link to="/" class="nav-link" href="#" @click="logUserOut"
+              >LOG OUT</router-link
+            >
           </li>
         </ul>
       </div>
@@ -39,13 +43,11 @@
 <script>
 export default {
   name: "Nav",
-
   data() {
     return {
       loggedIn: false,
-    }
+    };
   },
-
   methods: {
     logUserOut() {
       localStorage.removeItem("jwt");
@@ -53,21 +55,20 @@ export default {
     },
     checkLoggedIn() {
       if (localStorage.getItem("jwt")) {
-         this.loggedIn = true;
+        this.loggedIn = true;
       } else {
         this.loggedIn = false;
       }
-    }
+    },
   },
-
   created() {
     this.checkLoggedIn();
-  }
+  },
 };
 </script>
 
 <style scoped>
-  .img {
-    max-width: 200px;
-  }
+.img {
+  max-width: 200px;
+}
 </style>
