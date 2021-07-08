@@ -136,6 +136,7 @@ export default {
   margin: 0 auto;
   display: block;
   max-width: 25%;
+  margin-top: 120px;
 }
 
 .generation-intro h2 {
@@ -184,7 +185,7 @@ html {
 .hero-image {
   background-image: url("../assets/fooddistribution2.jpg");
   background-color: #cccccc;
-  height: 700px;
+  height: 810px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
