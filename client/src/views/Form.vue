@@ -83,9 +83,10 @@
           <tbody>
             <tr>
               <th colspan="1">Item Name</th>
+              <th scope="col">Donation Progress</th>
               <th scope="col">Quantity</th>
             </tr>
-            <tr :key="n" v-for="n in donor.items.length">
+            <tr :key="n" v-for="n in campaign.items.length">
               <td>{{ campaign.items[n - 1].item }}</td>
               <!-- <td>
                 <input
@@ -98,14 +99,11 @@
                 <input
                   v-model="campaign.items[n - 1].qty"
                   type="number"
-                  min="1"
-                  value="1"
                   name="quantity"
                 />
               </td> -->
-              <td>
-                <input type="number" value="1" name="quantity" />
-              </td>
+              <td>{{ itemCount[n - 1] }}/ {{ campaign.items[n - 1].qty }}</td>
+              <td><input type="number" value="1" name="quantity" /></td>
             </tr>
           </tbody>
         </table>
@@ -153,6 +151,7 @@
 import axios from "axios";
 import router from "@/router";
 import Nav from "../components/Nav.vue";
+
 var quantity = null;
 var quantity_arr = [];
 
@@ -172,6 +171,9 @@ export default {
     return {
       campaignid: "",
       campaign: [],
+      donors: [],
+      itemm: [],
+      itemCount: [],
       donor: {
         name: "",
         contact: "",
@@ -206,12 +208,61 @@ export default {
       return data;
     },
     getItems() {
+      let arr = [];
       for (let i = 0; i < this.campaign.items.length; i++) {
         var item = this.campaign.items[i].item;
         quantity = this.campaign.items[i].qty;
+        arr = [...arr, item];
         var data = { item: item, quantity: quantity, donate: false };
         this.donor.items = [...this.donor.items, data];
       }
+      this.itemm = arr;
+    },
+
+    async getDonors() {
+      const res = await axios.post("/api/donate/getDonors", {
+        campaignid: this.campaignid,
+      });
+      return res.data;
+    },
+
+    // getItems() {
+    //   let arr = [];
+    //   let campaignqty = [];
+    //   for (let i = 0; i < this.campaign.items.length; i++) {
+    //     let item = this.campaign.items[i].item;
+    //     let qty = this.campaign.items[i].qty;
+    //     arr = [...arr, item];
+    //     campaignqty.push(qty);
+    //   }
+    //   this.items = arr;
+    //   this.c_qty = campaignqty;
+    // },
+
+    getItemCount() {
+      this.getItems();
+      let arr = [];
+      // console.log(arr);
+      for (let i = 0; i < this.itemm.length; i++) {
+        arr = [...arr, 0];
+      }
+      for (let j = 0; j < this.donors.length; j++) {
+        let donor = this.donors[j];
+        for (let k = 0; k < donor.items.length; k++) {
+          if (donor.items[k].donate) {
+            let index = this.itemm.indexOf(donor.items[k].item);
+            if (index !== -1) {
+              if (arr[index] >= 0) {
+                arr[index] += donor.items[k].quantity;
+              } else {
+                arr[index] = 0;
+                arr[index] = donor.items[k].quantity;
+              }
+            }
+          }
+        }
+      }
+      this.itemCount = arr;
     },
 
     async submit() {
@@ -295,6 +346,8 @@ export default {
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.donors = await this.getDonors();
+    this.getItemCount();
     this.getItems();
     this.isLoading = false;
   },
