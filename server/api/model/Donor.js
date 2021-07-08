@@ -26,10 +26,15 @@ const donorSchema = mongoose.Schema({
         type: String,
         required: true
       },
+      quantity: {
+        type: Number,
+        required: true
+      },
       donate: {
         type: Boolean,
         required: true
       }
+
 
     }
   ],
