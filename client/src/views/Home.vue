@@ -45,15 +45,16 @@
 
         <div class="aboutus-text">
           <p class="para-space">
-            When it comes to food drives, there are always bumps in the process
-            of soliciting donations from the public as well as the selection,
-            sorting, and distribution of food products.
+            When it comes to food campaigns, there are often hiccups in the
+            process of gathering public donations as well as picking,
+            categorising, and dispersing food items.
           </p>
 
-          Thus, as individuals who recognise the value of food donation drives
-          and their effect on the less fortunate in our society, we want to
-          build a website that will make it easier for charitable organisations
-          to organise food drives in the future.
+          Thus, as young individuals who recognise the significance of food
+          charity drives and their impact on the less privileged in our society,
+          we want to set up a website that will ease the process and produce
+          positive outcomes for charitable organisations to acquire food
+          donations.
         </div>
       </div>
 
