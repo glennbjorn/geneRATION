@@ -102,7 +102,7 @@
                   name="quantity"
                 />
               </td> -->
-              <td>{{ itemCount[n - 1] }}/ {{ campaign.items[n - 1].qty }}</td>
+              <td>{{ itemCount[n - 1] }} / {{ campaign.items[n - 1].qty }}</td>
               <td><input type="number" value="1" name="quantity" /></td>
             </tr>
           </tbody>

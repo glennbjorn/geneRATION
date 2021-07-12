@@ -15,7 +15,7 @@
       <div class="cam-desc">
         {{ campaign.camDesc }}
       </div>
-      <h5>Items for collection</h5>
+      <h5>Items for Collection</h5>
       <div class="items" :key="item._id" v-for="item in campaign.items">
         <p>{{ item.qty }} x {{ item.item }}</p>
       </div>
@@ -105,8 +105,10 @@ export default {
   margin-bottom: 30px;
 }
 
-h5 {
+h5,
+h6 {
   text-align: center;
+  font-weight: bold;
 }
 
 .items {
