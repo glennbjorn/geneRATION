@@ -7,8 +7,11 @@
     <div class="form-page">
       <form @submit.prevent="submit">
         <div class="subheader">
-          <h1>Thank you for donating!</h1>
-          <h3>Kindly fill up your information below</h3>
+          <h1>
+            By pledging your donations, our volunteers would be collecting these
+            items at your doorstep within the stipulated time!
+          </h1>
+          <h3><br />Kindly fill up your information below</h3>
         </div>
 
         <div class="form-form">
@@ -115,16 +118,32 @@
         <div class="agree-checkbox">
           <label for="shelf-life"
             >I agree to only donate items that are <b>NOT</b> expiring in the
-            next 3 months</label
+            next 3 months <br />(counting from the day of collection)</label
           >
           <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
         </div>
 
         <div class="agree-checkbox">
           <label for="halal"
-            >I agree to only donate items that are <b>Halal certified</b></label
+            >I agree to only donate items that are <b>Halal Certified</b></label
           >
           <input v-model="donor.halal" type="checkbox" id="halal" />
+        </div>
+
+        <div class="agree-checkbox">
+          <label for="pdpa">
+            <p>
+              COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
+              <br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
+              obligations <br />in the course of or in connection with our
+              provision of the goods <br />
+              and/or services - "Doorstep Collection Service" <b>ALLOWED</b> by
+              you.
+              <br />
+              (Note: no external disclosure would be made)
+            </p>
+          </label>
+          <input v-model="donor.pdpa" type="checkbox" id="pdpa" />
         </div>
 
         <div class="form-form">
@@ -182,6 +201,7 @@ export default {
         items: [],
         shelfLife: false,
         halal: false,
+        pdpa: false,
         remarks: "",
       },
       toggle: false,
@@ -317,6 +337,13 @@ export default {
       if (!this.donor.halal) {
         this.$swal(
           "Please declare that you agree to donate items that are Halal!"
+        );
+        return;
+      }
+
+      if (!this.donor.pdpa) {
+        this.$swal(
+          "Please AGREE to PDPA to proceed, OR consider dropping the items personally!"
         );
         return;
       }
