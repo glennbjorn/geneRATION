@@ -130,6 +130,8 @@
           <input v-model="donor.halal" type="checkbox" id="halal" />
         </div>
 
+        <br />
+
         <div class="agree-checkbox">
           <label for="pdpa">
             <p>

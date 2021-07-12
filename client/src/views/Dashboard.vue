@@ -9,7 +9,7 @@
       <h1 class="name">{{ user.name }}</h1>
       <div class="container">
         <button class="left" @click="$router.push('/create')">
-          New Campaign
+          Create New Campaign
         </button>
         <button class="right" @click="$router.push('/mycampaigns')">
           View My Campaigns

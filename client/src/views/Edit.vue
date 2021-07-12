@@ -7,7 +7,7 @@
     <div class="edit-page" v-if="auth">
       <form @submit.prevent="submit">
         <div class="header">
-          <h1>Edit your campaign</h1>
+          <h1>Edit Campaign</h1>
         </div>
 
         <div class="edit-campaign">
@@ -65,7 +65,7 @@
         </div>
 
         <div class="edit-campaign">
-          <label for="collection-date">Choose a collection date</label>
+          <label for="collection-date">Choose a Collection Date</label>
           <input
             type="date"
             v-model="campaign.collectionDate"
@@ -106,14 +106,14 @@
       <div class="icons">
         <div class="delete">
           <i class="fas fa-trash" @click="deleteCampaign"></i>
-          <p>Delete campaign</p>
+          <p>Delete Campaign</p>
         </div>
         <div class="admins">
           <i
             class="fas fa-user-friends"
             @click="$router.push(`/mycampaigns/${campaignid}/admins`)"
           ></i>
-          <p>Manage administrators</p>
+          <p>Manage Administrators</p>
         </div>
       </div>
       <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">

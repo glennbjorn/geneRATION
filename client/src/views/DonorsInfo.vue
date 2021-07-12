@@ -22,10 +22,11 @@
             <td class="td">{{ donor.address }}</td>
             <td class="td">{{ donor.unit }}</td>
             <td class="td">{{ donor.contact }}</td>
-            <td class="td" :key="item.id" v-for="item in donor.items">
+
+            <!-- <td class="td" :key="item.id" v-for="item in donor.items">
               <p v-if="item.donate">Yes</p>
               <p v-else>No</p>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
