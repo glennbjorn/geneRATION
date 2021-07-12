@@ -20,7 +20,7 @@
         <p>{{ item.qty }} x {{ item.item }}</p>
       </div>
       <button class="donate" @click="gotoform">Donate Today!</button>
-      <h5>More about the organisation:</h5>
+      <h5>More about the Organisation:</h5>
       <div class="org-desc">
         <p>{{ campaign.orgDesc }}</p>
       </div>
