@@ -7,7 +7,7 @@
     <div class="date-and-loc">
       <p>Collection Date: {{ date }}</p>
       <p>
-        Collection Area: {{ campaign.collectionAddress }}, S{{
+        Self Drop-Off Location: {{ campaign.collectionAddress }}, S{{
           campaign.collectionPostalCode
         }}
       </p>

@@ -6,7 +6,7 @@
     <div class="date-and-loc">
       <p>Collection Date: {{ date }}</p>
       <p>
-        Collection Area: {{ campaignAdmin.collectionAddress }}, S{{
+        Self Drop-Off Location: {{ campaignAdmin.collectionAddress }}, S{{
           campaignAdmin.collectionPostalCode
         }}
       </p>
@@ -39,7 +39,9 @@ export default {
     },
 
     convertDate() {
-      this.date = moment(this.campaignAdmin.collectionDate).format("Do MMM YYYY");
+      this.date = moment(this.campaignAdmin.collectionDate).format(
+        "Do MMM YYYY"
+      );
     },
   },
 
