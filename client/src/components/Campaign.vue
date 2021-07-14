@@ -6,11 +6,7 @@
     <p>{{ campaign.camDesc }}</p>
     <div class="date-and-loc">
       <p>Collection Date: {{ date }}</p>
-      <p>
-        Self Drop-Off Location: {{ campaign.collectionAddress }}, S{{
-          campaign.collectionPostalCode
-        }}
-      </p>
+      <p>Self Drop-Off Location: {{ campaign.collectionAddress }}</p>
     </div>
   </div>
 </template>

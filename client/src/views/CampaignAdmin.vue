@@ -9,11 +9,7 @@
       <h6 class="org">By {{ campaign.org }}</h6>
       <div class="date-and-loc">
         <h6>Collection Date: {{ date }}</h6>
-        <h6>
-          Self Drop-Off Location: {{ campaign.collectionAddress }}, S{{
-            campaign.collectionPostalCode
-          }}
-        </h6>
+        <h6>Self Drop-Off Location: {{ campaign.collectionAddress }}</h6>
       </div>
       <div class="cam-desc">
         {{ campaign.camDesc }}
@@ -37,6 +33,11 @@
       <h5>More about the organisation:</h5>
       <div class="org-desc">
         <p>{{ campaign.orgDesc }}</p>
+      </div>
+
+      <h5>For further enquiries, please contact the organiser at:</h5>
+      <div class="org-desc">
+        <p>{{ campaign.collectionContact }}</p>
       </div>
 
       <h5>Donation Progress</h5>

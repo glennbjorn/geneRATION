@@ -5,11 +5,7 @@
     </h3>
     <div class="date-and-loc">
       <p>Collection Date: {{ date }}</p>
-      <p>
-        Self Drop-Off Location: {{ campaignAdmin.collectionAddress }}, S{{
-          campaignAdmin.collectionPostalCode
-        }}
-      </p>
+      <p>Self Drop-Off Location: {{ campaignAdmin.collectionAddress }}</p>
     </div>
   </div>
 </template>

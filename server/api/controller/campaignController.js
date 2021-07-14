@@ -9,7 +9,7 @@ exports.newCampaign = async (req, res) => {
             camDesc: req.body.camDesc,
             orgDesc: req.body.orgDesc,
             collectionAddress: req.body.collectionAddress,
-            collectionPostalCode: req.body.collectionPostalCode,
+            collectionContact: req.body.collectionContact,
             collectionDate: req.body.collectionDate,
             items: req.body.items,
             // target: req.body.target,
@@ -56,7 +56,7 @@ exports.editCampaign = async (req, res) => {
         campaign.camDesc = req.body.camDesc;
         campaign.orgDesc = req.body.orgDesc;
         campaign.collectionAddress = req.body.collectionAddress;
-        campaign.collectionPostalCode = req.body.collectionPostalCode;
+        campaign.collectionContact = req.body.collectionContact;
         campaign.collectionDate = req.body.collectionDate;
         campaign.items = req.body.items;
         // campaign.target = req.body.target;

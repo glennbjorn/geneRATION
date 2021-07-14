@@ -44,24 +44,24 @@
         </div>
 
         <div class="create-campaign">
-          <label for="collection-address">Address of Collection Area</label>
+          <label for="collection-address"
+            >Full Address of Collection Area</label
+          >
           <input
             v-model="campaign.collectionAddress"
             type="text"
             id="collection-address"
-            placeholder="Address of Collection Area"
+            placeholder="Block Number(if needed), Street Name and Postal Code"
           />
         </div>
 
         <div class="create-campaign">
-          <label for="collection-postcode"
-            >Postal Code of Collection Area</label
-          >
+          <label for="collection-contact">Organiser's Contact Number</label>
           <input
-            v-model="campaign.collectionPostalCode"
+            v-model="campaign.collectionContact"
             type="text"
-            id="collection-postcode"
-            placeholder="e.g. 512345"
+            id="collection-contact"
+            placeholder="Contact Number"
           />
         </div>
 
@@ -134,7 +134,7 @@ export default {
         camDesc: "",
         orgDesc: "",
         collectionAddress: "",
-        collectionPostalCode: "",
+        collectionContact: "",
         collectionDate: "",
         qty: "",
         // target: "",
@@ -203,15 +203,13 @@ export default {
         return;
       }
 
-      if (!this.campaign.collectionPostalCode) {
-        this.$swal(
-          "Please include the postal code for the collection address!"
-        );
+      if (!this.campaign.collectionContact) {
+        this.$swal("Please include a contact number for emergency!");
         return;
       }
 
-      if (this.campaign.collectionPostalCode.length !== 6) {
-        this.$swal("A postal code should consist of 6 digits");
+      if (this.campaign.collectionContact.length !== 8) {
+        this.$swal("A contact number should consist of 8 digits");
         return;
       }
 
@@ -233,7 +231,7 @@ export default {
           camDesc: this.campaign.camDesc,
           orgDesc: this.campaign.orgDesc,
           collectionAddress: this.campaign.collectionAddress,
-          collectionPostalCode: this.campaign.collectionPostalCode,
+          collectionContact: this.campaign.collectionContact,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
           // target: this.campaign.target,

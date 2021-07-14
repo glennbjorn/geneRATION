@@ -26,7 +26,7 @@ const CampaignSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  collectionPostalCode: {
+  collectionContact: {
     type: String,
     required: true
   },
