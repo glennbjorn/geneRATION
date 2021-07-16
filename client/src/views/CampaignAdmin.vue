@@ -6,15 +6,18 @@
     </div>
     <div class="page" v-if="auth">
       <h1 class="header" style="font-size: 10vw">{{ campaign.name }}</h1>
-      <h6 class="org">By {{ campaign.org }}</h6>
+      <!-- <h6 class="org">By {{ campaign.org }}</h6> -->
       <div class="date-and-loc">
-        <h6>Collection Date: {{ date }}</h6>
-        <h6>Self Drop-Off Location: {{ campaign.collectionAddress }}</h6>
+        <h6><b>Collection Date:</b> {{ date }}</h6>
+        <h6>
+          <b>Self Drop-Off Location:</b><br />
+          {{ campaign.collectionAddress }}
+        </h6>
       </div>
       <div class="cam-desc">
         {{ campaign.camDesc }}
       </div>
-      <h5>Items for Collection</h5>
+      <h5><b>Items for Collection</b></h5>
       <div class="items" :key="item._id" v-for="item in campaign.items">
         <p>{{ item.qty }} x {{ item.item }}</p>
       </div>
@@ -30,17 +33,17 @@
         </button>
       </div>
 
-      <h5 style="margin-top: 30px">More about the organisation:</h5>
+      <h5 style="margin-top: 30px"><b>More about the organisation:</b></h5>
       <div class="org-desc">
         <p>{{ campaign.orgDesc }}</p>
       </div>
 
-      <h5>For further enquiries, please contact the organiser at:</h5>
+      <h5><b>For further enquiries, please contact the organiser at:</b></h5>
       <div class="org-desc">
         <p>{{ campaign.collectionContact }}</p>
       </div>
 
-      <h5>Donation Progress</h5>
+      <h5><b>Donation Progress</b></h5>
       <div class="itemcount" v-for="n in items.length" :key="n">
         {{ items[n - 1] }} : {{ itemCount[n - 1] }} /
         {{ campaign.items[n - 1].qty }}

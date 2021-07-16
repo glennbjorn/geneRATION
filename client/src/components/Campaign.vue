@@ -4,9 +4,12 @@
       {{ campaign.name }}
     </h3>
     <p>{{ campaign.camDesc }}</p>
-    <div class="date-and-loc">
-      <p>Collection Date: {{ date }}</p>
-      <p>Self Drop-Off Location: {{ campaign.collectionAddress }}</p>
+    <div>
+      <p><b>Collection Date:</b> {{ date }}</p>
+      <p>
+        <b>Self Drop-Off Location:</b><br />
+        {{ campaign.collectionAddress }}
+      </p>
     </div>
   </div>
 </template>
@@ -62,13 +65,5 @@ export default {
   text-align: center;
   margin: auto;
   margin-bottom: 15px;
-}
-
-.date-and-loc {
-  display: flex;
-  margin-top: 20px;
-  margin-left: 25%;
-  margin-right: 25%;
-  justify-content: space-between;
 }
 </style>

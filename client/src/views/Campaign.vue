@@ -3,24 +3,30 @@
   <div v-if="!isLoading">
     <div class="page">
       <h1 class="header">{{ campaign.name }}</h1>
-      <h6 class="org">By {{ campaign.org }}</h6>
+      <!-- <h6 class="org">By {{ campaign.org }}</h6> -->
       <div class="date-and-loc">
-        <h6>Collection Date: {{ date }}</h6>
-        <h6>Collection Area: {{ campaign.collectionAddress }}</h6>
+        <h6>
+          <b>Collection Date:</b><br />
+          {{ date }}
+        </h6>
+        <h6>
+          <b>Self Drop-Off Location:</b><br />
+          {{ campaign.collectionAddress }}
+        </h6>
       </div>
       <div class="cam-desc">
         {{ campaign.camDesc }}
       </div>
-      <h5>Items for collection</h5>
+      <h5><b>Items for collection</b></h5>
       <div class="items" :key="item._id" v-for="item in campaign.items">
         <p>{{ item.qty }} x {{ item.item }}</p>
       </div>
       <button class="donate" @click="gotoform">Donate Today!</button>
-      <h5>More about the Organisation:</h5>
+      <h5><b>More about the Organisation:</b></h5>
       <div class="org-desc">
         <p>{{ campaign.orgDesc }}</p>
       </div>
-      <h5>For further enquiries, please contact the organiser at:</h5>
+      <h5><b>For further enquiries, please contact the organiser at:</b></h5>
       <div class="org-desc">
         <p>{{ campaign.collectionContact }}</p>
       </div>

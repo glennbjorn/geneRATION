@@ -91,20 +91,6 @@
             </tr>
             <tr :key="n" v-for="n in campaign.items.length">
               <td>{{ campaign.items[n - 1].item }}</td>
-              <!-- <td>
-                <input
-                  v-model="donor.items[n - 1].donate"
-                  type="checkbox"
-                  id="items"
-                />
-              </td> -->
-              <!-- <td>
-                <input
-                  v-model="campaign.items[n - 1].qty"
-                  type="number"
-                  name="quantity"
-                />
-              </td> -->
               <td>{{ itemCount[n - 1] }} / {{ campaign.items[n - 1].qty }}</td>
               <td><input type="number" value="1" name="quantity" /></td>
             </tr>
@@ -122,6 +108,8 @@
           >
           <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
         </div>
+
+        <br />
 
         <div class="agree-checkbox">
           <label for="halal"
@@ -147,6 +135,8 @@
           </label>
           <input v-model="donor.pdpa" type="checkbox" id="pdpa" />
         </div>
+
+        <br />
 
         <div class="form-form">
           <label for="remarks">Do you have any additional remarks?</label>
@@ -249,23 +239,10 @@ export default {
       return res.data;
     },
 
-    // getItems() {
-    //   let arr = [];
-    //   let campaignqty = [];
-    //   for (let i = 0; i < this.campaign.items.length; i++) {
-    //     let item = this.campaign.items[i].item;
-    //     let qty = this.campaign.items[i].qty;
-    //     arr = [...arr, item];
-    //     campaignqty.push(qty);
-    //   }
-    //   this.items = arr;
-    //   this.c_qty = campaignqty;
-    // },
-
     getItemCount() {
       this.getItems();
       let arr = [];
-      // console.log(arr);
+
       for (let i = 0; i < this.itemm.length; i++) {
         arr = [...arr, 0];
       }
@@ -416,7 +393,7 @@ export default {
 }
 
 .items-checkbox-quantity {
-  float: right;
+  float: left;
   margin-right: 25px !important;
 }
 
@@ -431,7 +408,7 @@ export default {
 }
 
 .agree-checkbox input {
-  float: right;
+  float: left;
   transform: scale(1.5);
   margin-right: 15px;
 }
