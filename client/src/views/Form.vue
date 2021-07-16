@@ -179,6 +179,7 @@ var quantity_arr = [];
 //To get values of the textbox and store inside an array (quantity_arr)
 function update_quantity() {
   quantity = document.getElementsByName("quantity");
+  quantity_arr = [];
   for (var x = 0; x < quantity.length; x++) {
     //store in array
     quantity_arr.push(quantity[x].value);
