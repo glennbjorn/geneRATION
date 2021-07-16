@@ -1,4 +1,4 @@
-<template>
+<template style="w3-mobile">
   <Nav />
   <div v-if="!isLoading">
     <div class="page">
@@ -28,7 +28,7 @@
     </div>
     <!--social share-->
     <div class="share-btn-container">
-      <p><b>Share</b><br /><b>This!</b></p>
+      <p style="margin-left: 25px"><b>Share</b><br /><b>This!</b></p>
 
       <a
         :href="'https://www.facebook.com/sharer.php?u=' + Location"
@@ -184,5 +184,6 @@ h5 {
   margin: 0 auto;
   display: block;
   margin-top: 30px;
+  margin-bottom: 150px;
 }
 </style>

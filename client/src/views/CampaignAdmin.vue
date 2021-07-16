@@ -5,7 +5,7 @@
       <h1>You are not authorised to view this page</h1>
     </div>
     <div class="page" v-if="auth">
-      <h1 class="header">{{ campaign.name }}</h1>
+      <h1 class="header" style="font-size: 10vw">{{ campaign.name }}</h1>
       <h6 class="org">By {{ campaign.org }}</h6>
       <div class="date-and-loc">
         <h6>Collection Date: {{ date }}</h6>
@@ -23,14 +23,14 @@
         <img :src="imgsrc" />
       </div>
 
-      <div class="container">
-        <button class="left" @click="goToEdit">Edit</button>
-        <button class="right" @click="goToDonorsInfo">
+      <div class="w3-bar">
+        <button class="btn w3-mobile" @click="goToEdit">Edit</button>
+        <button class="btn w3-mobile" @click="goToDonorsInfo">
           Donors Information
         </button>
       </div>
 
-      <h5>More about the organisation:</h5>
+      <h5 style="margin-top: 30px">More about the organisation:</h5>
       <div class="org-desc">
         <p>{{ campaign.orgDesc }}</p>
       </div>
@@ -294,5 +294,16 @@ h5 {
 .qr-img img {
   max-width: 200px;
   width: 100%;
+}
+
+.btn {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+  font-size: 50px;
 }
 </style>

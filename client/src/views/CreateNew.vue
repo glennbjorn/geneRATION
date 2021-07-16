@@ -294,13 +294,12 @@ export default {
 
 .btn {
   background: white;
-  width: 100%;
-  height: 100%;
   border-inline: 3px;
   border-color: black;
-  font-size: 50px;
   cursor: pointer;
-  margin-top: 70px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
 }
 
 .no-items {

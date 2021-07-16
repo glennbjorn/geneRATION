@@ -1,4 +1,4 @@
-<template>
+<template style="w3-mobile">
   <Nav />
   <div v-if="!isLoading">
     <div class="hero-image">
@@ -22,12 +22,18 @@
       </div>
     </div>
 
-    <div class="w3-center w3-hide-small w3-xxlarge">
-      <a href="#about-us" class="w3-bar-item w3-button w3-half"
+    <div class="w3-bar w3-black">
+      <a
+        href="#about-us"
+        class="w3-center w3-bar-item w3-button w3-mobile"
+        style="width: 50%"
         ><i class="fa fa-user"></i> About Us</a
       >
 
-      <a href="#ongoing-campaigns" class="w3-bar-item w3-button w3-half"
+      <a
+        href="#ongoing-campaigns"
+        class="w3-center w3-bar-item w3-button w3-mobile"
+        style="width: 50%"
         ><i class="fa fa-th"></i> Ongoing Campaigns</a
       >
     </div>
@@ -152,11 +158,11 @@ export default {
 .aboutus-text {
   text-align: center;
   margin-top: 50px;
-  font-size: 30px;
+  font-size: 20px;
   /* font-weight: bold; */
   margin-bottom: 250px;
-  margin-left: 300px;
-  margin-right: 300px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .para-space {
