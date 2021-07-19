@@ -7,8 +7,11 @@
     <div class="form-page">
       <form @submit.prevent="submit">
         <div class="subheader">
-          <h1>Thank you for donating!</h1>
-          <h3>Kindly fill up your information below</h3>
+          <h1>
+            By pledging your donations, our volunteers would be collecting these
+            items at your doorstep within the stipulated time!
+          </h1>
+          <h3><br />Kindly fill up your information below</h3>
         </div>
 
         <div class="form-form">
@@ -55,12 +58,12 @@
           <h5>Items to donate</h5>
         </div>
 
-        <div class="items-checkbox">
+        <!-- <div class="items-checkbox">
+          <p  class="all" >Select all</p>
           <input v-model="toggle" type="checkbox" @click="selectAll" />
-          <p>Select all</p>
-        </div>
+        </div>-->
 
-        <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
+        <!-- <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
           <input
             v-model="donor.items[n - 1].donate"
             type="checkbox"
@@ -69,7 +72,30 @@
           <p>
             {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
           </p>
-        </div>
+        </div>-->
+
+        <table class="table table-borderless">
+          <!-- <thead>
+            <tr>
+              <th scope="col">Select All</th>
+              <th scope="col">
+                <input v-model="toggle" type="checkbox" @click="selectAll" />
+              </th>
+            </tr>
+          </thead> -->
+          <tbody>
+            <tr>
+              <th colspan="1">Item Name</th>
+              <th scope="col">Donation Progress</th>
+              <th scope="col">Quantity</th>
+            </tr>
+            <tr :key="n" v-for="n in campaign.items.length">
+              <td>{{ campaign.items[n - 1].item }}</td>
+              <td>{{ itemCount[n - 1] }} / {{ campaign.items[n - 1].qty }}</td>
+              <td><input type="number" value="1" name="quantity" /></td>
+            </tr>
+          </tbody>
+        </table>
 
         <div class="mini-header">
           <h5>Declarations</h5>
@@ -78,17 +104,39 @@
         <div class="agree-checkbox">
           <label for="shelf-life"
             >I agree to only donate items that are <b>NOT</b> expiring in the
-            next 3 months</label
+            next 3 months <br />(counting from the day of collection)</label
           >
           <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
         </div>
 
+        <br />
+
         <div class="agree-checkbox">
           <label for="halal"
-            >I agree to only donate items that are <b>Halal certified</b></label
+            >I agree to only donate items that are <b>Halal Certified</b></label
           >
           <input v-model="donor.halal" type="checkbox" id="halal" />
         </div>
+
+        <br />
+
+        <div class="agree-checkbox">
+          <label for="pdpa">
+            <p>
+              COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
+              <br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
+              obligations <br />in the course of or in connection with our
+              provision of the goods <br />
+              and/or services - "Doorstep Collection Service" <b>ALLOWED</b> by
+              you.
+              <br />
+              (Note: no external disclosure would be made)
+            </p>
+          </label>
+          <input v-model="donor.pdpa" type="checkbox" id="pdpa" />
+        </div>
+
+        <br />
 
         <div class="form-form">
           <label for="remarks">Do you have any additional remarks?</label>
@@ -102,6 +150,7 @@
 
         <button class="donate" type="submit">Pledge My Donation!</button>
       </form>
+      <!--<button class="back" @click="$router.push(`/${campaignid}`)">-->
       <button class="back" @click="$router.push(`/${campaignid}`)">
         Back to Campaigns
       </button>
@@ -114,6 +163,19 @@ import axios from "axios";
 import router from "@/router";
 import Nav from "../components/Nav.vue";
 
+var quantity = null;
+var quantity_arr = [];
+
+//To get values of the textbox and store inside an array (quantity_arr)
+function update_quantity() {
+  quantity = document.getElementsByName("quantity");
+  quantity_arr = [];
+  for (var x = 0; x < quantity.length; x++) {
+    //store in array
+    quantity_arr.push(quantity[x].value);
+  }
+}
+
 export default {
   name: "Form",
 
@@ -121,6 +183,9 @@ export default {
     return {
       campaignid: "",
       campaign: [],
+      donors: [],
+      itemm: [],
+      itemCount: [],
       donor: {
         name: "",
         contact: "",
@@ -129,6 +194,7 @@ export default {
         items: [],
         shelfLife: false,
         halal: false,
+        pdpa: false,
         remarks: "",
       },
       toggle: false,
@@ -154,16 +220,69 @@ export default {
 
       return data;
     },
-
     getItems() {
+      let arr = [];
       for (let i = 0; i < this.campaign.items.length; i++) {
         var item = this.campaign.items[i].item;
-        var data = { item: item, donate: false };
+        quantity = this.campaign.items[i].qty;
+        arr = [...arr, item];
+        var data = { item: item, quantity: quantity, donate: false };
         this.donor.items = [...this.donor.items, data];
       }
+      this.itemm = arr;
+    },
+
+    async getDonors() {
+      const res = await axios.post("/api/donate/getDonors", {
+        campaignid: this.campaignid,
+      });
+      return res.data;
+    },
+
+    getItemCount() {
+      this.getItems();
+      let arr = [];
+
+      for (let i = 0; i < this.itemm.length; i++) {
+        arr = [...arr, 0];
+      }
+      for (let j = 0; j < this.donors.length; j++) {
+        let donor = this.donors[j];
+        for (let k = 0; k < donor.items.length; k++) {
+          if (donor.items[k].donate) {
+            let index = this.itemm.indexOf(donor.items[k].item);
+            if (index !== -1) {
+              if (arr[index] >= 0) {
+                arr[index] += donor.items[k].quantity;
+              } else {
+                arr[index] = 0;
+                arr[index] = donor.items[k].quantity;
+              }
+            }
+          }
+        }
+      }
+      this.itemCount = arr;
     },
 
     async submit() {
+      // Call function to get the updated array of the quantity,
+      // Empty the donor array to add new/updated quantity,
+      // Reuse the code on getItems() but change to use quantity_arr instead of campaign quantity ("update quantity")
+      // Donate change to true
+
+      // get updated array of quantity
+      update_quantity();
+      //empty the donor item array to store updated quantity
+      this.donor.items = [];
+      console.log(quantity_arr);
+      for (let i = 0; i < this.campaign.items.length; i++) {
+        var item = this.campaign.items[i].item;
+        quantity = quantity_arr[i];
+        var data = { item: item, quantity: quantity, donate: true };
+        this.donor.items = [...this.donor.items, data];
+      }
+
       if (!this.donor.name) {
         this.$swal("Please include your name!");
         return;
@@ -202,6 +321,13 @@ export default {
         return;
       }
 
+      if (!this.donor.pdpa) {
+        this.$swal(
+          "Please AGREE to PDPA to proceed, OR consider dropping the items personally!"
+        );
+        return;
+      }
+
       await axios.post("/api/donate", {
         campaignid: this.campaignid,
         name: this.donor.name,
@@ -211,7 +337,6 @@ export default {
         items: this.donor.items,
         remarks: this.donor.remarks,
       });
-
       localStorage.removeItem("tqid");
       localStorage.setItem("tqid", this.campaignid);
 
@@ -228,6 +353,8 @@ export default {
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
+    this.donors = await this.getDonors();
+    this.getItemCount();
     this.getItems();
     this.isLoading = false;
   },
@@ -252,15 +379,27 @@ export default {
   flex-direction: column;
   padding: 15px;
 }
+.all {
+  display: inline;
+}
+.item-name {
+  display: inline;
+  margin-left: 15px;
+}
 
 .items-checkbox {
   width: 50%;
   margin-left: 15px;
 }
 
+.items-checkbox-quantity {
+  float: left;
+  margin-right: 25px !important;
+}
+
 .items-checkbox input {
-  float: right;
   transform: scale(1.5);
+  float: right;
 }
 
 .agree-checkbox {
@@ -269,7 +408,7 @@ export default {
 }
 
 .agree-checkbox input {
-  float: right;
+  float: left;
   transform: scale(1.5);
   margin-right: 15px;
 }

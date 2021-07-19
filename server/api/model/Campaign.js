@@ -26,7 +26,7 @@ const CampaignSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  collectionPostalCode: {
+  collectionContact: {
     type: String,
     required: true
   },
@@ -46,10 +46,10 @@ const CampaignSchema = mongoose.Schema({
       }
     }
   ],
-  target: {
-    type: String,
-    required: true
-  },
+  // target: {
+  //   type: String,
+  //   required: true
+  // },
 });
 
 const Campaign = mongoose.model("campaign", CampaignSchema);

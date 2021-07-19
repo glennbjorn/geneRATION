@@ -6,16 +6,17 @@
         type="text"
         v-model="item"
         name="item"
-        placeholder="e.g. White Rice (5kg)"
+        placeholder="e.g. 3 in 1 Instant Coffee - Original (Less Sugar), ~30 Sachets"
       />
     </div>
+
     <div class="form-control">
-      <label>Quantity</label>
+      <label>Targeted Quantity</label>
       <input
         type="text"
         v-model="qty"
         name="qty"
-        placeholder="Please indicate a whole number"
+        placeholder="Please indicate a whole number, e.g. 100"
       />
     </div>
 

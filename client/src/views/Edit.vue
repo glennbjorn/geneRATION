@@ -7,7 +7,7 @@
     <div class="edit-page" v-if="auth">
       <form @submit.prevent="submit">
         <div class="header">
-          <h1>Edit your campaign</h1>
+          <h1 style="font-size: 10vw">Edit Campaign</h1>
         </div>
 
         <div class="edit-campaign">
@@ -43,29 +43,29 @@
         </div>
 
         <div class="edit-campaign">
-          <label for="collection-address">Address of Collection Area</label>
+          <label for="collection-address"
+            >Full Address of Collection Area</label
+          >
           <input
             v-model="campaign.collectionAddress"
             type="text"
             id="collection-address"
-            placeholder="Address of Collection Area"
+            placeholder="Block Number(if needed), Street Name and Postal Code"
           />
         </div>
 
         <div class="edit-campaign">
-          <label for="collection-postcode"
-            >Postal Code of Collection Area</label
-          >
+          <label for="collection-contact">Organiser's Contact Number</label>
           <input
-            v-model="campaign.collectionPostalCode"
+            v-model="campaign.collectionContact"
             type="text"
-            id="collection-postcode"
-            placeholder="e.g. 512345"
+            id="collection-contact"
+            placeholder="Contact Number"
           />
         </div>
 
         <div class="edit-campaign">
-          <label for="collection-date">Choose a collection date</label>
+          <label for="collection-date">Set a Collection Date</label>
           <input
             type="date"
             v-model="campaign.collectionDate"
@@ -90,7 +90,7 @@
           <Items @delete-item="deleteItem" :items="items" />
         </div>
 
-        <div class="edit-campaign">
+        <!-- <div class="edit-campaign">
           <label for="target">Target number of sets</label>
           <input
             v-model="campaign.target"
@@ -98,7 +98,7 @@
             id="target"
             placeholder="Please indicate a whole number"
           />
-        </div>
+        </div> -->
 
         <button class="edit" type="submit">Save Changes</button>
       </form>
@@ -106,14 +106,14 @@
       <div class="icons">
         <div class="delete">
           <i class="fas fa-trash" @click="deleteCampaign"></i>
-          <p>Delete campaign</p>
+          <p>Delete <br />Campaign</p>
         </div>
         <div class="admins">
           <i
             class="fas fa-user-friends"
             @click="$router.push(`/mycampaigns/${campaignid}/admins`)"
           ></i>
-          <p>Manage administrators</p>
+          <p>Manage <br />Administrators</p>
         </div>
       </div>
       <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
@@ -222,15 +222,13 @@ export default {
         return;
       }
 
-      if (!this.campaign.collectionPostalCode) {
-        this.$swal(
-          "Please include the postal code for the collection address!"
-        );
+      if (!this.campaign.collectionContact) {
+        this.$swal("Please include a contact number for emergency!");
         return;
       }
 
-      if (this.campaign.collectionPostalCode.length !== 6) {
-        this.$swal("A postal code should consist of 6 digits");
+      if (this.campaign.collectionContact.length !== 8) {
+        this.$swal("A contact number should consist of 8 digits");
         return;
       }
 
@@ -251,10 +249,9 @@ export default {
           camDesc: this.campaign.camDesc,
           orgDesc: this.campaign.orgDesc,
           collectionAddress: this.campaign.collectionAddress,
-          collectionPostalCode: this.campaign.collectionPostalCode,
+          collectionContact: this.campaign.collectionContact,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
-          target: this.campaign.target,
         });
 
         this.$swal("Campaign edited!");

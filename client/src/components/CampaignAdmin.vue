@@ -3,12 +3,11 @@
     <h3>
       {{ campaignAdmin.name }}
     </h3>
-    <div class="date-and-loc">
-      <p>Collection Date: {{ date }}</p>
+    <div>
+      <p><b>Collection Date:</b> {{ date }}</p>
       <p>
-        Collection Area: {{ campaignAdmin.collectionAddress }}, S{{
-          campaignAdmin.collectionPostalCode
-        }}
+        <b>Self Drop-Off Location:</b><br />
+        {{ campaignAdmin.collectionAddress }}
       </p>
     </div>
   </div>
@@ -39,7 +38,9 @@ export default {
     },
 
     convertDate() {
-      this.date = moment(this.campaignAdmin.collectionDate).format("Do MMM YYYY");
+      this.date = moment(this.campaignAdmin.collectionDate).format(
+        "Do MMM YYYY"
+      );
     },
   },
 

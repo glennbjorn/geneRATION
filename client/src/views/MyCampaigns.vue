@@ -5,7 +5,7 @@
       <h1>You are not logged in!</h1>
     </div>
     <div class="page" v-if="loggedIn">
-      <h1 class="header">Your Campaigns</h1>
+      <h1 class="header" style="font-size: 10vw">Your Campaigns</h1>
       <div v-if="campaignsAdmin.length === 0">
         <h2>You do not have any campaigns</h2>
         <button class="create" @click="$router.push('/create')">

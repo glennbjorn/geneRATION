@@ -4,31 +4,40 @@
     <div class="page" v-if="!auth">
       <h1>You are not authorised to view this page</h1>
     </div>
+
     <div class="page" v-if="auth">
       <p><i>You may click on the header to sort the table</i></p>
-      <table class="table">
-        <thead>
-          <tr class="tr">
-            <th class="th" @click="sort('name')">Name</th>
-            <th class="th" @click="sort('address')">Postal Code</th>
-            <th class="th" @click="sort('unit')">Unit Number</th>
-            <th class="th" @click="sort('contact')">Contact No.</th>
-            <th class="th" :key="item" v-for="item in items">{{ item }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="tr" :key="donor.id" v-for="donor in donors">
-            <td class="td">{{ donor.name }}</td>
-            <td class="td">{{ donor.address }}</td>
-            <td class="td">{{ donor.unit }}</td>
-            <td class="td">{{ donor.contact }}</td>
-            <td class="td" :key="item.id" v-for="item in donor.items">
-              <p v-if="item.donate">Yes</p>
-              <p v-else>No</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div style="overflow-x: auto">
+        <table class="table">
+          <thead>
+            <tr class="tr">
+              <th class="th">Collected?</th>
+              <th class="th" @click="sort('address')">Postal Code</th>
+              <th class="th" @click="sort('unit')">Unit Number</th>
+              <th class="th" @click="sort('name')">Name</th>
+              <th class="th" @click="sort('contact')">Contact No.</th>
+              <th class="th" :key="item" v-for="item in items">{{ item }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tr" :key="donor.id" v-for="donor in donors">
+              <td class="td">
+                <input type="checkbox" v-model="collected" />
+              </td>
+              <td class="td">{{ donor.address }}</td>
+              <td class="td">{{ donor.unit }}</td>
+              <td class="td">{{ donor.name }}</td>
+              <td class="td">{{ donor.contact }}</td>
+
+              <td class="td" :key="item.id" v-for="item in donor.items">
+                <p v-if="item.quantity != 0">{{ item.quantity }}</p>
+                <p v-else>0</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
         Back to My Campaigns
@@ -56,6 +65,8 @@ export default {
       currentSort: "address",
       currentSortDir: "asc",
       isLoading: true,
+      // itemCount: [],
+      halal: false,
     };
   },
 
@@ -127,6 +138,23 @@ export default {
         return 0;
       });
     },
+
+    // getItemCount() {
+    //     // this.getItems();
+    //     //   // let arr = [];
+
+    //     //   // for (let i = 0; i < this.items.length; i++) {
+    //     //   //   arr = [...arr, 0];
+    //     //   // }
+
+    //     for (let j = 0; j < this.donors.length; j++) {
+    //       let donor = this.donors[j]; // Loop about the particular donor
+
+    //       for (let k = 0; k < donor.items.length; k++) {
+    //         this.donationMade = donor.items[k].length;
+    //       }
+    //     }
+    // },
   },
 
   async created() {
@@ -135,6 +163,7 @@ export default {
     this.campaign = await this.getCampaign();
     this.checkAuth();
     this.getItems();
+    // this.getItemCount();
     this.donors = await this.getDonors();
     this.sort("address");
     this.isLoading = false;
@@ -152,6 +181,13 @@ p {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   border-collapse: collapse;
   border: 3px solid #44475c;
+  /* overflow-x: auto;
+  overflow-y: auto; */
+
+  /* transform: rotate(90deg); */
+
+  /* margin-top: 100px;
+  margin-bottom: 150px; */
 }
 
 .table .th {
@@ -169,7 +205,7 @@ p {
 }
 .table .tr .td {
   text-align: center;
-  padding: 3px;
+  padding: 5px;
   border-right: 2px solid #696969;
   vertical-align: middle;
 }
@@ -190,5 +226,9 @@ p {
   margin: 0 auto;
   display: block;
   margin-top: 30px;
+}
+
+.itemcount {
+  text-align: center;
 }
 </style>

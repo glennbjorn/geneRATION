@@ -6,12 +6,13 @@
     </div>
     <div class="page" v-if="loggedIn">
       <h1 class="header">Welcome</h1>
-      <h1 class="name">{{ user.name }}</h1>
-      <div class="container">
-        <button class="left" @click="$router.push('/create')">
-          New Campaign
+      <h1 class="name">{{ user.name }} <br /><i class="fa fa-smile-o"></i></h1>
+
+      <div class="w3-bar">
+        <button class="btn w3-mobile" @click="$router.push('/create')">
+          Create New Campaign
         </button>
-        <button class="right" @click="$router.push('/mycampaigns')">
+        <button class="btn w3-mobile" @click="$router.push('/mycampaigns')">
           View My Campaigns
         </button>
       </div>
@@ -65,14 +66,16 @@ export default {
 
 <style scoped>
 .header {
-  font-size: 250px;
+  font-size: 8vw;
   text-align: center;
   margin: -30px;
+  margin-top: 30px;
 }
 
 .name {
-  font-size: 100px;
+  font-size: 10vw;
   text-align: center;
+  margin-top: 30px;
 }
 
 .container {
@@ -100,5 +103,16 @@ export default {
   border-color: black;
   font-size: 50px;
   cursor: pointer;
+}
+
+.btn {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-top: 30px;
+  font-size: 50px;
 }
 </style>
