@@ -1,6 +1,24 @@
 <template style="w3-mobile">
   <Nav />
   <div v-if="!isLoading">
+    <div class="bar">
+      <div class="w3-bar w3-black">
+        <a
+          href="#about-us"
+          class="w3-center w3-bar-item w3-button w3-mobile"
+          style="width: 50%"
+          ><i class="fa fa-user"></i> About Us</a
+        >
+
+        <a
+          href="#ongoing-campaigns"
+          class="w3-center w3-bar-item w3-button w3-mobile"
+          style="width: 50%"
+          ><i class="fa fa-th"></i> Ongoing Campaigns</a
+        >
+      </div>
+    </div>
+
     <div class="hero-image">
       <div class="hero-text">
         <h1 style="font-size: 50px">do something that matters</h1>
@@ -20,22 +38,6 @@
           >
         </p>
       </div>
-    </div>
-
-    <div class="w3-bar w3-black">
-      <a
-        href="#about-us"
-        class="w3-center w3-bar-item w3-button w3-mobile"
-        style="width: 50%"
-        ><i class="fa fa-user"></i> About Us</a
-      >
-
-      <a
-        href="#ongoing-campaigns"
-        class="w3-center w3-bar-item w3-button w3-mobile"
-        style="width: 50%"
-        ><i class="fa fa-th"></i> Ongoing Campaigns</a
-      >
     </div>
 
     <div class="page">
@@ -160,7 +162,7 @@ export default {
   margin-top: 50px;
   font-size: 20px;
   /* font-weight: bold; */
-  margin-bottom: 250px;
+  margin-bottom: 150px;
   margin-left: 100px;
   margin-right: 100px;
 }
@@ -206,5 +208,9 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+.bar {
+  margin-top: -25px;
 }
 </style>

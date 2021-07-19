@@ -7,10 +7,10 @@
     <div class="form-page">
       <form @submit.prevent="submit">
         <div class="subheader">
-          <h1>
+          <h2>
             By pledging your donations, our volunteers would be collecting these
             items at your doorstep within the stipulated time!
-          </h1>
+          </h2>
           <h3><br />Kindly fill up your information below</h3>
         </div>
 
@@ -58,44 +58,24 @@
           <h5>Items to donate</h5>
         </div>
 
-        <!-- <div class="items-checkbox">
-          <p  class="all" >Select all</p>
-          <input v-model="toggle" type="checkbox" @click="selectAll" />
-        </div>-->
-
-        <!-- <div class="items-checkbox" :key="n" v-for="n in donor.items.length">
-          <input
-            v-model="donor.items[n - 1].donate"
-            type="checkbox"
-            id="items"
-          />
-          <p>
-            {{ campaign.items[n - 1].qty }} x {{ campaign.items[n - 1].item }}
-          </p>
-        </div>-->
-
-        <table class="table table-borderless">
-          <!-- <thead>
-            <tr>
-              <th scope="col">Select All</th>
-              <th scope="col">
-                <input v-model="toggle" type="checkbox" @click="selectAll" />
-              </th>
-            </tr>
-          </thead> -->
-          <tbody>
-            <tr>
-              <th colspan="1">Item Name</th>
-              <th scope="col">Donation Progress</th>
-              <th scope="col">Quantity</th>
-            </tr>
-            <tr :key="n" v-for="n in campaign.items.length">
-              <td>{{ campaign.items[n - 1].item }}</td>
-              <td>{{ itemCount[n - 1] }} / {{ campaign.items[n - 1].qty }}</td>
-              <td><input type="number" value="1" name="quantity" /></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="items">
+          <table>
+            <tbody>
+              <tr>
+                <th colspan="1" style="width: 50%">Item Name</th>
+                <th scope="col" style="width: 40%">Donation Progress</th>
+                <th scope="col" style="width: 10%">Quantity</th>
+              </tr>
+              <tr :key="n" v-for="n in campaign.items.length">
+                <td>{{ campaign.items[n - 1].item }}</td>
+                <td>
+                  {{ itemCount[n - 1] }} / {{ campaign.items[n - 1].qty }}
+                </td>
+                <td><input type="number" value="1" name="quantity" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="mini-header">
           <h5>Declarations</h5>
@@ -104,7 +84,7 @@
         <div class="agree-checkbox">
           <label for="shelf-life"
             >I agree to only donate items that are <b>NOT</b> expiring in the
-            next 3 months <br />(counting from the day of collection)</label
+            next 3 months <br />(starting from the day of collection)</label
           >
           <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
         </div>
@@ -121,19 +101,15 @@
         <br />
 
         <div class="agree-checkbox">
-          <label for="pdpa">
-            <p>
-              COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
-              <br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
-              obligations <br />in the course of or in connection with our
-              provision of the goods <br />
-              and/or services - "Doorstep Collection Service" <b>ALLOWED</b> by
-              you.
-              <br />
-              (Note: no external disclosure would be made)
-            </p>
-          </label>
           <input v-model="donor.pdpa" type="checkbox" id="pdpa" />
+          <label for="pdpa">
+            COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
+          </label>
+          <p><br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
+            obligations in the course of or in connection with our provision of
+            the goods and/or services - "Doorstep Collection Service"
+            <b>ALLOWED</b> by you. <br /><br />
+            (Note: no external disclosure would be made)</p>
         </div>
 
         <br />
@@ -367,6 +343,12 @@ export default {
   margin-top: -20px;
 }
 
+.subheader h2 {
+  text-align: justify;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 .form-page {
   width: 100%;
   max-width: 700px;
@@ -404,13 +386,19 @@ export default {
 
 .agree-checkbox {
   margin-top: 20px;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
 .agree-checkbox input {
   float: left;
   transform: scale(1.5);
   margin-right: 15px;
+  margin-top: 5px;
+}
+
+.agree-checkbox p {
+  margin-left: 30px;
+  text-align: justify;
 }
 
 .mini-header {
@@ -442,5 +430,17 @@ export default {
   display: block;
   margin-top: 30px;
   margin-bottom: 100px;
+}
+
+.items {
+  padding: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+table input {
+  width: 100%;
 }
 </style>

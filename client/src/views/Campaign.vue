@@ -139,6 +139,7 @@ export default {
 .date-and-loc {
   text-align: center;
   padding: 20px;
+  margin-top: -20px;
 }
 
 .cam-desc {
