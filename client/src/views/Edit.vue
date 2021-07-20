@@ -90,15 +90,10 @@
           <Items @delete-item="deleteItem" :items="items" />
         </div>
 
-        <!-- <div class="edit-campaign">
-          <label for="target">Target number of sets</label>
-          <input
-            v-model="campaign.target"
-            type="text"
-            id="target"
-            placeholder="Please indicate a whole number"
-          />
-        </div> -->
+        <div class="publish-checkbox">
+          <label for="publish">Publish campaign</label>
+          <input v-model="campaign.publish" type="checkbox" id="publish" />
+        </div>
 
         <button class="edit" type="submit">Save Changes</button>
       </form>
@@ -117,7 +112,7 @@
         </div>
       </div>
       <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
-        Back to My Campaigns
+        Back to Campaign
       </button>
     </div>
   </div>
@@ -252,6 +247,7 @@ export default {
           collectionContact: this.campaign.collectionContact,
           collectionDate: this.campaign.collectionDate,
           items: this.items,
+          publish: this.campaign.publish,
         });
 
         this.$swal("Campaign edited!");
@@ -368,5 +364,18 @@ export default {
   display: block;
   margin-top: 30px;
   margin-bottom: 100px;
+}
+
+.publish-checkbox {
+  margin-top: 40px;
+  font-size: 22.5px;
+  display: flex;
+  justify-content: center;
+}
+
+.publish-checkbox input {
+  transform: scale(1.5);
+  margin-top: 10px;
+  margin-left: 20px;
 }
 </style>

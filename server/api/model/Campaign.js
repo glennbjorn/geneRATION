@@ -46,10 +46,10 @@ const CampaignSchema = mongoose.Schema({
       }
     }
   ],
-  // target: {
-  //   type: String,
-  //   required: true
-  // },
+  publish: {
+    type: Boolean,
+    required: true
+  },
 });
 
 const Campaign = mongoose.model("campaign", CampaignSchema);

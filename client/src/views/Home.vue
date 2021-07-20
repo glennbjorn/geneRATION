@@ -66,9 +66,9 @@
         </div>
       </div>
 
-      <div id="ongoing-campaigns">
+      <div id="ongoing-campaigns" class="ongoing-campaigns">
         <Campaigns :campaigns="campaigns" />
-        <div class="home-no-campaign" v-if="!campaigns">
+        <div class="home-no-campaign" v-if="campaigns.length == 0">
           <h2>There are no campaigns at the moment.</h2>
           <h3>Do visit another day!</h3>
         </div>
@@ -103,13 +103,22 @@ export default {
 
       const data = await res.data;
 
-      return data;
+      const list = [];
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].publish) {
+          list.push(data[i]);
+        }
+      }
+
+      return list;
     },
   },
 
   async created() {
     this.campaigns = await this.getCampaigns();
     this.isLoading = false;
+    console.log(this.campaigns);
   },
 };
 </script>
@@ -212,5 +221,9 @@ html {
 
 .bar {
   margin-top: -25px;
+}
+
+.page .ongoing-campaigns {
+  margin-bottom: 100px;
 }
 </style>

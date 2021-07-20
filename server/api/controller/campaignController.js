@@ -12,7 +12,7 @@ exports.newCampaign = async (req, res) => {
             collectionContact: req.body.collectionContact,
             collectionDate: req.body.collectionDate,
             items: req.body.items,
-            // target: req.body.target,
+            publish: req.body.publish,
         })
         let data = await campaign.save()
         res.status(201).json({ data })
@@ -59,7 +59,7 @@ exports.editCampaign = async (req, res) => {
         campaign.collectionContact = req.body.collectionContact;
         campaign.collectionDate = req.body.collectionDate;
         campaign.items = req.body.items;
-        // campaign.target = req.body.target;
+        campaign.publish = req.body.publish;
         let data = await campaign.save();
         res.status(201).json({ data })
     } catch (err) {
