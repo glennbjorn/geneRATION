@@ -269,6 +269,11 @@ export default {
         return;
       }
 
+      if (this.donor.contact.length != 8) {
+        this.$swal("Your contact number should be 8 digits.");
+        return;
+      }
+
       if (!this.donor.address) {
         this.$swal("Please include your postal code!");
         return;
