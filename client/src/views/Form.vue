@@ -344,7 +344,7 @@ export default {
 }
 
 .subheader h2 {
-  text-align: justify;
+  text-align: center;
   margin-left: 5%;
   margin-right: 5%;
 }
