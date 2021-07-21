@@ -2,6 +2,7 @@
   <Nav />
   <div class="page">
     <h1 class="header">Thank You</h1>
+    <br />
     <h1 class="sentence">For Your Donation!</h1>
     <div class="reminder">
       <p>We will be coming to collect the items on {{ date }}!</p>
@@ -63,13 +64,13 @@ export default {
 
 <style scoped>
 .header {
-  font-size: 250px;
+  font-size: 15vw;
   text-align: center;
   margin: -30px;
 }
 
 .sentence {
-  font-size: 100px;
+  font-size: 10vw;
   text-align: center;
 }
 
