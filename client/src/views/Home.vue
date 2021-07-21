@@ -67,10 +67,23 @@
       </div>
 
       <div id="ongoing-campaigns" class="ongoing-campaigns">
-        <Campaigns :campaigns="campaigns" />
+        <div class="search" v-if="campaigns.length !== 0">
+          <input type="text" v-model="search" size=35 placeholder="search by name, location or organisation" />
+          <i @click="filter" class="fas fa-search fa-lg"></i>
+        </div>
+
+        <Campaigns :campaigns="filteredCampaigns" />
+
         <div class="home-no-campaign" v-if="campaigns.length == 0">
           <h2>There are no campaigns at the moment.</h2>
           <h3>Do visit another day!</h3>
+        </div>
+        <div
+          class="home-no-campaign"
+          v-if="campaigns.length !== 0 && filteredCampaigns.length == 0"
+        >
+          <h2>There are no campaigns that match your search result.</h2>
+          <h3>Please try again!</h3>
         </div>
       </div>
     </div>
@@ -94,6 +107,8 @@ export default {
     return {
       campaigns: [],
       isLoading: true,
+      search: "",
+      filteredCampaigns: [],
     };
   },
 
@@ -113,12 +128,32 @@ export default {
 
       return list;
     },
+
+    filter() {
+      let array = [];
+
+      const search = this.search.toLowerCase();
+      console.log(this.campaigns[0].name.toLowerCase());
+
+      for (let i = 0; i < this.campaigns.length; i++) {
+        console.log(this.campaigns[i]);
+        if (
+          this.campaigns[i].name.toLowerCase().match(search) ||
+          this.campaigns[i].collectionAddress.toLowerCase().match(search) ||
+          this.campaigns[i].org.toLowerCase().match(search)
+        ) {
+          array.push(this.campaigns[i]);
+        }
+      }
+
+      this.filteredCampaigns = array;
+    },
   },
 
   async created() {
     this.campaigns = await this.getCampaigns();
+    this.filteredCampaigns = this.campaigns;
     this.isLoading = false;
-    console.log(this.campaigns);
   },
 };
 </script>
@@ -171,7 +206,7 @@ export default {
   margin-top: 50px;
   font-size: 20px;
   /* font-weight: bold; */
-  margin-bottom: 150px;
+  margin-bottom: 100px;
   margin-left: 100px;
   margin-right: 100px;
 }
@@ -225,5 +260,18 @@ html {
 
 .page .ongoing-campaigns {
   margin-bottom: 100px;
+}
+
+.search {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search input {
+  margin-right: 1%;
+}
+
+.fas {
+  cursor: pointer;
 }
 </style>

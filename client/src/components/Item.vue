@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .fas {
   color: red;
 }

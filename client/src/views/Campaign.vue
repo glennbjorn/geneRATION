@@ -163,7 +163,6 @@ h5 {
 
 .donate {
   background: white;
-  width: 48%;
   height: 100%;
   border-inline: 3px;
   border-color: black;

@@ -82,20 +82,20 @@
         </div>
 
         <div class="agree-checkbox">
+          <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
           <label for="shelf-life"
             >I agree to only donate items that are <b>NOT</b> expiring in the
             next 3 months <br />(starting from the day of collection)</label
           >
-          <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
         </div>
 
         <br />
 
         <div class="agree-checkbox">
+          <input v-model="donor.halal" type="checkbox" id="halal" />
           <label for="halal"
             >I agree to only donate items that are <b>Halal Certified</b></label
           >
-          <input v-model="donor.halal" type="checkbox" id="halal" />
         </div>
 
         <br />
