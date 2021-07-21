@@ -94,6 +94,7 @@
 import Nav from "../components/Nav.vue";
 import Campaigns from "@/components/Campaigns";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   name: "Home",
@@ -109,6 +110,7 @@ export default {
       isLoading: true,
       search: "",
       filteredCampaigns: [],
+      currentDate: "",
     };
   },
 
@@ -122,7 +124,9 @@ export default {
 
       for (let i = 0; i < data.length; i++) {
         if (data[i].publish) {
-          list.push(data[i]);
+          if (data[i].collectionDate >= this.currentDate) {
+            list.push(data[i]);
+          }
         }
       }
 
@@ -148,9 +152,12 @@ export default {
 
       this.filteredCampaigns = array;
     },
+
+
   },
 
   async created() {
+    this.currentDate = moment(moment().toDate()).format("YYYY-MM-DD");
     this.campaigns = await this.getCampaigns();
     this.filteredCampaigns = this.campaigns;
     this.isLoading = false;
