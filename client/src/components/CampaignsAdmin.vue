@@ -1,6 +1,5 @@
 <template>
     <div :key="campaignAdmin.id" v-for="campaignAdmin in campaignsAdmin">
-        <!-- <Campaign @delete-item="$emit('delete-campaign', campaign.id)" :campaign="campaign" /> -->
         <CampaignAdmin :campaignAdmin="campaignAdmin" />
     </div>
 </template>
@@ -16,6 +15,5 @@ export default {
     components: {
         CampaignAdmin 
     },
-    // emits: ['delete-campaign'],
 }
 </script>

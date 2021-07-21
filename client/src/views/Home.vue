@@ -68,7 +68,12 @@
 
       <div id="ongoing-campaigns" class="ongoing-campaigns">
         <div class="search" v-if="campaigns.length !== 0">
-          <input type="text" v-model="search" size=35 placeholder="search by name, location or organisation" />
+          <input
+            type="text"
+            v-model="search"
+            size="35"
+            placeholder="search by name, location or organisation"
+          />
           <i @click="filter" class="fas fa-search fa-lg"></i>
         </div>
 
@@ -126,6 +131,8 @@ export default {
         if (data[i].publish) {
           if (data[i].collectionDate >= this.currentDate) {
             list.push(data[i]);
+          } else {
+            this.unpublish(data[i])
           }
         }
       }
@@ -140,7 +147,6 @@ export default {
       console.log(this.campaigns[0].name.toLowerCase());
 
       for (let i = 0; i < this.campaigns.length; i++) {
-        console.log(this.campaigns[i]);
         if (
           this.campaigns[i].name.toLowerCase().match(search) ||
           this.campaigns[i].collectionAddress.toLowerCase().match(search) ||
@@ -153,7 +159,19 @@ export default {
       this.filteredCampaigns = array;
     },
 
-
+    async unpublish(campaign) {
+      await axios.post("/api/campaign/editCampaign", {
+        _id: campaign._id,
+        name: campaign.name,
+        camDesc: campaign.camDesc,
+        orgDesc: campaign.orgDesc,
+        collectionAddress: campaign.collectionAddress,
+        collectionContact: campaign.collectionContact,
+        collectionDate: campaign.collectionDate,
+        items: campaign.items,
+        publish: false,
+      });
+    },
   },
 
   async created() {

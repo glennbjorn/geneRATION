@@ -6,7 +6,7 @@
     </div>
     <div class="page" v-if="loggedIn">
       <h1 class="header">Welcome</h1>
-      <h1 class="name">{{ user.name }} <br /><i class="fa fa-smile-o"></i></h1>
+      <h1 class="name">{{ user.name }}</h1>
 
       <div class="w3-bar">
         <button class="btn w3-mobile" @click="$router.push('/create')">
