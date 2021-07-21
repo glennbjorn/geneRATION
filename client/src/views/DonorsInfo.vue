@@ -8,8 +8,10 @@
     <div class="page" v-if="auth">
       <p><i>You may click on the header to sort the table</i></p>
 
-      <div style="overflow-x: auto">
-        <table class="table">
+      <div id="app" style="overflow-x: auto">
+        <input type="text" v-model="name" placeholder="Enter File Name" />
+        <button @click="ExportExcel('xlsx')">Export as Excel</button>
+        <table class="table" border="1" ref="exportable_table">
           <thead>
             <tr class="tr">
               <th class="th">Collected?</th>
@@ -53,7 +55,6 @@ import axios from "axios";
 
 export default {
   name: "DonorsInfo",
-
   data() {
     return {
       user: {},
@@ -67,13 +68,12 @@ export default {
       isLoading: true,
       // itemCount: [],
       halal: false,
+      name: "",
     };
   },
-
   components: {
     Nav,
   },
-
   methods: {
     getUserDetails() {
       let token = localStorage.getItem("jwt");
@@ -82,7 +82,6 @@ export default {
         this.user = decoded;
       }
     },
-
     checkAuth() {
       let admins = this.campaign.admin;
       for (var i = 0; i < admins.length; i++) {
@@ -91,17 +90,13 @@ export default {
         }
       }
     },
-
     async getCampaign() {
       const res = await axios.post("/api/campaign/getCampaignById", {
         _id: this.campaignid,
       });
-
       const data = await res.data[0];
-
       return data;
     },
-
     getItems() {
       let arr = [];
       for (let i = 0; i < this.campaign.items.length; i++) {
@@ -110,26 +105,20 @@ export default {
       }
       this.items = arr;
     },
-
     getCampaignId() {
       this.campaignid = localStorage.getItem("donorsInfoId");
     },
-
     async getDonors() {
       const res = await axios.post("/api/donate/getDonors", {
         campaignid: this.campaignid,
       });
-
       return res.data;
     },
-
     sort(field) {
       if (field === this.currentSort) {
         this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
-
       this.currentSort = field;
-
       this.donors.sort((a, b) => {
         let modifier = 1;
         if (this.currentSortDir === "desc") modifier = -1;
@@ -139,43 +128,50 @@ export default {
       });
     },
 
-    // getItemCount() {
-    //     // this.getItems();
-    //     //   // let arr = [];
-
-    //     //   // for (let i = 0; i < this.items.length; i++) {
-    //     //   //   arr = [...arr, 0];
-    //     //   // }
-
-    //     for (let j = 0; j < this.donors.length; j++) {
-    //       let donor = this.donors[j]; // Loop about the particular donor
-
-    //       for (let k = 0; k < donor.items.length; k++) {
-    //         this.donationMade = donor.items[k].length;
-    //       }
-    //     }
-    // },
+    ExportExcel(type, fn, dl) {
+      var XLSX = require("xlsx");
+      var elt = this.$refs.exportable_table;
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet JS" });
+      return dl
+        ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
+        : XLSX.writeFile(
+            wb,
+            fn || (this.name + "." || "SheetJSTableExport.") + (type || "xlsx")
+          );
+    },
   },
-
   async created() {
     this.getUserDetails();
     this.getCampaignId();
     this.campaign = await this.getCampaign();
     this.checkAuth();
     this.getItems();
-    // this.getItemCount();
     this.donors = await this.getDonors();
     this.sort("address");
     this.isLoading = false;
+
+    let exportExcelA = document.createElement("script");
+    exportExcelA.setAttribute(
+      "src",
+      "//unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"
+    );
+    document.head.appendChild(exportExcelA);
+
+    let exportExcelB = document.createElement("script");
+    exportExcelB.setAttribute(
+      "src",
+      "//cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"
+    );
+    document.head.appendChild(exportExcelB);
   },
 };
 </script>
+
 
 <style scoped>
 p {
   text-align: center;
 }
-
 .table {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -183,13 +179,10 @@ p {
   border: 3px solid #44475c;
   /* overflow-x: auto;
   overflow-y: auto; */
-
   /* transform: rotate(90deg); */
-
   /* margin-top: 100px;
   margin-bottom: 150px; */
 }
-
 .table .th {
   text-align: center;
   background: #696969;
@@ -199,7 +192,6 @@ p {
   min-width: 30px;
   vertical-align: middle;
 }
-
 .table .th:hover {
   background: black;
 }
@@ -209,15 +201,12 @@ p {
   border-right: 2px solid #696969;
   vertical-align: middle;
 }
-
 .table .td {
   border-right: none;
 }
-
 .table .tbody .tr .td {
   background: #d4d8f9;
 }
-
 .back {
   background: white;
   border-inline: 3px;
@@ -227,7 +216,6 @@ p {
   display: block;
   margin-top: 30px;
 }
-
 .itemcount {
   text-align: center;
 }
