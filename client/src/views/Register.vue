@@ -69,9 +69,7 @@
         <router-link to="/login">Sign in here!</router-link>
       </p>
 
-      <button class="register" type="submit">
-        New account
-      </button>
+      <button class="register" type="submit">Create</button>
     </form>
   </div>
 </template>
@@ -100,52 +98,37 @@ export default {
   methods: {
     async submit() {
       if (!this.reg.name) {
-        this.$swal(
-          "Please include your name!"
-        );
+        this.$swal("Please include your name!");
         return;
       }
 
       if (!this.reg.organisation) {
-        this.$swal(
-          "Please include your organisation!"
-        );
+        this.$swal("Please include your organisation!");
         return;
       }
 
       if (!this.reg.email) {
-        this.$swal(
-          "Please include your email!"
-        );
+        this.$swal("Please include your email!");
         return;
       }
 
-if (!this.reg.password) {
-        this.$swal(
-          "Please include your password!"
-        );
+      if (!this.reg.password) {
+        this.$swal("Please include your password!");
         return;
       }
 
       if (!this.reg.cfmpassword) {
-        this.$swal(
-          "Please confirm your password!"
-        );
+        this.$swal("Please confirm your password!");
         return;
       }
 
       if (this.reg.password != this.reg.cfmpassword) {
-        this.$swal(
-          "Your passwords do not match! Please try again."
-        );
+        this.$swal("Your passwords do not match! Please try again.");
         return;
       }
 
       try {
-        let response = await axios.post(
-          "/api/register",
-          this.reg
-        );
+        let response = await axios.post("/api/register", this.reg);
         let token = response.data.token;
         if (token) {
           this.$swal("Successfully created an account!", "Sign in");
@@ -168,7 +151,7 @@ if (!this.reg.password) {
 
 <style scoped>
 .header h1 {
-  font-size: 150px;
+  font-size: 15vw;
   text-align: center;
   margin: -15px;
 }

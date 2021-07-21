@@ -29,7 +29,7 @@
   }
   
   .share-btn-container a {
-    margin: 12px 0;
+    margin: 5px 0;
     transition: 500ms;
   }
   
@@ -68,11 +68,11 @@
       width: 100%;
       flex-direction: row;
       box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
-      padding: 16px 0;
+      padding: 6px 0;
       justify-content: center;
     }
   
     .share-btn-container a {
-      margin: 0 32px;
+      margin: 0 20px;
     }
   }
