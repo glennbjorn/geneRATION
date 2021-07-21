@@ -34,7 +34,7 @@
     </div>
     <!--social share-->
     <div class="share-btn-container">
-      <p style="margin-left: 25px"><b>Share</b><br /><b>This!</b></p>
+      <p><b>Share!</b></p>
 
       <a
         :href="'https://www.facebook.com/sharer.php?u=' + Location"

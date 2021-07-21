@@ -1,7 +1,7 @@
 <template>
   <Nav />
 
-  <div class="header">
+  <div class="header w3-mobile">
     <h1>Login</h1>
   </div>
 
@@ -61,10 +61,7 @@ export default {
   methods: {
     async submit() {
       try {
-        let response = await axios.post(
-          "/api/login",
-          this.login
-        );
+        let response = await axios.post("/api/login", this.login);
         let token = response.data.token;
         localStorage.setItem("jwt", token);
         if (token) {
@@ -83,7 +80,7 @@ export default {
 
 <style scoped>
 .header h1 {
-  font-size: 250px;
+  font-size: 15vw;
   text-align: center;
   margin: -15px;
 }
