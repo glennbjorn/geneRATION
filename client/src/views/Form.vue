@@ -34,6 +34,13 @@
           />
         </div>
 
+        <div class="agree-checkbox">
+          <input v-model="donor.dropoff" type="checkbox" id="dropoff" />
+          <label for="dropoff"
+            >I will send the items to </label
+          >
+        </div>
+
         <div class="form-form">
           <label for="address">Home Postal Code</label>
           <input
@@ -105,11 +112,13 @@
           <label for="pdpa">
             COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
           </label>
-          <p><br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
+          <p>
+            <br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
             obligations in the course of or in connection with our provision of
             the goods and/or services - "Doorstep Collection Service"
             <b>ALLOWED</b> by you. <br /><br />
-            (Note: no external disclosure would be made)</p>
+            (Note: no external disclosure would be made)
+          </p>
         </div>
 
         <br />

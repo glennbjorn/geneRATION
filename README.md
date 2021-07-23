@@ -56,7 +56,7 @@ npm install -g nodemon
 2. We can now install packages
 ```bash
 cd client
-npm i vue express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors dotenv --save
+npm i vue express mongoose bcrypt jsonwebtoken nodemon morgan body-parser cors dotenv xlsx --save
 cd ..
 ```
 
