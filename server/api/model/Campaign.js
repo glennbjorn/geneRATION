@@ -34,6 +34,14 @@ const CampaignSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  collectionStartTime: {
+    type: String,
+    required: true
+  },
+  collectionEndTime: {
+    type: String,
+    required: true
+  },
   items: [
     {
       item: {

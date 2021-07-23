@@ -5,14 +5,18 @@
       <h1 class="header">{{ campaign.name }}</h1>
       <!-- <h6 class="org">By {{ campaign.org }}</h6> -->
       <div class="date-and-loc">
-        <h6>
-          <b>Collection Date:</b><br />
+        <h5>
+          <b>Collection Date: </b>
           {{ date }}
-        </h6>
-        <h6>
-          <b>Self Drop-Off Location:</b><br />
+        </h5>
+        <h5>
+          <b>Collection Time: </b>
+          {{ campaign.collectionStartTime }} to {{ campaign.collectionEndTime }}
+        </h5>
+        <h5>
+          <b>Collection Point: </b><br />
           {{ campaign.collectionAddress }}
-        </h6>
+        </h5>
       </div>
       <div class="cam-desc">
         {{ campaign.camDesc }}
@@ -20,6 +24,9 @@
       <h5><b>Items for collection</b></h5>
       <div class="items" :key="item._id" v-for="item in campaign.items">
         <p>{{ item.qty }} x {{ item.item }}</p>
+      </div>
+      <div class="donate-desc">
+        Do consider donating if you live within a 10 minute walk from the collection point.
       </div>
       <button class="donate" @click="gotoform">Donate Today!</button>
       <h5><b>More about the Organisation:</b></h5>
@@ -126,7 +133,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css");
 
@@ -150,8 +156,20 @@ export default {
   margin-bottom: 30px;
 }
 
+.donate-desc {
+  font-size: 18px;
+  text-align: center;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: -20px;
+}
+
 h5 {
   text-align: center;
+}
+
+h5 b {
+  font-weight: 2000;
 }
 
 .items {

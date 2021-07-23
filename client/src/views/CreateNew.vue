@@ -45,7 +45,7 @@
 
         <div class="create-campaign">
           <label for="collection-address"
-            >Full Address of Collection Area</label
+            >Full Address of Collection Point</label
           >
           <input
             v-model="campaign.collectionAddress"
@@ -73,6 +73,28 @@
             placeholder="DD/MM/YYYY"
             id="collection-date"
           />
+        </div>
+
+        <div class="create-campaign">
+          <label>Set a Collection Time</label>
+          <div class="time">
+            <label for="collection-start-time">Start:</label>
+            <input
+              class="start-time"
+              type="time"
+              v-model="campaign.collectionStartTime"
+              id="collection-start-time"
+            />
+          </div>
+          <div class="time">
+            <label for="collection-end-time">End:</label>
+            <input
+              class="start-time"
+              type="time"
+              v-model="campaign.collectionEndTime"
+              id="collection-end-time"
+            />
+          </div>
         </div>
 
         <h3 class="mini-header">Add items here</h3>
@@ -131,6 +153,8 @@ export default {
         collectionAddress: "",
         collectionContact: "",
         collectionDate: "",
+        collectionStartTime: "",
+        collectionEndTime: "",
         qty: "",
         publish: false,
       },
@@ -213,6 +237,21 @@ export default {
         return;
       }
 
+      if (!this.campaign.collectionStartTime) {
+        this.$swal("Please include a collection time frame!");
+        return;
+      }
+
+      if (!this.campaign.collectionEndTime) {
+        this.$swal("Please include a collection time frame!");
+        return;
+      }
+
+      if (this.campaign.collectionStartTime > this.campaign.collectionEndTime) {
+        this.$swal("Your collection end time should be after your start time!")
+        return;
+      }
+
       if (this.items.length === 0) {
         this.$swal("Please include some items!");
         return;
@@ -228,6 +267,8 @@ export default {
           collectionAddress: this.campaign.collectionAddress,
           collectionContact: this.campaign.collectionContact,
           collectionDate: this.campaign.collectionDate,
+          collectionStartTime: this.campaign.collectionStartTime,
+          collectionEndTime: this.campaign.collectionEndTime,
           items: this.items,
           publish: this.campaign.publish,
         });
@@ -314,5 +355,16 @@ export default {
   transform: scale(1.5);
   margin-top: 10px;
   margin-left: 20px;
+}
+
+.create-campaign .time {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.create-campaign .time input {
+  width: 40%;
+  margin-right: 50%;
+  float: right;
 }
 </style>

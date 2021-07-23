@@ -5,7 +5,7 @@
     <br />
     <h1 class="sentence">For Your Donation!</h1>
     <div class="reminder">
-      <p>We will be coming to collect the items on {{ date }}!</p>
+      <p>The collection date will be {{ date }}!</p>
     </div>
 
     <button class="back" @click="$router.push('/')">
