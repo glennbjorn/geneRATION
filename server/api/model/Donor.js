@@ -40,6 +40,10 @@ const donorSchema = mongoose.Schema({
   ],
   remarks: {
     type: String
+  },
+  dropoff: {
+    type: Boolean,
+    required: true
   }
 });
 

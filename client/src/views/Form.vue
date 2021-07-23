@@ -8,8 +8,7 @@
       <form @submit.prevent="submit">
         <div class="subheader">
           <h2>
-            By pledging your donations, our volunteers would be collecting these
-            items at your doorstep within the stipulated time!
+            By pledging your donations, you will be helping many people in need!
           </h2>
           <h3><br />Kindly fill up your information below</h3>
         </div>
@@ -34,31 +33,38 @@
           />
         </div>
 
-        <div class="agree-checkbox">
+        <div class="mini-header">
+          <h5>Self-dropoff or have volunteers collect</h5>
+        </div>
+
+        <div class="dropoff-checkbox">
           <input v-model="donor.dropoff" type="checkbox" id="dropoff" />
-          <label for="dropoff"
-            >I will send the items to </label
-          >
+          <p>
+            I will personally send the items to the collection point at
+            {{ campaign.collectionAddress }}
+          </p>
         </div>
 
-        <div class="form-form">
-          <label for="address">Home Postal Code</label>
-          <input
-            v-model="donor.address"
-            type="text"
-            id="address"
-            placeholder="Postal Code"
-          />
-        </div>
+        <div v-if="!donor.dropoff">
+          <div class="form-form">
+            <label for="address">Home Postal Code</label>
+            <input
+              v-model="donor.address"
+              type="text"
+              id="address"
+              placeholder="Postal Code"
+            />
+          </div>
 
-        <div class="form-form">
-          <label for="unit">Unit Number</label>
-          <input
-            v-model="donor.unit"
-            type="text"
-            id="unit"
-            placeholder="Unit Number"
-          />
+          <div class="form-form">
+            <label for="unit">Unit Number</label>
+            <input
+              v-model="donor.unit"
+              type="text"
+              id="unit"
+              placeholder="Unit Number"
+            />
+          </div>
         </div>
 
         <div class="mini-header">
@@ -90,33 +96,30 @@
 
         <div class="agree-checkbox">
           <input v-model="donor.shelfLife" type="checkbox" id="shelf-life" />
-          <label for="shelf-life"
-            >I agree to only donate items that are <b>NOT</b> expiring in the
-            next 3 months <br />(starting from the day of collection)</label
-          >
+          <p>
+            I agree to only donate items that are <b>NOT</b> expiring in the
+            next 3 months <br />(starting from the day of collection)
+          </p>
         </div>
 
         <br />
 
         <div class="agree-checkbox">
           <input v-model="donor.halal" type="checkbox" id="halal" />
-          <label for="halal"
-            >I agree to only donate items that are <b>Halal Certified</b></label
-          >
+          <p>I agree to only donate items that are <b>Halal Certified</b></p>
         </div>
 
         <br />
 
         <div class="agree-checkbox">
           <input v-model="donor.pdpa" type="checkbox" id="pdpa" />
-          <label for="pdpa">
-            COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
-          </label>
           <p>
-            <br /><b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform
-            obligations in the course of or in connection with our provision of
-            the goods and/or services - "Doorstep Collection Service"
-            <b>ALLOWED</b> by you. <br /><br />
+            COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA:
+            <br /><br />
+            <b>I AGREE TO ALLOW THE ORGANISER(S)</b> to perform obligations in
+            the course of or in connection with our provision of the goods
+            and/or services - "Doorstep Collection Service" <b>ALLOWED</b> by
+            you. <br /><br />
             (Note: no external disclosure would be made)
           </p>
         </div>
@@ -135,7 +138,6 @@
 
         <button class="donate" type="submit">Pledge My Donation!</button>
       </form>
-      <!--<button class="back" @click="$router.push(`/${campaignid}`)">-->
       <button class="back" @click="$router.push(`/${campaignid}`)">
         Back to Campaigns
       </button>
@@ -181,6 +183,7 @@ export default {
         halal: false,
         pdpa: false,
         remarks: "",
+        dropoff: false,
       },
       toggle: false,
       isLoading: true,
@@ -283,18 +286,21 @@ export default {
         return;
       }
 
-      if (!this.donor.address) {
-        this.$swal("Please include your postal code!");
-        return;
-      }
+      if (!this.donor.dropoff) {
+        if (!this.donor.address) {
+          this.$swal("Please include your postal code!");
+          return;
+        }
 
-      if (this.donor.address.length != 6) {
-        this.$swal("Your postal code should be 6 digits!");
-      }
+        if (this.donor.address.length != 6) {
+          this.$swal("Your postal code should be 6 digits!");
+          return;
+        }
 
-      if (!this.donor.unit) {
-        this.$swal("Please include your unit number!");
-        return;
+        if (!this.donor.unit) {
+          this.$swal("Please include your unit number!");
+          return;
+        }
       }
 
       if (!this.donor.shelfLife) {
@@ -326,6 +332,7 @@ export default {
         unit: this.donor.unit,
         items: this.donor.items,
         remarks: this.donor.remarks,
+        dropoff: this.donor.dropoff,
       });
       localStorage.removeItem("tqid");
       localStorage.setItem("tqid", this.campaignid);
@@ -399,7 +406,7 @@ export default {
 }
 
 .agree-checkbox {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 20px;
 }
 
@@ -412,6 +419,24 @@ export default {
 
 .agree-checkbox p {
   margin-left: 30px;
+  margin-right: 15px;
+  text-align: justify;
+}
+
+.dropoff-checkbox {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.dropoff-checkbox input {
+  float: left;
+  transform: scale(1.5);
+  margin-top: 5px;
+}
+
+.dropoff-checkbox p {
+  margin-left: 30px;
+  margin-right: 15px;
   text-align: justify;
 }
 
