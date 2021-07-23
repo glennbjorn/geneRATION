@@ -41,7 +41,9 @@
           <input v-model="donor.dropoff" type="checkbox" id="dropoff" />
           <p>
             I will personally send the items to the collection point at
-            {{ campaign.collectionAddress }}
+            {{ campaign.collectionAddress }} within
+            {{ campaign.collectionStartTime }} to
+            {{ campaign.collectionEndTime }}.
           </p>
         </div>
 
