@@ -9,7 +9,8 @@ exports.addDonation = async (req, res) => {
             address: req.body.address,
             unit: req.body.unit,
             items: req.body.items,
-            remarks: req.body.remarks
+            remarks: req.body.remarks,
+            dropoff: req.body.dropoff,
         })
         let data = await donation.save()
         res.status(201).json({ data })
