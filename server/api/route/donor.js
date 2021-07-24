@@ -5,5 +5,6 @@ const donorController = require(path.join(__dirname,"../controller/donorControll
 
 router.post("/", donorController.addDonation);
 router.post("/getDonors", donorController.getDonors);
+router.post("/editDonor", donorController.editDonor);
 
 module.exports = router;

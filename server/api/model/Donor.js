@@ -34,14 +34,16 @@ const donorSchema = mongoose.Schema({
         type: Boolean,
         required: true
       }
-
-
-    }
+    },
   ],
   remarks: {
     type: String
   },
   dropoff: {
+    type: Boolean,
+    required: true
+  },
+  collected: {
     type: Boolean,
     required: true
   }

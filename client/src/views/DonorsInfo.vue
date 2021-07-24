@@ -12,17 +12,19 @@
         <table class="table" border="1" ref="exportable_table">
           <thead>
             <tr class="tr">
-              <th class="th" @click="sort('name')">Name</th>
-              <th class="th" @click="sort('contact')">Contact No.</th>
-              <th class="th" @click="sort('dropoff')">Self Drop Off</th>
-              <th class="th" @click="sort('address')">Postal Code</th>
-              <th class="th" @click="sort('unit')">Unit Number</th>
+              <th class="th">Collected?</th>
+              <th class="th">Name</th>
+              <th class="th">Contact No.</th>
+              <th class="th">Self Drop Off</th>
+              <th class="th">Postal Code</th>
+              <th class="th">Unit Number</th>
               <th class="th" :key="item" v-for="item in items">{{ item }}</th>
-              <th class="th" @click="sort('remarks')">Remarks</th>
+              <th class="th">Remarks</th>
             </tr>
           </thead>
           <tbody>
             <tr class="tr" :key="donor.id" v-for="donor in donors">
+              <td class="td">{{ donor.collected }}</td>
               <td class="td">{{ donor.name }}</td>
               <td class="td">{{ donor.contact }}</td>
               <td class="td">{{ donor.dropoff }}</td>
@@ -47,6 +49,7 @@
         <table class="table" border="1">
           <thead>
             <tr class="tr">
+              <th class="th" @click="sortpickup('collected')">Collected?</th>
               <th class="th" @click="sortpickup('name')">Name</th>
               <th class="th" @click="sortpickup('contact')">Contact No.</th>
               <th class="th" @click="sortpickup('address')">Postal Code</th>
@@ -57,6 +60,13 @@
           </thead>
           <tbody>
             <tr class="tr" :key="donor.id" v-for="donor in pickupdonors">
+              <td class="td">
+                <input
+                  type="checkbox"
+                  v-model="donor.collected"
+                  @change="changeStatus(donor)"
+                />
+              </td>
               <td class="td">{{ donor.name }}</td>
               <td class="td">{{ donor.contact }}</td>
               <td class="td">{{ donor.address }}</td>
@@ -70,10 +80,13 @@
             </tr>
           </tbody>
         </table>
+        <br />
+        <br />
         <h5>Self-Dropoff Donors</h5>
         <table class="table" border="1">
           <thead>
             <tr class="tr">
+              <th class="th" @click="sortpickup('collected')">Collected?</th>
               <th class="th" @click="sortdropoff('name')">Name</th>
               <th class="th" @click="sortdropoff('contact')">Contact No.</th>
               <th class="th" :key="item" v-for="item in items">{{ item }}</th>
@@ -82,6 +95,13 @@
           </thead>
           <tbody>
             <tr class="tr" :key="donor.id" v-for="donor in dropoffdonors">
+              <td class="td">
+                <input
+                  type="checkbox"
+                  v-model="donor.collected"
+                  @change="changeStatus(donor)"
+                />
+              </td>
               <td class="td">{{ donor.name }}</td>
               <td class="td">{{ donor.contact }}</td>
               <td class="td" :key="item.id" v-for="item in donor.items">
@@ -115,6 +135,7 @@ export default {
       campaignid: "",
       campaign: [],
       items: [],
+      donors: [],
       dropoffdonors: [],
       pickupdonors: [],
       currentSortPickUp: "address",
@@ -168,35 +189,43 @@ export default {
       });
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].dropoff) {
-          this.dropoffdonors.push(res.data[i])
+          this.dropoffdonors.push(res.data[i]);
+          this.donors.push(res.data[i]);
         } else {
-          this.pickupdonors.push(res.data[i])
+          this.pickupdonors.push(res.data[i]);
+          this.donors.push(res.data[i]);
         }
       }
     },
     sortpickup(field) {
       if (field === this.currentSortPickUp) {
-        this.currentSortDirPickUp = this.currentSortDirPickUp === "asc" ? "desc" : "asc";
+        this.currentSortDirPickUp =
+          this.currentSortDirPickUp === "asc" ? "desc" : "asc";
       }
       this.currentSortPickUp = field;
       this.pickupdonors.sort((a, b) => {
         let modifier = 1;
         if (this.currentSortDirPickUp === "desc") modifier = -1;
-        if (a[this.currentSortPickUp] < b[this.currentSortPickUp]) return -1 * modifier;
-        if (a[this.currentSortPickUp] > b[this.currentSortPickUp]) return 1 * modifier;
+        if (a[this.currentSortPickUp] < b[this.currentSortPickUp])
+          return -1 * modifier;
+        if (a[this.currentSortPickUp] > b[this.currentSortPickUp])
+          return 1 * modifier;
         return 0;
       });
     },
     sortdropoff(field) {
       if (field === this.currentSortDropOff) {
-        this.currentSortDirDropOff = this.currentSortDirDropOff === "asc" ? "desc" : "asc";
+        this.currentSortDirDropOff =
+          this.currentSortDirDropOff === "asc" ? "desc" : "asc";
       }
       this.currentSortDropOff = field;
       this.pickupdonors.sort((a, b) => {
         let modifier = 1;
         if (this.currentSortDirDropOff === "desc") modifier = -1;
-        if (a[this.currentSortDropOff] < b[this.currentSortDropOff]) return -1 * modifier;
-        if (a[this.currentSortDropOff] > b[this.currentSortDropOff]) return 1 * modifier;
+        if (a[this.currentSortDropOff] < b[this.currentSortDropOff])
+          return -1 * modifier;
+        if (a[this.currentSortDropOff] > b[this.currentSortDropOff])
+          return 1 * modifier;
         return 0;
       });
     },
@@ -213,6 +242,14 @@ export default {
               (this.campaign.name + "." || "SheetJSTableExport.") +
                 (type || "xlsx")
           );
+    },
+
+    async changeStatus(donor) {
+      console.log(donor._id);
+      await axios.post("/api/donate/editDonor", {
+        _id: donor._id,
+        collected: donor.collected,
+      });
     },
   },
   async created() {

@@ -11,6 +11,7 @@ exports.addDonation = async (req, res) => {
             items: req.body.items,
             remarks: req.body.remarks,
             dropoff: req.body.dropoff,
+            collected: false,
         })
         let data = await donation.save()
         res.status(201).json({ data })
@@ -26,6 +27,18 @@ exports.getDonors = async (req, res) => {
         await res.json(data)
     } catch (err) {
         console.log(err)
+        res.status(400).json({ err: err })
+    }
+}
+
+exports.editDonor = async (req, res) => {
+    try {
+        var donor = await Donor.findOne({ _id: req.body._id });
+        donor.collected = req.body.collected;
+        let data = await donor.save();
+        res.status(201).json({ data })
+    } catch (err) {
+        console.log(err);
         res.status(400).json({ err: err })
     }
 }
