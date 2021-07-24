@@ -6,15 +6,22 @@
         <a
           href="#about-us"
           class="w3-center w3-bar-item w3-button w3-mobile"
-          style="width: 50%"
-          ><i class="fa fa-user"></i> About Us</a
+          style="width: 33%"
+          ><i class="fa fa-users"></i> About Us</a
         >
 
         <a
           href="#ongoing-campaigns"
           class="w3-center w3-bar-item w3-button w3-mobile"
-          style="width: 50%"
+          style="width: 33%"
           ><i class="fa fa-th"></i> Ongoing Campaigns</a
+        >
+
+        <a
+          href="#faq"
+          class="w3-center w3-bar-item w3-button w3-mobile"
+          style="width: 33%"
+          ><i class="fa fa-info-circle"></i> FAQ</a
         >
       </div>
     </div>
@@ -75,6 +82,7 @@
       </div>
 
       <div id="ongoing-campaigns" class="ongoing-campaigns">
+        <br />
         <div class="search" v-if="campaigns.length !== 0">
           <input
             type="text"
@@ -97,6 +105,82 @@
         >
           <h2>There are no campaigns that match your search result.</h2>
           <h3>Please try again!</h3>
+        </div>
+      </div>
+    </div>
+
+    <div id="faq">
+      <span class="generation-intro">
+        <h2>FAQ<br /></h2>
+      </span>
+
+      <div class="row">
+        <div class="column" style="background-color: #e8e8e8">
+          <h2><i>How to Donate?</i></h2>
+          <br />
+          <p>
+            1. Search &amp; select the campaign of your choice. Click here to
+            start:<a
+              href="#ongoing-campaigns"
+              class="w3-center w3-bar-item w3-button w3-mobile"
+              ><i class="fa fa-th"></i> Ongoing Campaigns</a
+            ><br />
+            2. Read the details of the campaign &amp; click "Donate Today".<br /><br />
+            3. Fill in your particulars &amp; decide between the self drop-off
+            or door-to-door collection option. <br /><br />
+            4. Enter the desired quantity to donate. <br /><br />
+            5. Pledge your donation!
+          </p>
+        </div>
+
+        <div class="column" style="background-color: #bbb">
+          <h2><i>How to Organise?</i></h2>
+          <br />
+          <p>
+            1. Register an account wih GENERATION.<br /><br />
+            2. Under "Dashboad", select "Create New Campaign".<br /><br />
+            3. Enter the campaign's name &amp; details.<br /><br />
+            4. Add the type of items &amp; their respective target quantity.
+            <br /><br />
+            5. Tick the "Publish Campaign" checkbox follewed by "Create
+            Campaign"!
+          </p>
+        </div>
+
+        <div class="column" style="background-color: #e8e8e8">
+          <h2><i>How to Edit/Delete/Pause a Campaign?</i></h2>
+          <br /><br />
+          <p>
+            1. Under "Dashboad", select "View My Campaigns".<br /><br />
+            2. Select the campaign you wish to edit/delete &amp; click
+            "Edit".<br /><br />
+            3. Make the changes and/or uncheck the "Publish Campaign" checkbox
+            to pause.<br /><br />
+            4. Select "Save Changes" or "Delete Campaign".
+          </p>
+        </div>
+
+        <div class="column" style="background-color: #bbb">
+          <h2><i>How to add Collaborators?</i></h2>
+          <br /><br />
+          <p>
+            1. Under "Dashboad", select "View My Campaigns".<br /><br />
+            2. Select the campaign you wish to add a collaborator &amp; click
+            "Edit".<br /><br />
+            3. Scroll to the bottom &amp; click on "Manage Administrators"<br /><br />
+            4. Enter the collaborator(s)' email &amp; "Give Permission"
+          </p>
+        </div>
+
+        <div class="column" style="background-color: #e8e8e8">
+          <h2><i>How to View/Export Donors' Information?</i></h2>
+          <br /><br />
+          <p>
+            1. Under "Dashboad", select "View My Campaigns".<br /><br />
+            2. Select the campaign you wish to view/export &amp; click "Donors
+            Information".<br /><br />
+            3. Select "Export as Excel" to export as a Excel.xlsx <br /><br />
+          </p>
         </div>
       </div>
     </div>
@@ -306,5 +390,26 @@ html {
 
 .fas {
   cursor: pointer;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 380px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row {
+  content: "";
+  display: table;
+  clear: both;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 </style>
