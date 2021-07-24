@@ -301,6 +301,9 @@ export default {
 
     async deleteCampaign() {
       if (confirm("You sure you want to delete this?")) {
+        await axios.post("/api/donate/delDonors", {
+          campaignid: this.campaignid,
+        });
         await axios.post("/api/campaign/deleteCampaign", {
           _id: this.campaignid,
         });
