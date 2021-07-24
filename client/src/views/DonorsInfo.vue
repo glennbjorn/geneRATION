@@ -8,34 +8,87 @@
     <div class="page" v-if="auth">
       <p><i>You may click on the header to sort the table</i></p>
 
-      <div id="app" style="overflow-x: auto">
-        <input type="text" v-model="name" placeholder="Enter File Name" />
-        <button @click="ExportExcel('xlsx')">Export as Excel</button>
+      <div class="excel">
         <table class="table" border="1" ref="exportable_table">
           <thead>
             <tr class="tr">
-              <th class="th">Collected?</th>
-              <th class="th" @click="sort('address')">Postal Code</th>
-              <th class="th" @click="sort('unit')">Unit Number</th>
               <th class="th" @click="sort('name')">Name</th>
               <th class="th" @click="sort('contact')">Contact No.</th>
+              <th class="th" @click="sort('dropoff')">Self Drop Off</th>
+              <th class="th" @click="sort('address')">Postal Code</th>
+              <th class="th" @click="sort('unit')">Unit Number</th>
               <th class="th" :key="item" v-for="item in items">{{ item }}</th>
+              <th class="th" @click="sort('remarks')">Remarks</th>
             </tr>
           </thead>
           <tbody>
             <tr class="tr" :key="donor.id" v-for="donor in donors">
-              <td class="td">
-                <input type="checkbox" v-model="collected" />
-              </td>
-              <td class="td">{{ donor.address }}</td>
-              <td class="td">{{ donor.unit }}</td>
               <td class="td">{{ donor.name }}</td>
               <td class="td">{{ donor.contact }}</td>
+              <td class="td">{{ donor.dropoff }}</td>
+              <td class="td">{{ donor.address }}</td>
+              <td class="td">{{ donor.unit }}</td>
 
               <td class="td" :key="item.id" v-for="item in donor.items">
                 <p v-if="item.quantity != 0">{{ item.quantity }}</p>
                 <p v-else>0</p>
               </td>
+              <td class="td">{{ donor.remarks }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="app" style="overflow-x: auto">
+        <button class="export" @click="ExportExcel('xlsx')">
+          Export as Excel
+        </button>
+        <h5>Pick Up Donors</h5>
+        <table class="table" border="1">
+          <thead>
+            <tr class="tr">
+              <th class="th" @click="sortpickup('name')">Name</th>
+              <th class="th" @click="sortpickup('contact')">Contact No.</th>
+              <th class="th" @click="sortpickup('address')">Postal Code</th>
+              <th class="th" @click="sortpickup('unit')">Unit Number</th>
+              <th class="th" :key="item" v-for="item in items">{{ item }}</th>
+              <th class="th" @click="sortpickup('remarks')">Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tr" :key="donor.id" v-for="donor in pickupdonors">
+              <td class="td">{{ donor.name }}</td>
+              <td class="td">{{ donor.contact }}</td>
+              <td class="td">{{ donor.address }}</td>
+              <td class="td">{{ donor.unit }}</td>
+
+              <td class="td" :key="item.id" v-for="item in donor.items">
+                <p v-if="item.quantity != 0">{{ item.quantity }}</p>
+                <p v-else>0</p>
+              </td>
+              <td class="td">{{ donor.remarks }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h5>Self-Dropoff Donors</h5>
+        <table class="table" border="1">
+          <thead>
+            <tr class="tr">
+              <th class="th" @click="sortdropoff('name')">Name</th>
+              <th class="th" @click="sortdropoff('contact')">Contact No.</th>
+              <th class="th" :key="item" v-for="item in items">{{ item }}</th>
+              <th class="th" @click="sortdropoff('remarks')">Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tr" :key="donor.id" v-for="donor in dropoffdonors">
+              <td class="td">{{ donor.name }}</td>
+              <td class="td">{{ donor.contact }}</td>
+              <td class="td" :key="item.id" v-for="item in donor.items">
+                <p v-if="item.quantity != 0">{{ item.quantity }}</p>
+                <p v-else>0</p>
+              </td>
+              <td class="td">{{ donor.remarks }}</td>
             </tr>
           </tbody>
         </table>
@@ -62,13 +115,14 @@ export default {
       campaignid: "",
       campaign: [],
       items: [],
-      donors: [],
-      currentSort: "address",
-      currentSortDir: "asc",
+      dropoffdonors: [],
+      pickupdonors: [],
+      currentSortPickUp: "address",
+      currentSortDirPickUp: "asc",
+      currentSortDropOff: "name",
+      currentSortDirDropOff: "asc",
       isLoading: true,
-      // itemCount: [],
       halal: false,
-      name: "",
     };
   },
   components: {
@@ -112,18 +166,37 @@ export default {
       const res = await axios.post("/api/donate/getDonors", {
         campaignid: this.campaignid,
       });
-      return res.data;
-    },
-    sort(field) {
-      if (field === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].dropoff) {
+          this.dropoffdonors.push(res.data[i])
+        } else {
+          this.pickupdonors.push(res.data[i])
+        }
       }
-      this.currentSort = field;
-      this.donors.sort((a, b) => {
+    },
+    sortpickup(field) {
+      if (field === this.currentSortPickUp) {
+        this.currentSortDirPickUp = this.currentSortDirPickUp === "asc" ? "desc" : "asc";
+      }
+      this.currentSortPickUp = field;
+      this.pickupdonors.sort((a, b) => {
         let modifier = 1;
-        if (this.currentSortDir === "desc") modifier = -1;
-        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        if (this.currentSortDirPickUp === "desc") modifier = -1;
+        if (a[this.currentSortPickUp] < b[this.currentSortPickUp]) return -1 * modifier;
+        if (a[this.currentSortPickUp] > b[this.currentSortPickUp]) return 1 * modifier;
+        return 0;
+      });
+    },
+    sortdropoff(field) {
+      if (field === this.currentSortDropOff) {
+        this.currentSortDirDropOff = this.currentSortDirDropOff === "asc" ? "desc" : "asc";
+      }
+      this.currentSortDropOff = field;
+      this.pickupdonors.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDirDropOff === "desc") modifier = -1;
+        if (a[this.currentSortDropOff] < b[this.currentSortDropOff]) return -1 * modifier;
+        if (a[this.currentSortDropOff] > b[this.currentSortDropOff]) return 1 * modifier;
         return 0;
       });
     },
@@ -136,7 +209,9 @@ export default {
         ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
         : XLSX.writeFile(
             wb,
-            fn || (this.name + "." || "SheetJSTableExport.") + (type || "xlsx")
+            fn ||
+              (this.campaign.name + "." || "SheetJSTableExport.") +
+                (type || "xlsx")
           );
     },
   },
@@ -146,9 +221,9 @@ export default {
     this.campaign = await this.getCampaign();
     this.checkAuth();
     this.getItems();
-    this.donors = await this.getDonors();
-    this.sort("address");
-    this.isLoading = false;
+    await this.getDonors();
+    this.sortpickup("address");
+    this.sortdropoff("name");
 
     let exportExcelA = document.createElement("script");
     exportExcelA.setAttribute(
@@ -163,10 +238,11 @@ export default {
       "//cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"
     );
     document.head.appendChild(exportExcelB);
+
+    this.isLoading = false;
   },
 };
 </script>
-
 
 <style scoped>
 p {
@@ -177,11 +253,6 @@ p {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   border-collapse: collapse;
   border: 3px solid #44475c;
-  /* overflow-x: auto;
-  overflow-y: auto; */
-  /* transform: rotate(90deg); */
-  /* margin-top: 100px;
-  margin-bottom: 150px; */
 }
 .table .th {
   text-align: center;
@@ -217,6 +288,23 @@ p {
   margin-top: 30px;
 }
 .itemcount {
+  text-align: center;
+}
+.export {
+  background: white;
+  border-inline: 3px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+.excel {
+  display: none;
+}
+
+h5 {
   text-align: center;
 }
 </style>

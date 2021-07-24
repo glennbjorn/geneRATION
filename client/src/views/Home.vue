@@ -58,11 +58,19 @@
             categorising, and dispersing food items.
           </p>
 
-          Thus, as young individuals who recognise the significance of food
-          charity drives and their impact on the less privileged in our society,
-          we want to set up a website that will ease the process and produce
-          positive outcomes for charitable organisations to acquire food
-          donations.
+          <p class="para-space">
+            Thus, as young individuals who recognise the significance of food
+            charity drives and their impact on the less privileged in our
+            society, we want to set up a website that will ease the process and
+            produce positive outcomes for charitable organisations to acquire
+            food donations.
+          </p>
+
+          <p>
+            If you live within a 10 minute walk from the collection point, or
+            are able to drop off the donations at the collection point, please
+            consider donating to help those in need!
+          </p>
         </div>
       </div>
 
@@ -132,7 +140,7 @@ export default {
           if (data[i].collectionDate >= this.currentDate) {
             list.push(data[i]);
           } else {
-            this.unpublish(data[i])
+            this.unpublish(data[i]);
           }
         }
       }

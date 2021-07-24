@@ -8,11 +8,18 @@
       <h1 class="header" style="font-size: 10vw">{{ campaign.name }}</h1>
       <!-- <h6 class="org">By {{ campaign.org }}</h6> -->
       <div class="date-and-loc">
-        <h6><b>Collection Date:</b> {{ date }}</h6>
-        <h6>
-          <b>Self Drop-Off Location:</b><br />
+        <h5>
+          <b>Collection Date: </b>
+          {{ date }}
+        </h5>
+        <h5>
+          <b>Collection Time: </b>
+          {{ campaign.collectionStartTime }} to {{ campaign.collectionEndTime }}
+        </h5>
+        <h5>
+          <b>Collection Point: </b><br />
           {{ campaign.collectionAddress }}
-        </h6>
+        </h5>
       </div>
       <div class="cam-desc">
         {{ campaign.camDesc }}
@@ -36,11 +43,6 @@
       <h5 style="margin-top: 30px"><b>More about the organisation:</b></h5>
       <div class="org-desc">
         <p>{{ campaign.orgDesc }}</p>
-      </div>
-
-      <h5><b>For further enquiries, please contact the organiser at:</b></h5>
-      <div class="org-desc">
-        <p>{{ campaign.collectionContact }}</p>
       </div>
 
       <h5><b>Donation Progress</b></h5>

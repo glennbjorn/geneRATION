@@ -303,6 +303,9 @@ export default {
           this.$swal("Please include your unit number!");
           return;
         }
+      } else {
+        this.donor.address = "NA";
+        this.donor.unit = "NA";
       }
 
       if (!this.donor.shelfLife) {
