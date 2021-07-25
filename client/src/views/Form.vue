@@ -330,7 +330,7 @@ export default {
 
       if (!this.donor.pdpa) {
         this.$swal(
-          "Please AGREE to PDPA to proceed, OR consider dropping the items personally!"
+          "Please AGREE to PDPA to proceed!"
         );
         return;
       }
