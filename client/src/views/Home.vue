@@ -1,5 +1,8 @@
 <template style="w3-mobile">
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
   <div v-if="!isLoading">
     <div class="bar">
       <div class="w3-bar w3-black">
@@ -188,6 +191,7 @@ import Nav from "../components/Nav.vue";
 import Campaigns from "@/components/Campaigns";
 import axios from "axios";
 import moment from "moment";
+import Loading from "@/components/Loading"
 
 export default {
   name: "Home",
@@ -195,6 +199,7 @@ export default {
   components: {
     Nav,
     Campaigns,
+    Loading
   },
 
   data() {

@@ -1,16 +1,22 @@
 <template>
   <Nav />
-  <div class="page">
-    <h1 class="header">Thank You</h1>
-    <br />
-    <h1 class="sentence">For Your Donation!</h1>
-    <div class="reminder">
-      <p>The collection date will be {{ date }}!</p>
-    </div>
+  <div v-if="isLoading">
+    <Loading />
+  </div>
 
-    <button class="back" @click="$router.push('/')">
-      Head back to home page!
-    </button>
+  <div v-if="!isLoading">
+    <div class="page">
+      <h1 class="header">Thank You</h1>
+      <br />
+      <h1 class="sentence">For Your Donation!</h1>
+      <div class="reminder">
+        <p>The collection date will be {{ date }}!</p>
+      </div>
+
+      <button class="back" @click="$router.push('/')">
+        Head back to home page!
+      </button>
+    </div>
   </div>
 </template>
 
@@ -18,12 +24,14 @@
 import Nav from "../components/Nav.vue";
 import axios from "axios";
 import moment from "moment";
+import Loading from "@/components/Loading";
 
 export default {
   name: "Campaign",
 
   components: {
     Nav,
+    Loading,
   },
 
   data() {
@@ -31,6 +39,7 @@ export default {
       campaignid: "",
       campaign: [],
       date: "",
+      isLoading: true,
     };
   },
 
@@ -58,6 +67,7 @@ export default {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
     this.convertDate();
+    this.isLoading = false;
   },
 };
 </script>

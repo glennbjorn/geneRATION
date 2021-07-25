@@ -1,5 +1,9 @@
 <template>
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
+
   <div v-if="!isLoading">
     <div>
       <h1 class="header">{{ campaign.name }}</h1>
@@ -151,6 +155,7 @@
 import axios from "axios";
 import router from "@/router";
 import Nav from "../components/Nav.vue";
+import Loading from "@/components/Loading";
 
 var quantity = null;
 var quantity_arr = [];
@@ -194,6 +199,7 @@ export default {
 
   components: {
     Nav,
+    Loading,
   },
 
   methods: {

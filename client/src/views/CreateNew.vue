@@ -1,5 +1,9 @@
 <template>
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
+
   <div v-if="!isLoading">
     <div class="page" v-if="!loggedIn">
       <h1>You are not logged in!</h1>
@@ -131,6 +135,7 @@ import AddItem from "@/components/AddItem";
 import axios from "axios";
 import router from "@/router";
 import Nav from "../components/Nav.vue";
+import Loading from "@/components/Loading";
 
 export default {
   name: "Dashboard",
@@ -139,6 +144,7 @@ export default {
     Items,
     AddItem,
     Nav,
+    Loading,
   },
 
   data() {
@@ -248,7 +254,7 @@ export default {
       }
 
       if (this.campaign.collectionStartTime > this.campaign.collectionEndTime) {
-        this.$swal("Your collection end time should be after your start time!")
+        this.$swal("Your collection end time should be after your start time!");
         return;
       }
 

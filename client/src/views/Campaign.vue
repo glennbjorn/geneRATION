@@ -1,5 +1,9 @@
 <template style="w3-mobile">
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
+
   <div v-if="!isLoading">
     <div class="page">
       <h1 class="header">{{ campaign.name }}</h1>
@@ -26,7 +30,8 @@
         <p>{{ item.qty }} x {{ item.item }}</p>
       </div>
       <div class="donate-desc">
-        Do consider donating if you live within a 10 minute walk from the collection point.
+        Do consider donating if you live within a 10 minute walk from the
+        collection point.
       </div>
       <button class="donate" @click="gotoform">Donate Today!</button>
       <h5><b>More about the Organisation:</b></h5>
@@ -77,12 +82,14 @@ import Nav from "../components/Nav.vue";
 import axios from "axios";
 import moment from "moment";
 import "@/assets/socialSharing.css";
+import Loading from "@/components/Loading";
 
 export default {
   name: "Campaign",
 
   components: {
     Nav,
+    Loading,
   },
 
   data() {

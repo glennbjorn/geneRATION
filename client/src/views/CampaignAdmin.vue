@@ -1,5 +1,9 @@
 <template>
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
+
   <div v-if="!isLoading">
     <div class="page" v-if="!auth">
       <h1>You are not authorised to view this page</h1>
@@ -65,6 +69,8 @@ import Nav from "../components/Nav.vue";
 import axios from "axios";
 import router from "@/router";
 import moment from "moment";
+import Loading from "@/components/Loading";
+
 export default {
   name: "Dashboard",
   data() {
@@ -83,6 +89,7 @@ export default {
   },
   components: {
     Nav,
+    Loading,
   },
   methods: {
     getUserDetails() {

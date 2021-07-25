@@ -1,5 +1,9 @@
 <template>
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
+
   <div v-if="!isLoading">
     <div class="page" v-if="!auth">
       <h1>You are not authorised to view this page</h1>
@@ -29,6 +33,7 @@ import Nav from "../components/Nav.vue";
 import axios from "axios";
 import Admins from "@/components/Admins";
 import AddAdmin from "@/components/AddAdmin";
+import Loading from "@/components/Loading";
 
 export default {
   name: "ManageAdmins",
@@ -49,6 +54,7 @@ export default {
     Nav,
     Admins,
     AddAdmin,
+    Loading,
   },
 
   methods: {

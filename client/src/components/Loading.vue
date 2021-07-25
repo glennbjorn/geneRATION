@@ -1,14 +1,15 @@
 <template>
-  <div>
-    <circle-spin loading="isLoading"></circle-spin>
+  <div class="loading">
+    Loading...
   </div>
 </template>
-<script>
-export default {
-  data(){
-    return {
-        isLoading: true
-      }
-   }
+<style scoped>
+.loading {
+  text-align: center;
+  font-size: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-</script>
+</style>

@@ -1,5 +1,8 @@
 <template>
   <Nav />
+  <div v-if="isLoading">
+    <Loading />
+  </div>
   <div v-if="!isLoading">
     <div class="page" v-if="!loggedIn">
       <h1>You are not logged in!</h1>
@@ -27,6 +30,7 @@ import VueJwtDecode from "vue-jwt-decode";
 import axios from "axios";
 import CampaignsAdmin from "@/components/CampaignsAdmin";
 import Nav from "../components/Nav.vue";
+import Loading from "@/components/Loading";
 
 export default {
   name: "Dashboard",
@@ -34,6 +38,7 @@ export default {
   components: {
     CampaignsAdmin,
     Nav,
+    Loading,
   },
 
   data() {
