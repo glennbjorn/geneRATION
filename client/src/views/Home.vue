@@ -149,7 +149,7 @@
               Campaign"!
             </p>
             <br /><br />
-            <h2>How to edit/delete/unpublish a campaign?</h2>
+            <h2>How to edit / delete / unpublish a campaign?</h2>
             <br />
             <p>
               1. Under "Dashboad", select "View My Campaigns".<br /><br />
@@ -170,7 +170,7 @@
               4. Enter the collaborator(s)' email &amp; "Give Permission".
             </p>
             <br /><br />
-            <h2>How to view/export existing donations?</h2>
+            <h2>How to view / export existing donations?</h2>
             <br />
             <p>
               1. Under "Dashboad", select "View My Campaigns".<br /><br />
@@ -409,7 +409,6 @@ html {
 
 .FAQ {
   max-width: 700px;
-  text-align: justify;
   margin: 0 auto;
   margin-top: 50px;
   /* font-weight: bold; */
