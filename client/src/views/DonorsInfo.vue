@@ -119,7 +119,7 @@
       </div>
 
       <button class="back" @click="$router.push(`/mycampaigns/${campaignid}`)">
-        Back to My Campaigns
+        Back
       </button>
     </div>
   </div>
