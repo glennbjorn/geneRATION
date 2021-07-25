@@ -79,6 +79,7 @@ const routes = [
         name: 'ManageAdmins',
         component: ManageAdmins
     },
+
 ]
 
 const router = createRouter({

@@ -4,28 +4,38 @@
     <div class="bar">
       <div class="w3-bar w3-black">
         <a
+          @click="offFaq"
           href="#about-us"
           class="w3-center w3-bar-item w3-button w3-mobile"
-          style="width: 50%"
+          style="width: 33%"
           ><i class="fa fa-user"></i> About Us</a
         >
 
         <a
+          @click="offFaq"
           href="#ongoing-campaigns"
           class="w3-center w3-bar-item w3-button w3-mobile"
-          style="width: 50%"
+          style="width: 34%"
           ><i class="fa fa-th"></i> Ongoing Campaigns</a
+        >
+
+        <a
+          @click="onFaq"
+          class="w3-center w3-bar-item w3-button w3-mobile"
+          style="width: 33%"
+          ><i class="fa fa-info-circle"></i> FAQ</a
         >
       </div>
     </div>
 
-    <div class="hero-image">
-      <div class="hero-text">
-        <h1 style="font-size: 50px">do something that matters</h1>
-        <p>
-          <a
-            href="#ongoing-campaigns"
-            class="
+    <div v-if="!faq">
+      <div class="hero-image">
+        <div class="hero-text">
+          <h1 style="font-size: 50px">do something that matters</h1>
+          <p>
+            <a
+              href="#ongoing-campaigns"
+              class="
               w3-button
               w3-white
               w3-padding-large
@@ -34,69 +44,139 @@
               w3-opacity
               w3-hover-opacity-off
             "
-            >donate today</a
+              >donate today</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="page">
+        <div id="about-us">
+          <img
+            class="logo"
+            src="@/assets/logo-new3.png"
+            alt="Logo of geneRATION"
+          />
+          <span class="generation-intro">
+            <h2>a one-stop food drive organiser<br /></h2>
+          </span>
+
+          <div class="aboutus-text">
+            <p class="para-space">
+              When it comes to food campaigns, there are often hiccups in the
+              process of gathering public donations as well as picking,
+              categorising, and dispersing food items.
+            </p>
+
+            <p class="para-space">
+              Thus, as young individuals who recognise the significance of food
+              charity drives and their impact on the less privileged in our
+              society, we want to set up a website that will ease the process
+              and produce positive outcomes for charitable organisations to
+              acquire food donations.
+            </p>
+
+            <p>
+              If you live within a 10 minute walk from the collection point, or
+              are able to drop off the donations at the collection point, please
+              consider donating to help those in need!
+            </p>
+          </div>
+        </div>
+
+        <div id="ongoing-campaigns" class="ongoing-campaigns">
+          <div class="search" v-if="campaigns.length !== 0">
+            <input
+              type="text"
+              v-model="search"
+              size="35"
+              placeholder="search by name, location or organisation"
+            />
+            <i @click="filter" class="fas fa-search fa-lg"></i>
+          </div>
+
+          <Campaigns :campaigns="filteredCampaigns" />
+
+          <div class="home-no-campaign" v-if="campaigns.length == 0">
+            <h2>There are no campaigns at the moment.</h2>
+            <h3>Do visit another day!</h3>
+          </div>
+          <div
+            class="home-no-campaign"
+            v-if="campaigns.length !== 0 && filteredCampaigns.length == 0"
           >
-        </p>
+            <h2>There are no campaigns that match your search result.</h2>
+            <h3>Please try again!</h3>
+          </div>
+        </div>
       </div>
     </div>
+    <div v-if="faq">
+      <div class="page">
+        <div>
+          <h1><b>Frequently Asked Questions</b></h1>
 
-    <div class="page">
-      <div id="about-us">
-        <img
-          class="logo"
-          src="@/assets/logo-new3.png"
-          alt="Logo of geneRATION"
-        />
-        <span class="generation-intro">
-          <h2>a one-stop food drive organiser<br /></h2>
-        </span>
-
-        <div class="aboutus-text">
-          <p class="para-space">
-            When it comes to food campaigns, there are often hiccups in the
-            process of gathering public donations as well as picking,
-            categorising, and dispersing food items.
-          </p>
-
-          <p class="para-space">
-            Thus, as young individuals who recognise the significance of food
-            charity drives and their impact on the less privileged in our
-            society, we want to set up a website that will ease the process and
-            produce positive outcomes for charitable organisations to acquire
-            food donations.
-          </p>
-
-          <p>
-            If you live within a 10 minute walk from the collection point, or
-            are able to drop off the donations at the collection point, please
-            consider donating to help those in need!
-          </p>
-        </div>
-      </div>
-
-      <div id="ongoing-campaigns" class="ongoing-campaigns">
-        <div class="search" v-if="campaigns.length !== 0">
-          <input
-            type="text"
-            v-model="search"
-            size="35"
-            placeholder="search by name, location or organisation"
-          />
-          <i @click="filter" class="fas fa-search fa-lg"></i>
-        </div>
-
-        <Campaigns :campaigns="filteredCampaigns" />
-
-        <div class="home-no-campaign" v-if="campaigns.length == 0">
-          <h2>There are no campaigns at the moment.</h2>
-          <h3>Do visit another day!</h3>
-        </div>
-        <div
-          class="home-no-campaign"
-          v-if="campaigns.length !== 0 && filteredCampaigns.length == 0"
-        >
-          <h2>There are no campaigns that match your search result.</h2>
-          <h3>Please try again!</h3>
+          <div class="FAQ">
+            <h2>How to Donate?</h2>
+            <br />
+            <p>
+              1. Search &amp; select the campaign of your choice in the tab:
+              <a
+                @click="offFaq"
+                href="#ongoing-campaigns"
+                class="w3-center w3-bar-item w3-button w3-mobile"
+                ><i class="fa fa-th"></i> Ongoing Campaigns</a
+              ><br /><br />
+              2. Read the details of the campaign &amp; click "Donate Today".<br /><br />
+              3. Fill in your particulars &amp; decide between the self drop-off
+              or door-to-door collection option. <br /><br />
+              4. Enter the desired quantity to donate. <br /><br />
+              5. Pledge your donation!
+            </p>
+            <br /><br />
+            <h2>How to create a campaign on geneRATION?</h2>
+            <br />
+            <p>
+              1. Register an account wih geneRATION.<br /><br />
+              2. Under "Dashboad", select "Create New Campaign".<br /><br />
+              3. Enter the campaign's name &amp; details.<br /><br />
+              4. Add the type of items &amp; their respective target quantity.
+              <br /><br />
+              5. Tick the "Publish Campaign" checkbox followed by "Create
+              Campaign"!
+            </p>
+            <br /><br />
+            <h2>How to edit/delete/unpublish a campaign?</h2>
+            <br />
+            <p>
+              1. Under "Dashboad", select "View My Campaigns".<br /><br />
+              2. Select the campaign you wish to edit/delete &amp; click
+              "Edit".<br /><br />
+              3. Make the changes and/or uncheck the "Publish Campaign" checkbox
+              to publish/unpublish a campaign from the home page.<br /><br />
+              4. Select "Save Changes" or "Delete Campaign".
+            </p>
+            <br /><br />
+            <h2>How to add collaborators?</h2>
+            <br />
+            <p>
+              1. Under "Dashboad", select "View My Campaigns".<br /><br />
+              2. Select the campaign you wish to add a collaborator &amp; click
+              "Edit".<br /><br />
+              3. Scroll to the bottom &amp; click on "Manage Administrators".<br /><br />
+              4. Enter the collaborator(s)' email &amp; "Give Permission".
+            </p>
+            <br /><br />
+            <h2>How to view/export existing donations?</h2>
+            <br />
+            <p>
+              1. Under "Dashboad", select "View My Campaigns".<br /><br />
+              2. Select the campaign you wish to view/export &amp; click "Donors
+              Information".<br /><br />
+              3. Select "Export as Excel" to export as an Excel.xlsx .
+              <br /><br />
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -124,6 +204,7 @@ export default {
       search: "",
       filteredCampaigns: [],
       currentDate: "",
+      faq: false,
     };
   },
 
@@ -180,6 +261,14 @@ export default {
         publish: false,
       });
     },
+
+    onFaq() {
+      this.faq = true;
+    },
+
+    offFaq() {
+      this.faq = false;
+    },
   },
 
   async created() {
@@ -215,6 +304,11 @@ export default {
 .page .home-no-campaign h3 {
   text-align: center;
   margin-top: 50px;
+}
+
+.page h1 {
+  margin-top: 20px;
+  text-align: center;
 }
 
 .logo {
@@ -306,5 +400,14 @@ html {
 
 .fas {
   cursor: pointer;
+}
+
+.FAQ {
+  text-align: justify;
+  margin-top: 50px;
+  /* font-weight: bold; */
+  margin-bottom: 100px;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 </style>
