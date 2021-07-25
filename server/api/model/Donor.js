@@ -30,10 +30,6 @@ const donorSchema = mongoose.Schema({
         type: Number,
         required: true
       },
-      donate: {
-        type: Boolean,
-        required: true
-      }
     },
   ],
   remarks: {
