@@ -317,10 +317,10 @@ export default {
 }
 
 .logo {
+  max-width: 300px;
   margin-right: auto;
   margin: 0 auto;
   display: block;
-  max-width: 25%;
   margin-top: 120px;
 }
 
@@ -334,13 +334,13 @@ export default {
 }
 
 .aboutus-text {
+  max-width: 1000px;
   text-align: center;
+  margin: 0 auto;
   margin-top: 50px;
   font-size: 20px;
   /* font-weight: bold; */
   margin-bottom: 100px;
-  margin-left: 100px;
-  margin-right: 100px;
 }
 
 .para-space {
@@ -408,11 +408,11 @@ html {
 }
 
 .FAQ {
+  max-width: 700px;
   text-align: justify;
+  margin: 0 auto;
   margin-top: 50px;
   /* font-weight: bold; */
   margin-bottom: 100px;
-  margin-left: 25%;
-  margin-right: 25%;
 }
 </style>

@@ -5,6 +5,8 @@
     <h1>Register</h1>
   </div>
 
+  <div class="subheader"><h5>For Food Drive Organisers</h5></div>
+
   <div class="form-register">
     <form @submit.prevent="submit">
       <div class="form-floating">
@@ -154,6 +156,10 @@ export default {
   font-size: 15vw;
   text-align: center;
   margin: -15px;
+}
+
+.subheader {
+  text-align: center;
 }
 
 .form-register {
