@@ -31,7 +31,7 @@
           <label for="contact">Contact Number</label>
           <input
             v-model="donor.contact"
-            type="text"
+            type="tel"
             id="contact"
             placeholder="Contact Number"
           />
