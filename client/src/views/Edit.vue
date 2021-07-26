@@ -117,7 +117,7 @@
         </div>
 
         <div class="publish-checkbox">
-          <label for="publish">Publish campaign</label>
+          <label for="publish">Publish Campaign</label>
           <input v-model="campaign.publish" type="checkbox" id="publish" />
         </div>
 
