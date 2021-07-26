@@ -80,8 +80,8 @@
             </p>
 
             <p>
-              If you live within a 10 minute walk from the collection point, or
-              are able to drop off the donations at the collection point, please
+              If you live within a 10 minute walk from the collection point(s), or
+              are able to drop off the donations at a collection point, please
               consider donating to help those in need!
             </p>
           </div>

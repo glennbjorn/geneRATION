@@ -21,7 +21,7 @@
           {{ campaign.collectionStartTime }} to {{ campaign.collectionEndTime }}
         </h5>
         <h5>
-          <b>Collection Point: </b><br />
+          <b>Collection Point(s): </b><br />
           {{ campaign.collectionAddress }}
         </h5>
       </div>

@@ -18,7 +18,7 @@
           {{ campaign.collectionStartTime }} to {{ campaign.collectionEndTime }}
         </h5>
         <h5>
-          <b>Collection Point: </b><br />
+          <b>Collection Point(s): </b><br />
           {{ campaign.collectionAddress }}
         </h5>
       </div>
@@ -31,7 +31,7 @@
       </div>
       <div class="donate-desc">
         Do consider donating if you live within a 10 minute walk from the
-        collection point.
+        collection point(s).
       </div>
       <button class="donate" @click="gotoform">Donate Today!</button>
       <h5><b>More about the Organisation:</b></h5>

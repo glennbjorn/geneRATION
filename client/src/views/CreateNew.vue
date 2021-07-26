@@ -49,7 +49,7 @@
 
         <div class="create-campaign">
           <label for="collection-address"
-            >Full Address of Collection Point</label
+            >Full Address of Collection Point(s)</label
           >
           <input
             v-model="campaign.collectionAddress"
