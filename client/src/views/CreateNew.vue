@@ -63,7 +63,7 @@
           <label for="collection-contact">Organiser's Contact Number</label>
           <input
             v-model="campaign.collectionContact"
-            type="number"
+            type="tel"
             id="collection-contact"
             placeholder="Contact Number"
           />
