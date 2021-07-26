@@ -63,7 +63,7 @@
           <label for="collection-contact">Organiser's Contact Number</label>
           <input
             v-model="campaign.collectionContact"
-            type="text"
+            type="number"
             id="collection-contact"
             placeholder="Contact Number"
           />
@@ -208,58 +208,70 @@ export default {
     },
 
     async submit() {
+      this.isLoading = true;
       if (!this.campaign.name) {
         this.$swal("Please include a campaign name!");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.camDesc) {
         this.$swal("Please include a campaign description!");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.orgDesc) {
         this.$swal("Please include an organisation description!");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.collectionAddress) {
         this.$swal("Please include a collection address!");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.collectionContact) {
-        this.$swal("Please include a contact number for emergency!");
+        this.$swal("Please include a contact number for the public!");
+        this.isLoading = false;
         return;
       }
 
       if (this.campaign.collectionContact.length !== 8) {
         this.$swal("A contact number should consist of 8 digits");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.collectionDate) {
         this.$swal("Please include a collection date!");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.collectionStartTime) {
         this.$swal("Please include a collection time frame!");
+        this.isLoading = false;
         return;
       }
 
       if (!this.campaign.collectionEndTime) {
         this.$swal("Please include a collection time frame!");
+        this.isLoading = false;
         return;
       }
 
       if (this.campaign.collectionStartTime > this.campaign.collectionEndTime) {
         this.$swal("Your collection end time should be after your start time!");
+        this.isLoading = false;
         return;
       }
 
       if (this.items.length === 0) {
         this.$swal("Please include some items!");
+        this.isLoading = false;
         return;
       }
 
@@ -278,6 +290,7 @@ export default {
           items: this.items,
           publish: this.campaign.publish,
         });
+        this.isLoading = false;
 
         this.$swal("Campaign created!");
 
@@ -285,6 +298,7 @@ export default {
       } catch (err) {
         let error = err.response;
         console.log(error.data.err.message);
+        this.isLoading = false;
         this.$swal("Error");
       }
     },

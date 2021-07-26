@@ -13,7 +13,7 @@
     <div class="form-control">
       <label>Targeted Quantity</label>
       <input
-        type="text"
+        type="number"
         v-model="qty"
         name="qty"
         placeholder="Please indicate a whole number, e.g. 100"
