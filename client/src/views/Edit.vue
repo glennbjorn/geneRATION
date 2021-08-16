@@ -290,7 +290,7 @@ export default {
         return;
       }
 
-      if (this.campaign.tags === "undefined") {
+      if (!this.campaign.tags) {
         this.campaign.tags = "";
       }
 
