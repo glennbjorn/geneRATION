@@ -98,7 +98,9 @@ export default {
     },
 
     async addAdmin(admin) {
-      const res = await axios.post("/api/findUser", String(admin).toLowerCase());
+      const res = await axios.post("/api/findUser", {
+        email: String(admin.email).toLowerCase(),
+      });
       if (res.status === 202) {
         this.$swal("Email is not an existing user. Please try again!");
         return;

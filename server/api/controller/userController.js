@@ -56,6 +56,7 @@ exports.getUserOrg = async (req, res) => {
 exports.findUser = async (req, res) => {
   try {
     let exist = await User.find({ email: req.body.email });
+    console.log(req.body)
     if (exist.length >= 1) {
       res.status(201).json();
     } else {

@@ -3,7 +3,7 @@
     <div class="form-control">
       <label>Email</label>
       <input
-        type="email"
+        type="text"
         v-model="email"
         name="email"
         placeholder="Add collaborator email"

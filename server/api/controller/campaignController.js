@@ -14,7 +14,7 @@ exports.newCampaign = async (req, res) => {
             collectionStartTime: req.body.collectionStartTime,
             collectionEndTime: req.body.collectionEndTime,
             items: req.body.items,
-            tag: req.body.tag,
+            tags: req.body.tags,
             publish: req.body.publish,
         })
         let data = await campaign.save()
