@@ -139,7 +139,7 @@
             <br />
             <p>
               1. Register an account wih geneRATION.<br /><br />
-              2. Under "Dashboad", select "Create New Campaign".<br /><br />
+              2. Under "Dashboard", select "Create New Campaign".<br /><br />
               3. Enter the campaign's name &amp; details.<br /><br />
               4. Add the type of items &amp; their respective target quantity.
               <br /><br />
@@ -150,7 +150,7 @@
             <h2>How to edit / delete / unpublish a campaign?</h2>
             <br />
             <p>
-              1. Under "Dashboad", select "View My Campaigns".<br /><br />
+              1. Under "Dashboard", select "View My Campaigns".<br /><br />
               2. Select the campaign you wish to edit/delete &amp; click
               "Edit".<br /><br />
               3. Make the changes and/or uncheck the "Publish Campaign" checkbox
@@ -161,7 +161,7 @@
             <h2>How to add collaborators?</h2>
             <br />
             <p>
-              1. Under "Dashboad", select "View My Campaigns".<br /><br />
+              1. Under "Dashboard", select "View My Campaigns".<br /><br />
               2. Select the campaign you wish to add a collaborator &amp; click
               "Edit".<br /><br />
               3. Scroll to the bottom &amp; click on "Manage Administrators".<br /><br />
@@ -171,7 +171,7 @@
             <h2>How to view / export existing donations?</h2>
             <br />
             <p>
-              1. Under "Dashboad", select "View My Campaigns".<br /><br />
+              1. Under "Dashboard", select "View My Campaigns".<br /><br />
               2. Select the campaign you wish to view/export &amp; click "Donors
               Information".<br /><br />
               3. Select "Export as Excel" to export as an Excel.xlsx .
