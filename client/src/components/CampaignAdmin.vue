@@ -6,7 +6,7 @@
     <div>
       <p><b>Collection Date:</b> {{ date }}</p>
       <p>
-        <b>Self Drop-Off Location:</b><br />
+        <b>Location(s):</b><br />
         {{ campaignAdmin.collectionAddress }}
       </p>
     </div>
