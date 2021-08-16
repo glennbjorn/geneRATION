@@ -251,7 +251,6 @@ export default {
     },
 
     async changeStatus(donor) {
-      console.log(donor._id);
       await axios.post("/api/donate/editDonor", {
         _id: donor._id,
         collected: donor.collected,

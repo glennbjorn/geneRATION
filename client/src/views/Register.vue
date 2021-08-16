@@ -99,6 +99,8 @@ export default {
   },
   methods: {
     async submit() {
+      this.email = String(this.email).toLowerCase();
+
       if (!this.reg.name) {
         this.$swal("Please include your name!");
         return;

@@ -52,7 +52,9 @@ export default {
     logUserOut() {
       localStorage.removeItem("jwt");
       this.$router.push("/");
-      this.$router.go();
+      if (this.$route.path === "/") {
+        this.$router.go();
+      }
     },
     checkLoggedIn() {
       if (localStorage.getItem("jwt")) {

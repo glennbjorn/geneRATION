@@ -22,17 +22,23 @@
           {{ campaign.collectionAddress }}
         </h5>
       </div>
+      <div class="donate-desc">
+        NOTE: Residents may choose to drop-off their donations at the ground
+        floor of each of the blocks indicated above.
+      </div>
       <div class="cam-desc">
         {{ campaign.camDesc }}
       </div>
-      <h5><b>Items for collection</b></h5>
-      <div class="items" :key="item._id" v-for="item in campaign.items">
-        <p>{{ item.qty }} x {{ item.item }}</p>
+
+      <br>
+   
+      <h5><b>Items for collection and donation progress</b></h5>
+      <div class="itemcount" v-for="n in items.length" :key="n">
+        {{ items[n - 1] }} : {{ itemCount[n - 1] }} /
+        {{ campaign.items[n - 1].qty }}
+        <!-- {{ items[n - 1] }} : {{ itemCount[n - 1] }} / {{ qty[n - 1] }} -->
       </div>
-      <div class="donate-desc">
-        Do consider donating if you live within a 10 minute walk from the
-        collection point(s).
-      </div>
+
       <button class="donate" @click="gotoform">Donate Today!</button>
       <h5><b>More about the Organisation:</b></h5>
       <div class="org-desc">
@@ -100,6 +106,9 @@ export default {
       isLoading: true,
       Location: "",
       title: encodeURI("Hey, please support this Donation Drive! "),
+      donors: [],
+      items: [],
+      itemCount: [],
     };
   },
 
@@ -127,12 +136,60 @@ export default {
     convertDate() {
       this.date = moment(this.campaign.collectionDate).format("Do MMM YYYY");
     },
+
+    async getDonors() {
+      const res = await axios.post("/api/donate/getDonors", {
+        campaignid: this.campaignid,
+      });
+      return res.data;
+    },
+    getItems() {
+      let arr = [];
+      for (let i = 0; i < this.campaign.items.length; i++) {
+        let item = this.campaign.items[i].item;
+        arr = [...arr, item];
+      }
+      this.items = arr;
+    },
+
+    getItemCount() {
+      this.getItems();
+      let arr = [];
+
+      for (let i = 0; i < this.items.length; i++) {
+        arr = [...arr, 0];
+      }
+      for (let j = 0; j < this.donors.length; j++) {
+        let donor = this.donors[j]; // Loop about the particular donor
+
+        for (let k = 0; k < donor.items.length; k++) {
+          if (donor.items[k].donate) {
+            // Checks if the item is donated
+            let index = this.items.indexOf(donor.items[k].item); //checks position of item donated
+
+            if (index !== -1) {
+              if (arr[index] >= 0) {
+                // Checks if there are any other donation
+                arr[index] += donor.items[k].quantity; // The particular index (representing 1 specific item) inside the array will count if being donated
+              } else {
+                // Initialise the array
+                arr[index] = 0;
+                arr[index] = donor.items[k].quantity;
+              }
+            }
+          }
+        }
+      }
+      this.itemCount = arr; //store inside
+    },
   },
 
   async created() {
     this.getCampaignId();
     this.campaign = await this.getCampaign();
     this.convertDate();
+    this.donors = await this.getDonors();
+    this.getItemCount();
     this.isLoading = false;
     this.Location = encodeURI(window.location.href);
     // this.Location = encodeURI("https://new-generation.herokuapp.com/");
@@ -167,8 +224,8 @@ export default {
   font-size: 18px;
   text-align: center;
   margin: auto;
-  margin-top: 50px;
-  margin-bottom: -20px;
+  margin-top: 5px;
+  margin-bottom: 30px;
 }
 
 h5 {
@@ -216,5 +273,9 @@ h5 b {
   display: block;
   margin-top: 30px;
   margin-bottom: 150px;
+}
+
+.itemcount {
+  text-align: center;
 }
 </style>

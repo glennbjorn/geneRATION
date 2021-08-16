@@ -98,6 +98,11 @@ export default {
     },
 
     async addAdmin(admin) {
+      const res = await axios.post("/api/findUser", String(admin).toLowerCase());
+      if (res.status === 202) {
+        this.$swal("Email is not an existing user. Please try again!");
+        return;
+      }
       var arr = this.admins;
       if (this.owner === admin.email) {
         this.$swal("Owner is already a collaborator!");

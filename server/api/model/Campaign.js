@@ -54,6 +54,10 @@ const CampaignSchema = mongoose.Schema({
       }
     }
   ],
+  tags: {
+    type: String,
+    required: false,
+  },
   publish: {
     type: Boolean,
     required: true

@@ -141,26 +141,6 @@ export default {
       }
       this.items = arr;
     },
-    // getItemCount() {
-    //   this.getItems();
-    //   let arr = [];
-    //   for (let i = 0; i < this.items.length; i++) {
-    //     arr = [...arr, 0];
-    //   }
-    //   for (let j = 0; j < this.donors.length; j++) {
-    //     let donor = this.donors[j];
-    //     console.log(donor);
-    //     for (let k = 0; k < donor.items.length; k++) {
-    //       if (donor.items[k].donate) {
-    //         let index = this.items.indexOf(donor.items[k].item);
-    //         if (index !== -1) {
-    //           arr[index]++;
-    //         }
-    //       }
-    //     }
-    //   }
-    //   this.itemCount = arr;
-    // },
 
     getItemCount() {
       this.getItems();

@@ -14,6 +14,7 @@ exports.newCampaign = async (req, res) => {
             collectionStartTime: req.body.collectionStartTime,
             collectionEndTime: req.body.collectionEndTime,
             items: req.body.items,
+            tag: req.body.tag,
             publish: req.body.publish,
         })
         let data = await campaign.save()
@@ -63,6 +64,7 @@ exports.editCampaign = async (req, res) => {
         campaign.collectionStartTime = req.body.collectionStartTime;
         campaign.collectionEndTime = req.body.collectionEndTime;
         campaign.items = req.body.items;
+        campaign.tags = req.body.tags;
         campaign.publish = req.body.publish;
         let data = await campaign.save();
         res.status(201).json({ data })

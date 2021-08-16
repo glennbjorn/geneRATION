@@ -24,7 +24,6 @@ exports.addDonation = async (req, res) => {
 exports.getDonors = async (req, res) => {
     try {
         const data = await Donor.find({ campaignid: req.body.campaignid })
-        console.log(data.length)
         await res.json(data)
     } catch (err) {
         console.log(err)
@@ -47,11 +46,7 @@ exports.editDonor = async (req, res) => {
 exports.delDonors = async (req, res) => {
     try {
         const data = await Donor.find({ campaignid: req.body.campaignid });
-        console.log(data)
-        console.log(data[0])
         for (let i = 0; i < data.length; i++) {
-            console.log(data[i])
-            console.log(data[i]._id)
             await Donor.findOneAndDelete({ _id: data[i]._id })
         }
         res.status(201).json({ data })

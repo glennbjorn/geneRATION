@@ -117,6 +117,16 @@
           <Items @delete-item="deleteItem" :items="items" />
         </div>
 
+        <div class="create-campaign">
+          <label for="tag">Tags / Keywords (Optional)</label>
+          <input
+            v-model="campaign.tags"
+            type="text"
+            id="tag"
+            placeholder="e.g. Clementi, rice, elderly"
+          />
+        </div>
+
         <div class="publish-checkbox">
           <label for="publish">Publish Campaign</label>
           <input v-model="campaign.publish" type="checkbox" id="publish" />
@@ -162,6 +172,7 @@ export default {
         collectionStartTime: "",
         collectionEndTime: "",
         qty: "",
+        tags: "",
         publish: false,
       },
       items: [],
@@ -288,6 +299,7 @@ export default {
           collectionStartTime: this.campaign.collectionStartTime,
           collectionEndTime: this.campaign.collectionEndTime,
           items: this.items,
+          tags: String(this.tags).toLowerCase(),
           publish: this.campaign.publish,
         });
         this.isLoading = false;

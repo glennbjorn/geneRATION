@@ -271,7 +271,6 @@ export default {
       update_quantity();
       //empty the donor item array to store updated quantity
       this.donor.items = [];
-      console.log(quantity_arr);
       for (let i = 0; i < this.campaign.items.length; i++) {
         var item = this.campaign.items[i].item;
         quantity = quantity_arr[i];

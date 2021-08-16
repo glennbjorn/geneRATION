@@ -80,9 +80,7 @@
             </p>
 
             <p>
-              If you live within a 10 minute walk from the collection point(s), or
-              are able to drop off the donations at a collection point, please
-              consider donating to help those in need!
+              Please consider donating to help those in need!
             </p>
           </div>
         </div>
@@ -120,7 +118,7 @@
           <h1><b>Frequently Asked Questions</b></h1>
 
           <div class="FAQ">
-            <h2>How to Donate?</h2>
+            <h2>How to donate?</h2>
             <br />
             <p>
               1. Search &amp; select the campaign of your choice in the tab:
@@ -191,7 +189,7 @@ import Nav from "../components/Nav.vue";
 import Campaigns from "@/components/Campaigns";
 import axios from "axios";
 import moment from "moment";
-import Loading from "@/components/Loading"
+import Loading from "@/components/Loading";
 
 export default {
   name: "Home",
@@ -199,7 +197,7 @@ export default {
   components: {
     Nav,
     Campaigns,
-    Loading
+    Loading,
   },
 
   data() {
@@ -238,13 +236,13 @@ export default {
       let array = [];
 
       const search = this.search.toLowerCase();
-      console.log(this.campaigns[0].name.toLowerCase());
 
       for (let i = 0; i < this.campaigns.length; i++) {
         if (
           this.campaigns[i].name.toLowerCase().match(search) ||
           this.campaigns[i].collectionAddress.toLowerCase().match(search) ||
-          this.campaigns[i].org.toLowerCase().match(search)
+          this.campaigns[i].org.toLowerCase().match(search) ||
+          this.campaigns[i].tags.toLowerCase().match(search)
         ) {
           array.push(this.campaigns[i]);
         }
@@ -261,6 +259,8 @@ export default {
         orgDesc: campaign.orgDesc,
         collectionAddress: campaign.collectionAddress,
         collectionContact: campaign.collectionContact,
+        collectionStartTime: campaign.collectionStartTime,
+        collectionEndTime: campaign.collectionEndTime,
         collectionDate: campaign.collectionDate,
         items: campaign.items,
         publish: false,
